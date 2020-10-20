@@ -14,6 +14,7 @@ namespace Rss_reader
     {
         public Form1()
         {
+            //Hej! Marcus
             InitializeComponent();
         }
     }
