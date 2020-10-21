@@ -35,12 +35,12 @@ namespace Rss_reader
             this.clmName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmFrequency = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lblURL = new System.Windows.Forms.Label();
+            this.lblUrl = new System.Windows.Forms.Label();
             this.lblUpdateFrequency = new System.Windows.Forms.Label();
             this.lblCategory = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.tbUrl = new System.Windows.Forms.TextBox();
+            this.cbUpdateFrequency = new System.Windows.Forms.ComboBox();
+            this.cbCategory = new System.Windows.Forms.ComboBox();
             this.btnRemovePodcast = new System.Windows.Forms.Button();
             this.btnAddPodcast = new System.Windows.Forms.Button();
             this.btnSavePodcast = new System.Windows.Forms.Button();
@@ -48,7 +48,7 @@ namespace Rss_reader
             this.lblEpisode = new System.Windows.Forms.Label();
             this.lwCategories = new System.Windows.Forms.ListView();
             this.lblCategories = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tbCategory = new System.Windows.Forms.TextBox();
             this.btnAddCategory = new System.Windows.Forms.Button();
             this.btnSaveCategory = new System.Windows.Forms.Button();
             this.btnRemoveCategory = new System.Windows.Forms.Button();
@@ -97,15 +97,15 @@ namespace Rss_reader
             this.clmCategory.Name = "clmCategory";
             this.clmCategory.Width = 160;
             // 
-            // lblURL
+            // lblUrl
             // 
-            this.lblURL.AutoSize = true;
-            this.lblURL.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblURL.Location = new System.Drawing.Point(12, 289);
-            this.lblURL.Name = "lblURL";
-            this.lblURL.Size = new System.Drawing.Size(50, 20);
-            this.lblURL.TabIndex = 1;
-            this.lblURL.Text = "URL:";
+            this.lblUrl.AutoSize = true;
+            this.lblUrl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUrl.Location = new System.Drawing.Point(12, 289);
+            this.lblUrl.Name = "lblUrl";
+            this.lblUrl.Size = new System.Drawing.Size(50, 20);
+            this.lblUrl.TabIndex = 1;
+            this.lblUrl.Text = "URL:";
             // 
             // lblUpdateFrequency
             // 
@@ -127,29 +127,29 @@ namespace Rss_reader
             this.lblCategory.TabIndex = 3;
             this.lblCategory.Text = "Kategori:";
             // 
-            // textBox1
+            // tbUrl
             // 
-            this.textBox1.Location = new System.Drawing.Point(16, 312);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(211, 20);
-            this.textBox1.TabIndex = 4;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.tbUrl.Location = new System.Drawing.Point(16, 312);
+            this.tbUrl.Name = "tbUrl";
+            this.tbUrl.Size = new System.Drawing.Size(211, 20);
+            this.tbUrl.TabIndex = 4;
+            this.tbUrl.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // comboBox1
+            // cbUpdateFrequency
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(259, 312);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(186, 21);
-            this.comboBox1.TabIndex = 5;
+            this.cbUpdateFrequency.FormattingEnabled = true;
+            this.cbUpdateFrequency.Location = new System.Drawing.Point(259, 312);
+            this.cbUpdateFrequency.Name = "cbUpdateFrequency";
+            this.cbUpdateFrequency.Size = new System.Drawing.Size(186, 21);
+            this.cbUpdateFrequency.TabIndex = 5;
             // 
-            // comboBox2
+            // cbCategory
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(475, 312);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(137, 21);
-            this.comboBox2.TabIndex = 6;
+            this.cbCategory.FormattingEnabled = true;
+            this.cbCategory.Location = new System.Drawing.Point(475, 312);
+            this.cbCategory.Name = "cbCategory";
+            this.cbCategory.Size = new System.Drawing.Size(137, 21);
+            this.cbCategory.TabIndex = 6;
             // 
             // btnRemovePodcast
             // 
@@ -189,11 +189,10 @@ namespace Rss_reader
             // 
             // lblEpisode
             // 
-            this.lblEpisode.AutoSize = true;
             this.lblEpisode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEpisode.Location = new System.Drawing.Point(12, 386);
+            this.lblEpisode.Location = new System.Drawing.Point(16, 386);
             this.lblEpisode.Name = "lblEpisode";
-            this.lblEpisode.Size = new System.Drawing.Size(0, 20);
+            this.lblEpisode.Size = new System.Drawing.Size(596, 20);
             this.lblEpisode.TabIndex = 13;
             // 
             // lwCategories
@@ -215,12 +214,12 @@ namespace Rss_reader
             this.lblCategories.TabIndex = 15;
             this.lblCategories.Text = "Kategorier:";
             // 
-            // textBox2
+            // tbCategory
             // 
-            this.textBox2.Location = new System.Drawing.Point(630, 277);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(422, 20);
-            this.textBox2.TabIndex = 16;
+            this.tbCategory.Location = new System.Drawing.Point(630, 277);
+            this.tbCategory.Name = "tbCategory";
+            this.tbCategory.Size = new System.Drawing.Size(422, 20);
+            this.tbCategory.TabIndex = 16;
             // 
             // btnAddCategory
             // 
@@ -252,9 +251,9 @@ namespace Rss_reader
             // lblDescription
             // 
             this.lblDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescription.Location = new System.Drawing.Point(628, 409);
+            this.lblDescription.Location = new System.Drawing.Point(632, 409);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(424, 20);
+            this.lblDescription.Size = new System.Drawing.Size(420, 20);
             this.lblDescription.TabIndex = 20;
             // 
             // tbDescription
@@ -278,7 +277,7 @@ namespace Rss_reader
             this.Controls.Add(this.btnRemoveCategory);
             this.Controls.Add(this.btnSaveCategory);
             this.Controls.Add(this.btnAddCategory);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.tbCategory);
             this.Controls.Add(this.lblCategories);
             this.Controls.Add(this.lwCategories);
             this.Controls.Add(this.lblEpisode);
@@ -286,12 +285,12 @@ namespace Rss_reader
             this.Controls.Add(this.btnSavePodcast);
             this.Controls.Add(this.btnAddPodcast);
             this.Controls.Add(this.btnRemovePodcast);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.cbCategory);
+            this.Controls.Add(this.cbUpdateFrequency);
+            this.Controls.Add(this.tbUrl);
             this.Controls.Add(this.lblCategory);
             this.Controls.Add(this.lblUpdateFrequency);
-            this.Controls.Add(this.lblURL);
+            this.Controls.Add(this.lblUrl);
             this.Controls.Add(this.dgwPodcasts);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -308,12 +307,12 @@ namespace Rss_reader
         private System.Windows.Forms.DataGridViewTextBoxColumn clmName;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmFrequency;
         private System.Windows.Forms.DataGridViewTextBoxColumn clmCategory;
-        private Label lblURL;
+        private Label lblUrl;
         private Label lblUpdateFrequency;
         private Label lblCategory;
-        private TextBox textBox1;
-        private ComboBox comboBox1;
-        private ComboBox comboBox2;
+        private TextBox tbUrl;
+        private ComboBox cbUpdateFrequency;
+        private ComboBox cbCategory;
         private Button btnRemovePodcast;
         private Button btnAddPodcast;
         private Button btnSavePodcast;
@@ -321,7 +320,7 @@ namespace Rss_reader
         private Label lblEpisode;
         private ListView lwCategories;
         private Label lblCategories;
-        private TextBox textBox2;
+        private TextBox tbCategory;
         private Button btnAddCategory;
         private Button btnSaveCategory;
         private Button btnRemoveCategory;
