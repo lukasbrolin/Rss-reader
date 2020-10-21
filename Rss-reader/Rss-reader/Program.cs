@@ -17,6 +17,8 @@ namespace Rss_reader
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+
+            
         }
     }
 }

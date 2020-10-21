@@ -30,6 +30,7 @@ namespace Rss_reader
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgwPodcasts = new System.Windows.Forms.DataGridView();
             this.clmEpisode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,22 +55,45 @@ namespace Rss_reader
             this.btnRemoveCategory = new System.Windows.Forms.Button();
             this.lblDescription = new System.Windows.Forms.Label();
             this.tbDescription = new System.Windows.Forms.TextBox();
+            this.tbName = new System.Windows.Forms.TextBox();
+            this.lblName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgwPodcasts)).BeginInit();
             this.SuspendLayout();
             // 
             // dgwPodcasts
             // 
-            this.dgwPodcasts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgwPodcasts.AllowUserToAddRows = false;
+            this.dgwPodcasts.AllowUserToDeleteRows = false;
+            this.dgwPodcasts.AllowUserToResizeColumns = false;
+            this.dgwPodcasts.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgwPodcasts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgwPodcasts.ColumnHeadersHeight = 50;
+            this.dgwPodcasts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgwPodcasts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clmEpisode,
             this.clmName,
             this.clmFrequency,
             this.clmCategory});
+            this.dgwPodcasts.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dgwPodcasts.Location = new System.Drawing.Point(12, 12);
             this.dgwPodcasts.MaximumSize = new System.Drawing.Size(600, 250);
+            this.dgwPodcasts.MultiSelect = false;
             this.dgwPodcasts.Name = "dgwPodcasts";
+            this.dgwPodcasts.ReadOnly = true;
             this.dgwPodcasts.RowHeadersVisible = false;
+            this.dgwPodcasts.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgwPodcasts.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.White;
+            this.dgwPodcasts.RowTemplate.Height = 40;
+            this.dgwPodcasts.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dgwPodcasts.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgwPodcasts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgwPodcasts.Size = new System.Drawing.Size(600, 250);
             this.dgwPodcasts.TabIndex = 0;
             // 
@@ -77,24 +101,28 @@ namespace Rss_reader
             // 
             this.clmEpisode.HeaderText = "Avsnitt";
             this.clmEpisode.Name = "clmEpisode";
+            this.clmEpisode.ReadOnly = true;
             this.clmEpisode.Width = 80;
             // 
             // clmName
             // 
             this.clmName.HeaderText = "Namn";
             this.clmName.Name = "clmName";
+            this.clmName.ReadOnly = true;
             this.clmName.Width = 200;
             // 
             // clmFrequency
             // 
             this.clmFrequency.HeaderText = "Frekvens";
             this.clmFrequency.Name = "clmFrequency";
+            this.clmFrequency.ReadOnly = true;
             this.clmFrequency.Width = 160;
             // 
             // clmCategory
             // 
             this.clmCategory.HeaderText = "Kategori";
             this.clmCategory.Name = "clmCategory";
+            this.clmCategory.ReadOnly = true;
             this.clmCategory.Width = 160;
             // 
             // lblUrl
@@ -137,6 +165,7 @@ namespace Rss_reader
             // 
             // cbUpdateFrequency
             // 
+            this.cbUpdateFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbUpdateFrequency.FormattingEnabled = true;
             this.cbUpdateFrequency.Location = new System.Drawing.Point(259, 312);
             this.cbUpdateFrequency.Name = "cbUpdateFrequency";
@@ -145,6 +174,7 @@ namespace Rss_reader
             // 
             // cbCategory
             // 
+            this.cbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCategory.FormattingEnabled = true;
             this.cbCategory.Location = new System.Drawing.Point(475, 312);
             this.cbCategory.Name = "cbCategory";
@@ -153,7 +183,7 @@ namespace Rss_reader
             // 
             // btnRemovePodcast
             // 
-            this.btnRemovePodcast.Location = new System.Drawing.Point(521, 339);
+            this.btnRemovePodcast.Location = new System.Drawing.Point(521, 345);
             this.btnRemovePodcast.Name = "btnRemovePodcast";
             this.btnRemovePodcast.Size = new System.Drawing.Size(91, 33);
             this.btnRemovePodcast.TabIndex = 9;
@@ -162,7 +192,7 @@ namespace Rss_reader
             // 
             // btnAddPodcast
             // 
-            this.btnAddPodcast.Location = new System.Drawing.Point(259, 339);
+            this.btnAddPodcast.Location = new System.Drawing.Point(259, 345);
             this.btnAddPodcast.Name = "btnAddPodcast";
             this.btnAddPodcast.Size = new System.Drawing.Size(117, 33);
             this.btnAddPodcast.TabIndex = 10;
@@ -171,7 +201,7 @@ namespace Rss_reader
             // 
             // btnSavePodcast
             // 
-            this.btnSavePodcast.Location = new System.Drawing.Point(396, 339);
+            this.btnSavePodcast.Location = new System.Drawing.Point(396, 345);
             this.btnSavePodcast.Name = "btnSavePodcast";
             this.btnSavePodcast.Size = new System.Drawing.Size(91, 33);
             this.btnSavePodcast.TabIndex = 11;
@@ -267,11 +297,30 @@ namespace Rss_reader
             this.tbDescription.Size = new System.Drawing.Size(420, 237);
             this.tbDescription.TabIndex = 21;
             // 
+            // tbName
+            // 
+            this.tbName.Location = new System.Drawing.Point(16, 358);
+            this.tbName.Name = "tbName";
+            this.tbName.Size = new System.Drawing.Size(211, 20);
+            this.tbName.TabIndex = 22;
+            // 
+            // lblName
+            // 
+            this.lblName.AutoSize = true;
+            this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblName.Location = new System.Drawing.Point(12, 335);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(60, 20);
+            this.lblName.TabIndex = 23;
+            this.lblName.Text = "Namn:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1064, 681);
+            this.Controls.Add(this.lblName);
+            this.Controls.Add(this.tbName);
             this.Controls.Add(this.tbDescription);
             this.Controls.Add(this.lblDescription);
             this.Controls.Add(this.btnRemoveCategory);
@@ -326,6 +375,8 @@ namespace Rss_reader
         private Button btnRemoveCategory;
         private Label lblDescription;
         private TextBox tbDescription;
+        private TextBox tbName;
+        private Label lblName;
     }
 }
 

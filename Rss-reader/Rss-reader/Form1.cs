@@ -15,6 +15,12 @@ namespace Rss_reader
         public Form1()
         {
             InitializeComponent();
+            //dgwPodcasts.Rows.RemoveAt(0);
+            dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
+            dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
+            dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
+            dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
