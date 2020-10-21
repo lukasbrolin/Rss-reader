@@ -41,17 +41,17 @@ namespace Rss_reader
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnRemovePodcast = new System.Windows.Forms.Button();
+            this.btnAddPodcast = new System.Windows.Forms.Button();
+            this.btnSavePodcast = new System.Windows.Forms.Button();
             this.lwEpisodes = new System.Windows.Forms.ListView();
             this.lblEpisode = new System.Windows.Forms.Label();
             this.lwCategories = new System.Windows.Forms.ListView();
             this.lblCategories = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.btnAddCategory = new System.Windows.Forms.Button();
+            this.btnSaveCategory = new System.Windows.Forms.Button();
+            this.btnRemoveCategory = new System.Windows.Forms.Button();
             this.lblDescription = new System.Windows.Forms.Label();
             this.tbDescription = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgwPodcasts)).BeginInit();
@@ -151,32 +151,32 @@ namespace Rss_reader
             this.comboBox2.Size = new System.Drawing.Size(137, 21);
             this.comboBox2.TabIndex = 6;
             // 
-            // button3
+            // btnRemovePodcast
             // 
-            this.button3.Location = new System.Drawing.Point(521, 339);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(91, 33);
-            this.button3.TabIndex = 9;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnRemovePodcast.Location = new System.Drawing.Point(521, 339);
+            this.btnRemovePodcast.Name = "btnRemovePodcast";
+            this.btnRemovePodcast.Size = new System.Drawing.Size(91, 33);
+            this.btnRemovePodcast.TabIndex = 9;
+            this.btnRemovePodcast.Text = "Ta bort";
+            this.btnRemovePodcast.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnAddPodcast
             // 
-            this.button1.Location = new System.Drawing.Point(259, 339);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(91, 33);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnAddPodcast.Location = new System.Drawing.Point(259, 339);
+            this.btnAddPodcast.Name = "btnAddPodcast";
+            this.btnAddPodcast.Size = new System.Drawing.Size(117, 33);
+            this.btnAddPodcast.TabIndex = 10;
+            this.btnAddPodcast.Text = "Lägg till";
+            this.btnAddPodcast.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnSavePodcast
             // 
-            this.button2.Location = new System.Drawing.Point(396, 339);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(91, 33);
-            this.button2.TabIndex = 11;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnSavePodcast.Location = new System.Drawing.Point(396, 339);
+            this.btnSavePodcast.Name = "btnSavePodcast";
+            this.btnSavePodcast.Size = new System.Drawing.Size(91, 33);
+            this.btnSavePodcast.TabIndex = 11;
+            this.btnSavePodcast.Text = "Spara";
+            this.btnSavePodcast.UseVisualStyleBackColor = true;
             // 
             // lwEpisodes
             // 
@@ -222,32 +222,32 @@ namespace Rss_reader
             this.textBox2.Size = new System.Drawing.Size(422, 20);
             this.textBox2.TabIndex = 16;
             // 
-            // button4
+            // btnAddCategory
             // 
-            this.button4.Location = new System.Drawing.Point(632, 303);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(134, 42);
-            this.button4.TabIndex = 17;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnAddCategory.Location = new System.Drawing.Point(630, 303);
+            this.btnAddCategory.Name = "btnAddCategory";
+            this.btnAddCategory.Size = new System.Drawing.Size(136, 42);
+            this.btnAddCategory.TabIndex = 17;
+            this.btnAddCategory.Text = "Lägg till";
+            this.btnAddCategory.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // btnSaveCategory
             // 
-            this.button5.Location = new System.Drawing.Point(778, 303);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(134, 42);
-            this.button5.TabIndex = 18;
-            this.button5.Text = "button5";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnSaveCategory.Location = new System.Drawing.Point(778, 303);
+            this.btnSaveCategory.Name = "btnSaveCategory";
+            this.btnSaveCategory.Size = new System.Drawing.Size(134, 42);
+            this.btnSaveCategory.TabIndex = 18;
+            this.btnSaveCategory.Text = "Spara";
+            this.btnSaveCategory.UseVisualStyleBackColor = true;
             // 
-            // button6
+            // btnRemoveCategory
             // 
-            this.button6.Location = new System.Drawing.Point(918, 303);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(134, 42);
-            this.button6.TabIndex = 19;
-            this.button6.Text = "button6";
-            this.button6.UseVisualStyleBackColor = true;
+            this.btnRemoveCategory.Location = new System.Drawing.Point(918, 303);
+            this.btnRemoveCategory.Name = "btnRemoveCategory";
+            this.btnRemoveCategory.Size = new System.Drawing.Size(134, 42);
+            this.btnRemoveCategory.TabIndex = 19;
+            this.btnRemoveCategory.Text = "Ta bort";
+            this.btnRemoveCategory.UseVisualStyleBackColor = true;
             // 
             // lblDescription
             // 
@@ -275,17 +275,17 @@ namespace Rss_reader
             this.ClientSize = new System.Drawing.Size(1064, 681);
             this.Controls.Add(this.tbDescription);
             this.Controls.Add(this.lblDescription);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.btnRemoveCategory);
+            this.Controls.Add(this.btnSaveCategory);
+            this.Controls.Add(this.btnAddCategory);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.lblCategories);
             this.Controls.Add(this.lwCategories);
             this.Controls.Add(this.lblEpisode);
             this.Controls.Add(this.lwEpisodes);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btnSavePodcast);
+            this.Controls.Add(this.btnAddPodcast);
+            this.Controls.Add(this.btnRemovePodcast);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.textBox1);
@@ -314,17 +314,17 @@ namespace Rss_reader
         private TextBox textBox1;
         private ComboBox comboBox1;
         private ComboBox comboBox2;
-        private Button button3;
-        private Button button1;
-        private Button button2;
+        private Button btnRemovePodcast;
+        private Button btnAddPodcast;
+        private Button btnSavePodcast;
         private ListView lwEpisodes;
         private Label lblEpisode;
         private ListView lwCategories;
         private Label lblCategories;
         private TextBox textBox2;
-        private Button button4;
-        private Button button5;
-        private Button button6;
+        private Button btnAddCategory;
+        private Button btnSaveCategory;
+        private Button btnRemoveCategory;
         private Label lblDescription;
         private TextBox tbDescription;
     }
