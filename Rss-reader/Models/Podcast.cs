@@ -8,11 +8,11 @@ namespace Models
     {
 
         public string Name { get; set; }
-        public UpdateFrequency UpdateFrequency { get; }
+        public UpdateFrequency UpdateFrequency { get; set; }
 
         public string Url { get; set; }
 
-        private Categories categorie;
+        //private Categories categorie;
 
         private List<Episode> episodes;
 
@@ -21,7 +21,10 @@ namespace Models
 
         public Podcast()
         {
-            
+            Name = "Kalles kaviar";
+            UpdateFrequency = UpdateFrequency.Fifteen;
+            Console.WriteLine(UpdateFrequency);
+            Url = @"file:///C:/Users/Lukas/AppData/Local/Temp/2519-1";
         }
 
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BL;
 
 namespace Rss_reader
 {
@@ -14,6 +15,9 @@ namespace Rss_reader
         [STAThread]
         static void Main()
         {
+            PodcastController controller = new PodcastController();
+            controller.CreatePodcast();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

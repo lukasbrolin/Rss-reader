@@ -4,9 +4,9 @@ using System.IO;
 using System.Xml.Serialization;
 using Models;
 
-namespace DataAccessLayer
+namespace DAL
 {
-    internal class DataManagerXML
+    internal class DataManager
     {
         public void Serialize<T>(List<T> podcasts)
         {
