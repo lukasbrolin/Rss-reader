@@ -18,8 +18,11 @@ namespace Rss_reader
             PodcastController controller = new PodcastController();
             controller.CreatePodcast();
 
+
+            
+               
+
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
 
             

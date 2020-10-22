@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DAL.Repositories;
 using Models;
 
@@ -17,6 +18,16 @@ namespace BL
         {
             Podcast newPodcast = new Podcast();
             podcastRepository.Create(newPodcast);
+        }
+
+        public List<Podcast> GetAll()
+        {
+            return podcastRepository.GetAll();
+        }
+
+        public IRepository<Podcast> GetRepopRepository()
+        {
+            return podcastRepository;
         }
     }
 }

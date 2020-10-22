@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Models;
 
 namespace DAL.Repositories
@@ -13,7 +14,8 @@ namespace DAL.Repositories
         {
             podcasts = new List<Podcast>();
             dataManager = new DataManager();
-            //podcasts = GetAll();
+            podcasts = GetAll();
+            
         }
 
         public void Create(Podcast podcast)
@@ -39,7 +41,9 @@ namespace DAL.Repositories
 
         public List<Podcast> GetAll()
         {
-            return new List<Podcast>();
+            List<Podcast> savedPodcasts = new List<Podcast>();
+            savedPodcasts = dataManager.Deserialize();
+            return savedPodcasts;
         }
     }
 }
