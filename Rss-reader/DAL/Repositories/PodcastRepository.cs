@@ -39,10 +39,17 @@ namespace DAL.Repositories
             dataManager.Serialize(podcasts);
         }
 
+        /*public List<Podcast> GetAll()
+        {
+            List<Podcast> savedPodcasts = new List<Podcast>();
+            savedPodcasts = dataManager.DeserializePodcasts();
+            return savedPodcasts;
+        }*/
+
         public List<Podcast> GetAll()
         {
             List<Podcast> savedPodcasts = new List<Podcast>();
-            savedPodcasts = dataManager.Deserialize();
+            savedPodcasts = dataManager.Deserialize(podcasts, nameof(Podcast));
             return savedPodcasts;
         }
     }

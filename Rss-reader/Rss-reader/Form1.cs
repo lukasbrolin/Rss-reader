@@ -17,22 +17,21 @@ namespace Rss_reader
         {
             InitializeComponent();
 
-            //dgwPodcasts.Rows.RemoveAt(0);
+            // TEST
             dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
             dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
             dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
             dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
             PodcastController controller = new PodcastController();
             var podcastList = controller.GetAll();
+
             Console.WriteLine(podcastList.Count);
             foreach (var p in podcastList)
             {
                 Console.WriteLine(p);
-                dgwPodcasts.Rows.Add(0, p.Name, p.UpdateFrequency, "Historia");
+                dgwPodcasts.Rows.Add(0, p.Name, "Every " +  p.UpdateFrequency + " seconds", "Historia");
             }
         }
-
-
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {

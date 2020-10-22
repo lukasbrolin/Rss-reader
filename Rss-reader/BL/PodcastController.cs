@@ -25,9 +25,5 @@ namespace BL
             return podcastRepository.GetAll();
         }
 
-        public IRepository<Podcast> GetRepopRepository()
-        {
-            return podcastRepository;
-        }
     }
 }

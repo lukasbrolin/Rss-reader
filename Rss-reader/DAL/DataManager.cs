@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using Models;
 
@@ -10,28 +11,21 @@ namespace DAL
     {
         public void Serialize<T>(List<T> podcasts)
         {
-
+            string xmlName = (podcasts.LastOrDefault().ToString().Split('.')[1]) + ".xml";
             XmlSerializer xmlSerializer = new XmlSerializer(podcasts.GetType());
-            using (FileStream outFile = new FileStream("Podcasts.xml", FileMode.Create,
+            using (FileStream outFile = new FileStream(xmlName, FileMode.Create,
                 FileAccess.Write))
             {
-
-                /* string x = cars[0].GetType().ToString();
-                string[] xy = x.Split('.');
-                Console.WriteLine(xy[1] + "s"); */
-
                 xmlSerializer.Serialize(outFile, podcasts);
             }
-
-
         }
 
-        public List<Podcast> Deserialize()
+        public List<Podcast> DeserializePodcasts()
         {
 
             List<Podcast> listOfPodcastsToBeReturned;
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Podcast>));
-            using (FileStream inFile = new FileStream("Podcasts.xml", FileMode.Open,
+            using (FileStream inFile = new FileStream("Podcast.xml", FileMode.Open,
                 FileAccess.Read))
             {
                 listOfPodcastsToBeReturned = (List<Podcast>)xmlSerializer.Deserialize(inFile);
@@ -41,19 +35,32 @@ namespace DAL
 
         }
 
-        public List<Categories> Deserialize<T>()
+        public List<Category> DeserializeCategories()
         {
 
-            List<Categories> listOfCarsToBeReturned;
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>));
-            using (FileStream inFile = new FileStream("Cars.xml", FileMode.Open,
+            List<Category> listOfCategoriesToBeReturned;
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Category>));
+            using (FileStream inFile = new FileStream("Category.xml", FileMode.Open,
                 FileAccess.Read))
             {
-                listOfCarsToBeReturned = (List<Categories>)xmlSerializer.Deserialize(inFile);
+                listOfCategoriesToBeReturned = (List<Category>)xmlSerializer.Deserialize(inFile);
             }
-            return listOfCarsToBeReturned;
+            return listOfCategoriesToBeReturned;
 
 
+        }
+
+        public List<T> Deserialize<T>(List<T> objectList, string value)
+        {
+            string xmlName = value + ".xml";
+            List<T> listOfObjectToBeReturned;
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>));
+            using (FileStream inFile = new FileStream(xmlName, FileMode.Open,
+                FileAccess.Read))
+            {
+                listOfObjectToBeReturned = (List<T>)xmlSerializer.Deserialize(inFile);
+            }
+            return listOfObjectToBeReturned;
         }
     }
 }

@@ -1,12 +1,12 @@
 ﻿namespace Models
 {
-    public class Categories
+    public class Category
     {
         public string Title { get; set; }
 
-        public Categories()
+        public Category()
         {
-            
+            Title = "Sport";
         }
     }
 }

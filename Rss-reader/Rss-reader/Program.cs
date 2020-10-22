@@ -18,13 +18,11 @@ namespace Rss_reader
             PodcastController controller = new PodcastController();
             controller.CreatePodcast();
 
-
-            
-               
+            CategoryController catcontroller = new CategoryController();
+            catcontroller.CreateCategory();
 
             Application.EnableVisualStyles();
             Application.Run(new Form1());
-
             
         }
     }
