@@ -1,28 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using DAL.Repositories;
 using Models;
 
 namespace BL
 {
-    public class CategoryController
+    public class CategoryController : Controller<Category>
     {
-        private IRepository<Category> categoryRepository;
 
-        public CategoryController()
+        public override void createRepository()
         {
-            categoryRepository = new CategoryRepository();
+            objectRepository = new CategoryRepository();
         }
 
         public void CreateCategory()
         {
             Category newCategory = new Category();
-            categoryRepository.Create(newCategory);
+            objectRepository.Create(newCategory);
         }
-
-        public List<Category> GetAll()
-        {
-            return categoryRepository.GetAll();
-        }
-
     }
 }

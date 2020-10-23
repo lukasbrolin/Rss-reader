@@ -1,29 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using DAL;
 using DAL.Repositories;
 using Models;
 
 namespace BL
 {
-    public class PodcastController
+    public class PodcastController : Controller<Podcast>
     {
-        private IRepository<Podcast> podcastRepository;
+        private UrlManager urlManager = new UrlManager();
 
-        public PodcastController()
+        public override void createRepository()
         {
-            podcastRepository = new PodcastRepository();
+            objectRepository = new PodcastRepository();
         }
 
-        public void CreatePodcast()
+        public void CreatePodcast(string name, UpdateFrequency updateFrequency, string url, string category)
         {
-            Podcast newPodcast = new Podcast();
-            podcastRepository.Create(newPodcast);
+            Category newCategory = new Category(category);
+            Podcast newPodcast = new Podcast(name, updateFrequency, url, newCategory, urlManager.GetTotalEpisodes(url), urlManager.GetEpisodes(url));
+            objectRepository.Create(newPodcast);
         }
-
-        public List<Podcast> GetAll()
-        {
-            return podcastRepository.GetAll();
-        }
-
     }
 }

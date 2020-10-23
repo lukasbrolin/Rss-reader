@@ -6,7 +6,12 @@
 
         public Category()
         {
-            Title = "Sport";
+            Title = "Nyheter";
+        }
+
+        public Category(string title)
+        {
+            this.Title = title;
         }
     }
 }

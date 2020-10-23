@@ -2,52 +2,24 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 using System.Xml.Serialization;
+using System.Xml.XPath;
 using Models;
 
 namespace DAL
 {
     internal class DataManager
     {
-        public void Serialize<T>(List<T> podcasts)
+        public void Serialize<T>(List<T> objects)
         {
-            string xmlName = (podcasts.LastOrDefault().ToString().Split('.')[1]) + ".xml";
-            XmlSerializer xmlSerializer = new XmlSerializer(podcasts.GetType());
+            string xmlName = (objects.LastOrDefault().ToString().Split('.')[1]) + ".xml";
+            XmlSerializer xmlSerializer = new XmlSerializer(objects.GetType());
             using (FileStream outFile = new FileStream(xmlName, FileMode.Create,
                 FileAccess.Write))
             {
-                xmlSerializer.Serialize(outFile, podcasts);
+                xmlSerializer.Serialize(outFile, objects);
             }
-        }
-
-        public List<Podcast> DeserializePodcasts()
-        {
-
-            List<Podcast> listOfPodcastsToBeReturned;
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Podcast>));
-            using (FileStream inFile = new FileStream("Podcast.xml", FileMode.Open,
-                FileAccess.Read))
-            {
-                listOfPodcastsToBeReturned = (List<Podcast>)xmlSerializer.Deserialize(inFile);
-            }
-            return listOfPodcastsToBeReturned;
-
-
-        }
-
-        public List<Category> DeserializeCategories()
-        {
-
-            List<Category> listOfCategoriesToBeReturned;
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Category>));
-            using (FileStream inFile = new FileStream("Category.xml", FileMode.Open,
-                FileAccess.Read))
-            {
-                listOfCategoriesToBeReturned = (List<Category>)xmlSerializer.Deserialize(inFile);
-            }
-            return listOfCategoriesToBeReturned;
-
-
         }
 
         public List<T> Deserialize<T>(List<T> objectList, string value)
@@ -61,6 +33,35 @@ namespace DAL
                 listOfObjectToBeReturned = (List<T>)xmlSerializer.Deserialize(inFile);
             }
             return listOfObjectToBeReturned;
+        }
+    }
+
+    public class UrlManager
+    {
+        public XDocument urlManager = new XDocument();
+
+
+        public List<Episode> GetEpisodes(string url)
+        {
+            List<Episode> episodeList = new List<Episode>();
+            urlManager = XDocument.Load(url);
+            episodeList = (from item in urlManager.Descendants("item")
+                select new Episode
+                {
+                    Title = item.Element("title").Value,
+                    Description = item.Element("description").Value
+                }).ToList();
+            return episodeList;
+        }
+
+        public int GetTotalEpisodes(string url)
+        {
+            urlManager = XDocument.Load(url);
+            var items = from e in urlManager.Descendants("item") 
+                                        select new { title = e.Element("title")};
+            
+            int totalEpisodes = items.Count();
+            return totalEpisodes;
         }
     }
 }

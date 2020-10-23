@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BL;
+using Models;
 
 namespace Rss_reader
 {
@@ -15,6 +16,7 @@ namespace Rss_reader
     {
         public Form1()
         {
+            PodcastController controller = new PodcastController();
             InitializeComponent();
 
             // TEST
@@ -22,9 +24,12 @@ namespace Rss_reader
             dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
             dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
             dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
-            PodcastController controller = new PodcastController();
-            var podcastList = controller.GetAll();
+            
+            
 
+            controller.CreatePodcast("Svt Nyheter", UpdateFrequency.Fifteen, "https://www.svt.se/nyheter/rss.xml", "Nyheter" );
+
+            var podcastList = controller.GetAll();
             Console.WriteLine(podcastList.Count);
             foreach (var p in podcastList)
             {

@@ -12,7 +12,9 @@ namespace Models
 
         public string Url { get; set; }
 
-        //private Categories categorie;
+        private Category category;
+
+        private int TotalEpisodes { get; set; }
 
         private List<Episode> episodes;
 
@@ -21,11 +23,23 @@ namespace Models
 
         public Podcast()
         {
-            Name = "Kalles kaviar";
-            UpdateFrequency = UpdateFrequency.Fifteen;
-            Console.WriteLine(UpdateFrequency);
-            Url = @"file:///C:/Users/Lukas/AppData/Local/Temp/2519-1";
+            this.Name = "";
+            UpdateFrequency = UpdateFrequency;
+            this.Url = "";
+            this.category = category;
+            this.TotalEpisodes = TotalEpisodes;
+            this.episodes = episodes;
         }
 
+        public Podcast(string name, UpdateFrequency updateFrequency, string url, Category category, int totalEpisodes,
+            List<Episode> episodes)
+        {
+            this.Name = name;
+            this.UpdateFrequency = updateFrequency;
+            this.Url = url;
+            this.category = category;
+            this.TotalEpisodes = totalEpisodes;
+            this.episodes = episodes;
+        }
     }
 }

@@ -15,8 +15,8 @@ namespace Rss_reader
         [STAThread]
         static void Main()
         {
-            PodcastController controller = new PodcastController();
-            controller.CreatePodcast();
+            /*PodcastController controller = new PodcastController();
+            controller.CreatePodcast();*/
 
             CategoryController catcontroller = new CategoryController();
             catcontroller.CreateCategory();
