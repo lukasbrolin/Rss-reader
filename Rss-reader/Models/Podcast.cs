@@ -12,11 +12,11 @@ namespace Models
 
         public string Url { get; set; }
 
-        private Category category;
+        public Category category;
 
-        private int TotalEpisodes { get; set; }
+        public int TotalEpisodes { get; set; }
 
-        private List<Episode> episodes;
+        public List<Episode> episodes;
 
 
 

@@ -28,13 +28,13 @@ namespace Rss_reader
             
 
             controller.CreatePodcast("Svt Nyheter", UpdateFrequency.Fifteen, "https://www.svt.se/nyheter/rss.xml", "Nyheter" );
-
+            controller.CreatePodcast("The Daily", UpdateFrequency.Sixty, "http://rss.art19.com/the-daily", "Nyheter");
             var podcastList = controller.GetAll();
             Console.WriteLine(podcastList.Count);
             foreach (var p in podcastList)
             {
                 Console.WriteLine(p);
-                dgwPodcasts.Rows.Add(0, p.Name, "Every " +  p.UpdateFrequency + " seconds", "Historia");
+                dgwPodcasts.Rows.Add(p.TotalEpisodes, p.Name, "Every " +  p.UpdateFrequency + " seconds", "Historia");
             }
         }
 
