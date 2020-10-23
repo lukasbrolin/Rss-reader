@@ -8,6 +8,7 @@ namespace DAL.Repositories
         internal List<T> objectList;
 
 
+
         public Repository()
         {
             dataManager = new DataManager();
@@ -17,6 +18,7 @@ namespace DAL.Repositories
 
         public virtual void Create(T value)
         {
+            
             objectList.Add(value);
             SaveChanges();
         }
