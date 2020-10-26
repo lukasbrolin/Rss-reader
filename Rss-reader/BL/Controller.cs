@@ -5,7 +5,8 @@ namespace BL
 {
     public abstract class Controller<T> where T : class
     {
-        internal IRepository<T> objectRepository;
+        public IRepository<T> objectRepository;
+        internal static CategoryRepository categoryRepository = new CategoryRepository();
 
         public Controller()
         {
@@ -22,4 +23,7 @@ namespace BL
         }
 
     }
+
+    //Plymorph
+    //
 }

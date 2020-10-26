@@ -12,30 +12,33 @@ namespace DAL.Repositories
         public Repository()
         {
             dataManager = new DataManager();
-            objectList = GetAll();
+
 
         }
 
         public virtual void Create(T value)
         {
-            
             objectList.Add(value);
             SaveChanges();
         }
 
-        public void Delete(int index)
+        public virtual void Delete(string value)
         {
 
         }
 
-        public void Update(int index, T value)
+        public virtual void UpdateCategory(string valueBefore, string value)
         {
 
         }
 
-        public void SaveChanges()
+        public virtual void Update(string valueBefore, string value)
         {
-            dataManager.Serialize(objectList);
+
+        }
+
+        public virtual void SaveChanges()
+        {
         }
 
         public virtual List<T> GetAll()

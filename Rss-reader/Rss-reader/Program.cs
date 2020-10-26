@@ -16,20 +16,28 @@ namespace Rss_reader
         [STAThread]
         static void Main()
         {
-            /*PodcastController controller = new PodcastController();
-            controller.CreatePodcast();*/
 
-            string[] folders = System.IO.Directory.GetDirectories(@"..\Debug\");
+        //    string[] XMLfiles = Directory.GetFiles(@"..\Debug\", "*.XML");
+        //    foreach(string file in XMLfiles)
+        //{
+        //    Console.WriteLine(Path.GetFileName(file));
+        //}
 
-            foreach (var d in System.IO.Directory.GetDirectories(@"..\Debug\"))
-            {
-                var dir = new DirectoryInfo(d);
-                var dirName = dir.Name;
-                Console.WriteLine(dirName);
-            }
-            Console.WriteLine(folders[0]);
-            CategoryController catcontroller = new CategoryController();
-            catcontroller.CreateCategory();
+            ;
+
+    /*PodcastController controller = new PodcastController();
+    controller.CreatePodcast();*/
+
+    //string[] folders = System.IO.Directory.GetDirectories(@"..\Debug\");
+
+    //        foreach (var d in System.IO.Directory.GetDirectories(@"..\Debug\"))
+    //        {
+    //            var dir = new DirectoryInfo(d);
+    //            var dirName = dir.Name;
+    //            Console.WriteLine(dirName);
+    //        }
+    //        Console.WriteLine(folders[0]);
+            //catcontroller.CreateCategory();
 
             Application.EnableVisualStyles();
             Application.Run(new Form1());
