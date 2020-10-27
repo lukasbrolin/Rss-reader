@@ -35,9 +35,15 @@ namespace BL
             PodcastRepository.Create(newPodcast);
         }
 
+
         public List<Podcast> GetAll()
         {
             return PodcastRepository.GetAll();
+        }
+
+        public List<Category> GetAllCategories()
+        {
+            return CategoryRepository.GetAll();
         }
     }
 }
