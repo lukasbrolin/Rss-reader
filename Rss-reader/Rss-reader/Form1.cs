@@ -14,9 +14,9 @@ namespace Rss_reader
 {
     public partial class Form1 : Form
     {
+        public Controller controller = new Controller();
         public Form1()
         {
-            PodcastController controller = new PodcastController();
             InitializeComponent();
 
             // TEST
@@ -42,6 +42,11 @@ namespace Rss_reader
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnAddPodcast_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

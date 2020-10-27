@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Models;
 
 namespace DAL.Repositories
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository
     {
+        void UpdateCategory(string name, string valueBefore, string value);
+        void UpdateName(string valueBefore, string value);
 
-        void Create(T entity);
-        void Delete(string value);
-        void Update(string valueBefore, string value);
-        void SaveChanges();
-        List<T> GetAll();
+        void UpdateFrequency(string name, UpdateFrequency newFrequency);
 
     }
 }

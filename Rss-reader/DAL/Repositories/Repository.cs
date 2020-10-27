@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DAL.Repositories
 {
@@ -7,13 +8,9 @@ namespace DAL.Repositories
         internal DataManager dataManager;
         internal List<T> objectList;
 
-
-
         public Repository()
         {
             dataManager = new DataManager();
-
-
         }
 
         public virtual void Create(T value)
@@ -29,12 +26,6 @@ namespace DAL.Repositories
 
         public virtual void UpdateCategory(string valueBefore, string value)
         {
-
-        }
-
-        public virtual void Update(string valueBefore, string value)
-        {
-
         }
 
         public virtual void SaveChanges()
@@ -45,5 +36,7 @@ namespace DAL.Repositories
         {
             return new List<T>();
         }
+
+        
     }
 }

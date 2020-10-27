@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Models;
 
 namespace DAL.Repositories
 {
-    public class CategoryRepository : Repository<Category>, IEnumerable
+    public class CategoryRepository : Repository<Category>
     {
         public event EventHandler<CategoryEvent> onCategoryDelete; 
         public CategoryRepository()
@@ -14,7 +14,7 @@ namespace DAL.Repositories
             objectList = GetAll();
         }
 
-        public override void Update(string valueBefore, string value)
+        public override void UpdateCategory(string valueBefore, string value)
         {
             foreach (var c in objectList)
             {

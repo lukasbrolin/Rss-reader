@@ -8,21 +8,21 @@ using Models;
 
 namespace DAL.Repositories
 {
-    public class PodcastRepository : Repository<Podcast>
+    public class PodcastRepository : Repository<Podcast>, IRepository
     {
 
-        public CategoryRepository CatRepository;
+        public CategoryRepository CategoryRepository;
 
         public PodcastRepository(CategoryRepository catRepository)
         {
-            this.CatRepository = catRepository;
+            this.CategoryRepository = catRepository;
             objectList = new List<Podcast>();
             objectList = GetAll();
         }
 
         public override void SaveChanges()
         {
-            foreach (var c in CatRepository.objectList)
+            foreach (var c in CategoryRepository.objectList)
             {
                 List<Podcast> temporaryList = new List<Podcast>();
                 var query = from podcast in objectList where podcast.category.Title.Equals(c.Title) select podcast;
@@ -37,7 +37,7 @@ namespace DAL.Repositories
 
         public override List<Podcast> GetAll()
         {
-            foreach (var c in CatRepository.objectList)
+            foreach (var c in CategoryRepository.objectList)
             {
                 List<Podcast> temporaryList = GetPodcastsByCategoyTitle(c.Title);
                 for (int i = 0; i < temporaryList.Count; i++)
@@ -59,20 +59,45 @@ namespace DAL.Repositories
         }
 
 
-        public void UpdateForeach(string valueBefore, string value)
+        public void UpdateCategory(string name,string valueBefore, string value)
         {
-            
+            foreach (var c in CategoryRepository.objectList)
+            { 
+                if (c.Title.Equals(valueBefore))
+                {
+                    GetPodcast(name).category = c;
+                }
+            }
+            SaveChanges();
         }
 
-        public override void UpdateCategory(string valueBefore, string value)
+        public void UpdateName(string valueBefore, string value)
         {
-            Console.WriteLine();
+            GetPodcast(valueBefore).Name = value;
+            SaveChanges();
+        }
+
+        public void UpdateFrequency(string name, UpdateFrequency newFrequency)
+        {
+            GetPodcast(name).UpdateFrequency = newFrequency;
+            SaveChanges();
+        }
+        private Podcast GetPodcast(string value)
+        {
+            foreach (var p in objectList)
+            {
+                if (p.Name.Equals(value))
+                {
+                    return p;
+                }
+            }
+            return null;
         }
 
         public override void Delete(string value)
         {
             bool match = false;
-            foreach (var c in CatRepository.objectList)
+            foreach (var c in CategoryRepository.objectList)
             {
                 if (!match)
                 {
@@ -91,13 +116,13 @@ namespace DAL.Repositories
             }
         }
 
-        public void DeleteByCategory(string value)
+        private void DeleteByCategory(string value)
         {
             objectList.RemoveAll(p => p.category.Equals(value));
             SaveChanges();
         }
 
-        public void DeleteByName(string value)
+        private void DeleteByName(string value)
         {
             objectList.RemoveAll(p => p.Name.Equals(value));
             SaveChanges();

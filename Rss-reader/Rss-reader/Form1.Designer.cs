@@ -198,6 +198,7 @@ namespace Rss_reader
             this.btnAddPodcast.TabIndex = 10;
             this.btnAddPodcast.Text = "Lägg till";
             this.btnAddPodcast.UseVisualStyleBackColor = true;
+            this.btnAddPodcast.Click += new System.EventHandler(this.btnAddPodcast_Click);
             // 
             // btnSavePodcast
             // 

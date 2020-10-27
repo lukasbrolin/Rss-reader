@@ -1,29 +1,43 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using DAL;
 using DAL.Repositories;
+using Models;
 
 namespace BL
 {
-    public abstract class Controller<T> where T : class
+    public class Controller : IController<Podcast>
     {
-        public IRepository<T> objectRepository;
-        internal static CategoryRepository categoryRepository = new CategoryRepository();
+        private UrlManager _urlManager;
+        public CategoryRepository CategoryRepository;
+        public PodcastRepository PodcastRepository;
+        
 
         public Controller()
         {
-            createRepository();
+            _urlManager = new UrlManager();
+            CategoryRepository = new CategoryRepository();
+            PodcastRepository = new PodcastRepository(CategoryRepository);
+            CategoryRepository.onCategoryDelete += this.onCategoryDelete;
         }
 
-        public virtual void createRepository()
+        private void onCategoryDelete(object sender, CategoryEvent e)
         {
+            PodcastRepository.Delete(e.Title);
+            PodcastRepository.SaveChanges();
+            PodcastRepository.GetAll();
         }
 
-        public List<T> GetAll()
+
+        public void CreatePodcast(string name, UpdateFrequency updateFrequency, string url, Category category)
         {
-            return objectRepository.GetAll();
+            Podcast newPodcast = new Podcast(name, updateFrequency, url, category, _urlManager.GetTotalEpisodes(url), _urlManager.GetEpisodes(url));
+            PodcastRepository.Create(newPodcast);
         }
 
+        public List<Podcast> GetAll()
+        {
+            return PodcastRepository.GetAll();
+        }
     }
-
-    //Plymorph
-    //
 }
