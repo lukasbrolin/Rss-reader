@@ -25,11 +25,7 @@ namespace Rss_reader
             dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
             dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
 
-            Episode e = controller.GetPodcastEpisode("The Daily", "Thursday, Feb. 2, 2017");
-            Console.WriteLine(e.Title);
-            Console.WriteLine(e.Description);
-            Console.WriteLine(e.Length);
-            
+
 
             //controller.CreatePodcast("Svt Nyheter", UpdateFrequency.Fifteen, "https://www.svt.se/nyheter/rss.xml", "Nyheter" );
             //controller.CreatePodcast("The Daily", UpdateFrequency.Sixty, "http://rss.art19.com/the-daily", "Nyheter");
@@ -38,9 +34,9 @@ namespace Rss_reader
             foreach (var p in podcastList)
             {
                 Console.WriteLine(p);
-                dgwPodcasts.Rows.Add(p.TotalEpisodes, p.Name, "Every " +  p.UpdateFrequency + " seconds", p.category.Title);
+                dgwPodcasts.Rows.Add(p.TotalEpisodes, p.Name, "Every " + p.UpdateFrequency + " seconds", p.category.Title);
             }
-            
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -50,7 +46,105 @@ namespace Rss_reader
 
         private void btnAddPodcast_Click(object sender, EventArgs e)
         {
+            //controller.CreatePodcast(tbName.Text, cbUpdateFrequency.SelectedItem, tbUrl.Text, cbCategory.SelectedItem);
+        }
+
+        private void dgwPodcasts_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int chosenPodcastIndex = 0;
+            lwEpisodes.Items.Clear();
+
+
+
+            int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected);
+            chosenPodcastIndex = 0;
+
+            string name = dgwPodcasts.SelectedRows[chosenPodcastIndex].Cells[1].Value.ToString();
+            lblEpisode.Text = name;
+
+            Controller controller = new Controller();
+            var podcastList = controller.GetAll();
+
+
+
+            foreach (var p in podcastList)
+            {
+                string podName = p.Name;
+                if (podName == name)
+                {
+
+
+
+                    var episodeList = p.episodes;
+                    foreach (var j in episodeList)
+                    {
+                        lwEpisodes.Items.Add(j.Title);
+                    }
+                }
+            }
+
+
+        }
+
+        private void lwEpisodes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            String text;
+
+            text = lwEpisodes.SelectedItems[0].Text;
+            lblDescription.Text = text;
+            Controller controller = new Controller();
+
+
+            var podcastList = controller.GetAll();
+
+           
+
+            foreach (var p in podcastList)
+            {
+               
+
+                    var episodeList = p.episodes;
+                    foreach (var j in episodeList)
+                    {
+                    if (j.Title == text) { 
+                        tbDescription.Text=j.Description;
+                        break;
+                    }
+                    }
+                
+            }
             
+        }
+
+        private void btnAddCategory_Click(object sender, EventArgs e)
+        {
+            string newcat = tbCategory.Text;
+
+           
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            var catetgory = controller.GetAllCategories();
+            foreach (var cat in catetgory) {
+                cbCategory.Items.Add(cat.Title);
+            }
+        }
+
+        private void cbCategory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbUpdateFrequency_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+
+            foreach (var up in Enum.GetValues(typeof(UpdateFrequency)))
+            {
+                cbUpdateFrequency.Items.Add(up.ToString());
+                    }
         }
     }
 }
