@@ -82,7 +82,7 @@ namespace DAL.Repositories
             GetPodcast(name).UpdateFrequency = newFrequency;
             SaveChanges();
         }
-        private Podcast GetPodcast(string value)
+        public Podcast GetPodcast(string value)
         {
             foreach (var p in objectList)
             {

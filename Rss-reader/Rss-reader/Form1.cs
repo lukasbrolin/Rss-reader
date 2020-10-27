@@ -24,7 +24,11 @@ namespace Rss_reader
             dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
             dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
             dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
-            
+
+            Episode e = controller.GetPodcastEpisode("The Daily", "Thursday, Feb. 2, 2017");
+            Console.WriteLine(e.Title);
+            Console.WriteLine(e.Description);
+            Console.WriteLine(e.Length);
             
 
             //controller.CreatePodcast("Svt Nyheter", UpdateFrequency.Fifteen, "https://www.svt.se/nyheter/rss.xml", "Nyheter" );
