@@ -1,4 +1,6 @@
-﻿namespace Models
+﻿using System.Collections.Generic;
+
+namespace Models
 {
     public class Category
     {
@@ -6,7 +8,6 @@
 
         public Category()
         {
-            Title = "Nyheter";
         }
 
         public Category(string title)

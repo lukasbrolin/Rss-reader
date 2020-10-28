@@ -26,7 +26,8 @@ namespace Rss_reader
             dgwPodcasts.Rows.Add("1", "n", "resdtfgy", "GVHJ,");
 
 
-
+            controller.CreateCategory("Nyheter");
+            controller.CreatePodcast("The Daily", UpdateFrequency.Thirty, "http://rss.art19.com/the-daily", controller.GetCategoryByName("Nyheter"));
             //controller.CreatePodcast("Svt Nyheter", UpdateFrequency.Fifteen, "https://www.svt.se/nyheter/rss.xml", "Nyheter" );
             //controller.CreatePodcast("The Daily", UpdateFrequency.Sixty, "http://rss.art19.com/the-daily", "Nyheter");
             var podcastList = controller.GetAll();

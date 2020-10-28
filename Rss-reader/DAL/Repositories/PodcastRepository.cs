@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net.Sockets;
-using System.Security.Cryptography.X509Certificates;
 using Models;
 
 namespace DAL.Repositories
@@ -37,25 +34,34 @@ namespace DAL.Repositories
 
         public override List<Podcast> GetAll()
         {
-            foreach (var c in CategoryRepository.objectList)
+            try
             {
-                List<Podcast> temporaryList = GetPodcastsByCategoyTitle(c.Title);
-                for (int i = 0; i < temporaryList.Count; i++)
+                foreach (var c in CategoryRepository.objectList)
                 {
-                    temporaryList[i].category = c;
+                    List<Podcast> temporaryList = GetPodcastsByCategoyTitle(c.Title);
+                    for (int i = 0; i < temporaryList.Count; i++)
+                    {
+                        temporaryList[i].category = c;
+                    }
+
+                    if (objectList == null)
+                    {
+                        objectList = temporaryList;
+                    }
+                    else
+                    {
+                        objectList.AddRange(temporaryList);
+                    }
+
                 }
 
-                if (objectList == null)
-                {
-                    objectList = temporaryList;
-                }
-                else
-                {
-                    objectList.AddRange(temporaryList);
-                }
-                
+                return objectList;
             }
-            return objectList;
+            catch (NullReferenceException e)
+            {
+                Console.WriteLine("Var god lägg till en podcast");
+                return null;
+            }
         }
 
 
@@ -97,6 +103,7 @@ namespace DAL.Repositories
         public override void Delete(string value)
         {
             bool match = false;
+
             foreach (var c in CategoryRepository.objectList)
             {
                 if (!match)
@@ -132,7 +139,7 @@ namespace DAL.Repositories
         {
             name += ".xml";
             List<Podcast> savedPodcasts = new List<Podcast>();
-            savedPodcasts = dataManager.Deserialize<List<Podcast>>(name);
+             savedPodcasts = dataManager.Deserialize<List<Podcast>>(name);
             return savedPodcasts;
         }
     }

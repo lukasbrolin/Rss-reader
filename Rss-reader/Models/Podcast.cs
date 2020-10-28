@@ -10,6 +10,8 @@ namespace Models
         public string Name { get; set; }
         public UpdateFrequency UpdateFrequency { get; set; }
 
+        public DateTime NextUpdate { get; set; }
+
         public string Url { get; set; }
 
         public Category category;
@@ -29,6 +31,7 @@ namespace Models
             this.category = category;
             this.TotalEpisodes = TotalEpisodes;
             this.episodes = episodes;
+            
         }
 
         public Podcast(string name, UpdateFrequency updateFrequency, string url, Category category, int totalEpisodes,
@@ -40,6 +43,21 @@ namespace Models
             this.category = category;
             this.TotalEpisodes = totalEpisodes;
             this.episodes = episodes;
+            Update();
+        }
+
+        public bool NeedsUpdate
+        {
+            get
+            {
+                return NextUpdate <= DateTime.Now;
+            }
+        }
+
+        public void Update()
+        {
+            NextUpdate = DateTime.Now.AddSeconds((double) UpdateFrequency);
+            Console.WriteLine(((double)UpdateFrequency).GetType());
         }
     }
 }
