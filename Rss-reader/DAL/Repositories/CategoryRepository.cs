@@ -23,6 +23,9 @@ namespace DAL.Repositories
                     c.Title = value;
                 }
             }
+            string valueBeforePath = @"..\Debug\" + valueBefore + ".xml";
+            string valuePath = @"..\Debug\" + value + ".xml";
+            dataManager.SerializeRename(valueBeforePath, valuePath);
             SaveChanges();
         }
         public List<Category> GetList

@@ -35,6 +35,11 @@ namespace DAL
 
         }
 
+        public void SerializeRename(string valueBefore, string value)
+        {
+            File.Move(valueBefore, value);
+        }
+
         public void SerializeDelete(string c)
         {
             File.Delete(c);

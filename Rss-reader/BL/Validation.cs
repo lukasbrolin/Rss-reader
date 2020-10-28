@@ -1,5 +1,7 @@
 ﻿using DAL;
 using DAL.Repositories;
+using Models;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace BL
@@ -17,9 +19,9 @@ namespace BL
             return true;
         }
 
-        public static bool NameIsUnique(TextBox name, PodcastRepository podcastRepository)
+        public static bool NameIsUnique(TextBox name, List<Podcast> podcastList)
         {
-            foreach (var podcast in podcastRepository.GetAll())
+            foreach (var podcast in podcastList)
             {
                 if (podcast.Name == name.Text)
                 {
@@ -30,9 +32,9 @@ namespace BL
             return true;
         }
 
-        public static bool CategoryIsUnique(TextBox categoryTextBox, CategoryRepository categoryRepository)
+        public static bool CategoryIsUnique(TextBox categoryTextBox, List<Category> categoryList)
         {
-            foreach (var category in categoryRepository.GetAll())
+            foreach (var category in categoryList)
             {
                 if (categoryTextBox.Text == category.Title)
                 {
@@ -43,9 +45,9 @@ namespace BL
             return true;
         }
 
-        public static bool UrlIsUnique(TextBox urlTextBox, PodcastRepository podcastRepository)
+        public static bool UrlIsUnique(TextBox urlTextBox, List<Podcast> podcastList)
         {
-            foreach (var podcast in podcastRepository.GetAll())
+            foreach (var podcast in podcastList)
             {
                 if (urlTextBox.Text == podcast.Url)
                 {
@@ -93,40 +95,46 @@ namespace BL
             }
             return true;
         }
+        public static bool listBoxItemSelected(ListBox listBox, string dataTyp)
+        {
+            if (listBox.SelectedItem == null)
+            {
+                MessageBox.Show("En " + dataTyp + " måste väljas!");
+                return false;
+            }
+            return true;
+        }
 
 
         // Metoderna nedan grupperar valideringsmetoderna ovan i metoder som utför flera valideringar på en gång.  
-        public static bool ValidateNewName(TextBox name, PodcastRepository podcastRepository)
+        public static bool ValidateNewName(TextBox name, List<Podcast> podcastList)
         {
             if (TextIsFilled(name, "Namnet"))
             {
-                if (NameIsUnique(name, podcastRepository))
+                if (NameIsUnique(name, podcastList))
                 {
                     return true;
                 }
             }
             return false;
         }
-        public static bool ValidateNewUrl(TextBox url, PodcastRepository podcastRepository)
+        public static bool ValidateNewUrl(TextBox url, List<Podcast> podcastList)
         {
             if (TextIsFilled(url, "URL:en"))
             {
-                if (UrlIsUnique(url, podcastRepository))
+                if (UrlIsUnique(url, podcastList))
                 {
-                    if (UrlIsValid(url))
-                    {
-                        return true;
-                    }
+                    return true;   
                 }
             }
             return false;
         }
 
-        public static bool ValidateChangedUrl(TextBox url, PodcastRepository podcastRepository, string oldPodcastUrl)
+        public static bool ValidateChangedUrl(TextBox url, List<Podcast> podcastList, string oldPodcastUrl)
         {
             if(TextIsFilled(url, "URL:en"))
             {
-                if (UrlIsUnchanged(url, oldPodcastUrl) || UrlIsUnique(url, podcastRepository))
+                if (UrlIsUnchanged(url, oldPodcastUrl) || UrlIsUnique(url, podcastList))
                 {
                     if (UrlIsValid(url))
                     {
@@ -137,11 +145,11 @@ namespace BL
             return false;
         }
 
-        public static bool ValidateChangedName(TextBox name, PodcastRepository podcastRepository, string oldPodcastName)
+        public static bool ValidateChangedName(TextBox name, List<Podcast> podcastList, string oldPodcastName)
         {
             if(TextIsFilled(name, "Namnet"))
             {
-                if(NameIsUnchanged(name, oldPodcastName) || NameIsUnique(name, podcastRepository))
+                if(NameIsUnchanged(name, oldPodcastName) || NameIsUnique(name, podcastList))
                 {
                     return true;
                 }
@@ -150,11 +158,11 @@ namespace BL
         }
 
         //Metoderna nedan är de färdigställda metoderna som kan användas för validering!
-        public static bool ValidateNewOrChangedCategory(TextBox name, CategoryRepository categoryRepository)
+        public static bool ValidateNewCategory(TextBox name, List<Category> categoryList)
         {
             if (TextIsFilled(name, "Kategorin"))
             {
-                if(CategoryIsUnique(name, categoryRepository))
+                if(CategoryIsUnique(name, categoryList))
                 {
                     return true;
                 }
@@ -162,11 +170,27 @@ namespace BL
                 return false;
         }
 
-        public static bool ValidateNewPodcast(TextBox name, TextBox url, ComboBox category, ComboBox updateFrequency, PodcastRepository podcastRepository)
+        public static bool ValidateChangedCategory(TextBox name, ListBox category, List<Category> categoryList)
         {
-            if (ValidateNewName(name, podcastRepository))
+            if (TextIsFilled(name, "Kategorin"))
             {
-                if (ValidateNewUrl(url, podcastRepository))
+                if (listBoxItemSelected(category, "kategori"))
+                {
+                    if (CategoryIsUnique(name, categoryList))
+                    {
+                        return true;
+                    }
+                }
+                
+            }
+            return false;
+        }
+
+        public static bool ValidateNewPodcast(TextBox name, TextBox url, ComboBox category, ComboBox updateFrequency, List<Podcast> podcastList)
+        {
+            if (ValidateNewName(name, podcastList))
+            {
+                if (ValidateNewUrl(url, podcastList))
                 {
                     if (comboBoxItemSelected(updateFrequency, "uppdateringsfrekvens"))
                     {
@@ -180,11 +204,11 @@ namespace BL
             return false;
         }
 
-        public static bool ValidateChangedPodcast(TextBox name, TextBox url, PodcastRepository podcastRepository, ComboBox category, ComboBox updateFrequency, string oldPodcastName, string oldPodcastUrl)
+        public static bool ValidateChangedPodcast(TextBox name, TextBox url, List<Podcast> podcastList, ComboBox category, ComboBox updateFrequency, string oldPodcastName, string oldPodcastUrl)
         {
-            if (ValidateChangedName(name, podcastRepository, oldPodcastName))
+            if (ValidateChangedName(name, podcastList, oldPodcastName))
             {
-                if(ValidateChangedUrl(url, podcastRepository, oldPodcastUrl))
+                if(ValidateChangedUrl(url, podcastList, oldPodcastUrl))
                 {
                     if(comboBoxItemSelected(updateFrequency, "uppdateringsfrekvens"))
                     {

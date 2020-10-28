@@ -39,9 +39,9 @@ namespace Rss_reader
         private void FillCategories()
         {
             lbCategories.Items.Clear();
-            //cbCategory.Refresh();
+            cbCategory.DataSource = null;
+            cbCategory.Items.Clear();
 
-            
             cbCategory.DataSource = controller.GetListCategories();
             cbCategory.DisplayMember = "Title";
 
@@ -64,9 +64,13 @@ namespace Rss_reader
 
         private void btnAddPodcast_Click(object sender, EventArgs e)
         {
-            controller.CreatePodcast(tbName.Text, (UpdateFrequency)cbUpdateFrequency.SelectedValue, tbUrl.Text, (Category)cbCategory.SelectedValue);
-            dgwPodcasts.Rows.Clear();
-            FilldgwPodcast();
+            if (Validation.ValidateNewPodcast(tbName, tbUrl, cbCategory, cbUpdateFrequency, controller.GetListPodcasts()))
+            {
+                controller.CreatePodcast(tbName.Text, (UpdateFrequency)cbUpdateFrequency.SelectedValue, tbUrl.Text, (Category)cbCategory.SelectedValue);
+                dgwPodcasts.Rows.Clear();
+                FilldgwPodcast();
+            }
+            
         }
 
         private void dgwPodcasts_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -142,8 +146,6 @@ namespace Rss_reader
                 if (podName == name)
                 {
 
-
-
                     var episodeList = p.episodes;
                     foreach (var c in episodeList)
                     {
@@ -157,10 +159,29 @@ namespace Rss_reader
 
         private void btnAddCategory_Click(object sender, EventArgs e)
         {
-            string newcat = tbCategory.Text;
-            controller.CreateCategory(newcat);
+            if (Validation.ValidateNewCategory(tbCategory, controller.GetListCategories()))
+            {
+                string newcat = tbCategory.Text;
+                controller.CreateCategory(newcat);
+
+                FillCategories();
+            }
             
-            FillCategories();
+
+        }
+
+        private void btnSaveCategory_Click(object sender, EventArgs e)
+        {
+            if (Validation.ValidateChangedCategory(tbCategory, lbCategories, controller.GetListCategories()))
+            {
+                string oldCategory = lbCategories.SelectedItem.ToString();
+                string newCategory = tbCategory.Text;
+                controller.ChangeCategory(oldCategory, newCategory);
+                
+
+
+                FillCategories();
+            }
         }
     }
 }
