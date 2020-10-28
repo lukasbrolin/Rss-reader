@@ -6,7 +6,8 @@ namespace DAL.Repositories
     public abstract class Repository<T> : IRepository<T> where T : class
     {
         internal DataManager dataManager;
-        internal List<T> objectList;
+        public List<T> objectList { get; set; }
+
 
         public Repository()
         {
