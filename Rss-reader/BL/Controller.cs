@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
+using System.Timers;
 using DAL;
 using DAL.Repositories;
 using Models;
@@ -13,10 +14,13 @@ namespace BL
         private UrlManager _urlManager;
         public CategoryRepository CategoryRepository;
         public PodcastRepository PodcastRepository;
+        private Timer timer = new Timer(15000);
         
 
         public Controller()
         {
+            timer.Elapsed += UpdatePodcast;
+            timer.Start();
             _urlManager = new UrlManager();
             CategoryRepository = new CategoryRepository();
             PodcastRepository = new PodcastRepository(CategoryRepository);
@@ -30,6 +34,26 @@ namespace BL
             PodcastRepository.GetAll();
         }
 
+        public void UpdatePodcast(object sender, EventArgs e)
+        {
+            foreach (var p in PodcastRepository.objectList.ToList())
+            {
+                if (p.NeedsUpdate)
+                {
+                    p.Update();
+                    if (!p.episodes[0].Title.Equals(_urlManager.GetEpisodes(p.Url)[0].Title))
+                    {
+                        p.episodes = _urlManager.GetEpisodes(p.Url);
+                        p.TotalEpisodes = _urlManager.GetTotalEpisodes(p.Url);
+                        Console.WriteLine(p.Name + " Have added Episodes");
+                    }
+                    
+                    Console.WriteLine(p.Name + " WAS UPDATED");
+                }
+            }
+            PodcastRepository.SaveChanges();
+            PodcastRepository.GetAll();
+        }
 
         public void CreatePodcast(string name, UpdateFrequency updateFrequency, string url, Category category)
         {
@@ -110,6 +134,12 @@ namespace BL
         public List<Category> GetAllCategories()
         {
             return CategoryRepository.GetAll();
+        }
+
+        public Category GetCategoryByName(string value)
+        {
+            
+            return CategoryRepository.objectList.Where(c => c.Title.Equals(value)).Select(c => c).FirstOrDefault();
         }
     }
 }

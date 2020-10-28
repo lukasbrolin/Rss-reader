@@ -44,20 +44,24 @@ namespace DAL.Repositories
 
         public override List<Category> GetAll()
         {
-            List<Category> savedCategories = new List<Category>();
-            string[] XMLfiles = Directory.GetFiles(@"..\Debug\", "*.XML");
-            foreach (string file in XMLfiles)
+            try
             {
-                savedCategories.Add(new Category(Path.GetFileName(file).Split('.')[0]));
+                List<Category> savedCategories = new List<Category>();
+                string[] XMLfiles = Directory.GetFiles(@"..\Debug\", "*.XML");
+                foreach (string file in XMLfiles)
+                {
+                    savedCategories.Add(new Category(Path.GetFileName(file).Split('.')[0]));
+                }
+
+                return savedCategories;
             }
-
-            return savedCategories;
+            catch (NullReferenceException e)
+            {
+                Console.WriteLine("Var god lägg till en kategori");
+                return null;
+            }
         }
 
-        public IEnumerator GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class CategoryEvent : EventArgs
