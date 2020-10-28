@@ -140,7 +140,7 @@ namespace Rss_reader
             string name = dgwPodcasts.SelectedRows[chosenPodcastIndex].Cells[1].Value.ToString();
             lblEpisode.Text = name;
 
-            foreach (var p in controller.GetListPodcasts())
+            foreach (var p in controller.GetListPodcasts().ToList())
             {
                 string podName = p.Name;
                 if (podName == name)
