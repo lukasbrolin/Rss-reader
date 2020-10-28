@@ -30,7 +30,7 @@ namespace Rss_reader
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgwPodcasts = new System.Windows.Forms.DataGridView();
             this.clmEpisode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -66,14 +66,14 @@ namespace Rss_reader
             this.dgwPodcasts.AllowUserToDeleteRows = false;
             this.dgwPodcasts.AllowUserToResizeColumns = false;
             this.dgwPodcasts.AllowUserToResizeRows = false;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgwPodcasts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgwPodcasts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dgwPodcasts.ColumnHeadersHeight = 50;
             this.dgwPodcasts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgwPodcasts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -301,19 +301,23 @@ namespace Rss_reader
             // 
             // lbEpisodes
             // 
+            this.lbEpisodes.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbEpisodes.FormattingEnabled = true;
+            this.lbEpisodes.ItemHeight = 24;
             this.lbEpisodes.Location = new System.Drawing.Point(16, 409);
             this.lbEpisodes.Name = "lbEpisodes";
-            this.lbEpisodes.Size = new System.Drawing.Size(596, 264);
+            this.lbEpisodes.Size = new System.Drawing.Size(596, 244);
             this.lbEpisodes.TabIndex = 24;
             this.lbEpisodes.SelectedIndexChanged += new System.EventHandler(this.lbEpisodes_SelectedIndexChanged);
             // 
             // lbCategories
             // 
+            this.lbCategories.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbCategories.FormattingEnabled = true;
+            this.lbCategories.ItemHeight = 24;
             this.lbCategories.Location = new System.Drawing.Point(630, 37);
             this.lbCategories.Name = "lbCategories";
-            this.lbCategories.Size = new System.Drawing.Size(422, 225);
+            this.lbCategories.Size = new System.Drawing.Size(422, 220);
             this.lbCategories.TabIndex = 25;
             // 
             // Form1

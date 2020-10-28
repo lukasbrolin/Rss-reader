@@ -65,6 +65,8 @@ namespace Rss_reader
         private void btnAddPodcast_Click(object sender, EventArgs e)
         {
             controller.CreatePodcast(tbName.Text, (UpdateFrequency)cbUpdateFrequency.SelectedValue, tbUrl.Text, (Category)cbCategory.SelectedValue);
+            dgwPodcasts.Rows.Clear();
+            FilldgwPodcast();
         }
 
         private void dgwPodcasts_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -105,22 +107,19 @@ namespace Rss_reader
                 String text;
 
                 text = lbEpisodes.SelectedItem.ToString();
-                lblDescription.Text = text;
-
+                
                 foreach (var p in controller.GetListPodcasts())
                 {
-
-
                     var episodeList = p.episodes;
                     foreach (var j in episodeList)
                     {
                         if (j.Title == text)
                         {
+                            lblDescription.Text = text + " - " + j.Length;
                             tbDescription.Text = j.Description;
                             break;
                         }
                     }
-
                 }
 
             
@@ -146,12 +145,14 @@ namespace Rss_reader
 
 
                     var episodeList = p.episodes;
-                    foreach (var j in episodeList)
+                    foreach (var c in episodeList)
                     {
-                        lbEpisodes.Items.Add(j.Title);
+                        lbEpisodes.Items.Add(c.Title);
+                        lbEpisodes.Items.Add("");
                     }
                 }
             }
+
         }
 
         private void btnAddCategory_Click(object sender, EventArgs e)

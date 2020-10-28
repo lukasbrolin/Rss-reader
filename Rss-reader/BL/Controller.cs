@@ -39,7 +39,7 @@ namespace BL
 
         public void UpdatePodcast(object sender, EventArgs e)
         {
-            /*if ((!PodcastRepository.objectList.Any()) && (PodcastRepository.objectList!=null))
+            if ((!PodcastRepository.objectList.Any()) && (PodcastRepository.objectList!=null) || PodcastRepository!=null)
             {
                 foreach (var p in PodcastRepository.objectList)
                 {
@@ -60,7 +60,7 @@ namespace BL
                 PodcastRepository.SaveChanges();
                 PodcastRepository.objectList.Clear();
                 PodcastRepository.GetAll();
-            }*/
+            }
         }
 
         public List<Podcast> GetListPodcasts()

@@ -50,18 +50,21 @@ namespace DAL.Repositories
                     List<Podcast> temporaryList = GetPodcastsByCategoyTitle(c.Title);
                     try
                     {
-                        for (int i = 0; i < temporaryList.Count; i++)
+                        if (temporaryList != null)
                         {
-                            temporaryList[i].category = c;
-                        }
+                            for (int i = 0; i < temporaryList.Count; i++)
+                            {
+                                temporaryList[i].category = c;
+                            }
 
-                        if (objectList.Count() == 0)
-                        {
-                            objectList = temporaryList;
-                        }
-                        else
-                        {
-                            objectList.AddRange(temporaryList);
+                            if (objectList.Count() == 0)
+                            {
+                                objectList = temporaryList;
+                            }
+                            else
+                            {
+                                objectList.AddRange(temporaryList);
+                            }
                         }
                     }
                     catch (Exception e)
