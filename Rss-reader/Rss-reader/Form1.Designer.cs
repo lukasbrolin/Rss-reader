@@ -203,6 +203,7 @@ namespace Rss_reader
             this.btnRemovePodcast.TabIndex = 9;
             this.btnRemovePodcast.Text = "Ta bort";
             this.btnRemovePodcast.UseVisualStyleBackColor = true;
+            this.btnRemovePodcast.Click += new System.EventHandler(this.btnRemovePodcast_Click);
             // 
             // btnAddPodcast
             // 

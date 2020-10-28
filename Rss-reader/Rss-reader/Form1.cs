@@ -49,23 +49,37 @@ namespace Rss_reader
           private void Filldgw()
             {
                 var podcastList = controller.GetAll();
+
                 Console.WriteLine(podcastList.Count);
+
                 foreach (var p in podcastList)
                 {
                     Console.WriteLine(p);
                     dgwPodcasts.Rows.Add(p.TotalEpisodes, p.Name, "Every " + p.UpdateFrequency + " seconds", p.category.Title);
                 }
             var catetgory = controller.GetAllCategories();
+
+
+
+            cbCategory.DataSource = catetgory;
+            cbCategory.DisplayMember = "Title";
+
+            cbUpdateFrequency.DataSource = Enum.GetValues(typeof(UpdateFrequency));
+
+
+
+
             foreach (var cat in catetgory)
             {
-                cbCategory.Items.Add(cat.Title);
+                //cbCategory.Items.Add(cat.Title);
                 lbCategories.Items.Add(cat.Title);
+                
+                
             }
 
-            foreach (var up in Enum.GetValues(typeof(UpdateFrequency)))
-            {
-                cbUpdateFrequency.Items.Add(up.ToString());
-            }
+
+
+            
 
 
         }
@@ -76,6 +90,8 @@ namespace Rss_reader
 
         private void btnAddPodcast_Click(object sender, EventArgs e)
         {
+
+              controller.CreatePodcast(tbName.Text, (UpdateFrequency)cbUpdateFrequency.SelectedValue, tbUrl.Text, (Category)cbCategory.SelectedValue);
             //controller.CreatePodcast(tbName.Text, (UpdateFrequency)cbUpdateFrequency.SelectedItem, tbUrl.Text, (Category)cbCategory.SelectedItem);
             //controller.CreatePodcast(tbName.Text, cbUpdateFrequency.SelectedItem, tbUrl.Text, cbCategory.SelectedItem);
         }
@@ -123,7 +139,8 @@ namespace Rss_reader
                         tbName.Text = p.Name;
                         oldcategory = p.category.Title;
 
-                        cbCategory.Text = p.category.ToString();
+                        //cbCategory.Text = p.category.ToString();
+                        cbCategory.SelectedItem= p.category.Title;
                         UpdateFrequency updateFrequency;
                         
 
@@ -234,6 +251,11 @@ namespace Rss_reader
             {
                 controller.ChangeCategory(oldcategory, cbCategory.SelectedItem.ToString());
             }
+        }
+
+        private void btnRemovePodcast_Click(object sender, EventArgs e)
+        {
+            controller.DeletePodcast(tbName.Text); ;
         }
     }
 }
