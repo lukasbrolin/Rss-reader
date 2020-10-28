@@ -15,11 +15,24 @@ namespace DAL
             
             //string xmlName = (objects.LastOrDefault().ToString().Split('.')[1]) + ".xml";
             XmlSerializer xmlSerializer = new XmlSerializer(objects.GetType());
-            using (FileStream outFile = new FileStream(c, FileMode.Create,
+            using (FileStream outFile = new FileStream(c, FileMode.Open,
                 FileAccess.Write))
             {
                 xmlSerializer.Serialize(outFile, objects);
             }
+        }
+
+        public void Serialize(string c)
+        {
+            //using (FileStream outFile = new FileStream(c, FileMode.Create,
+            //    FileAccess.Write))
+            //var sampleText = "";
+            //XmlSerializer xmlSerializer = new XmlSerializer("".GetType());
+            using (FileStream outFile = new FileStream(c, FileMode.Create))
+            {
+                //xmlSerializer.Serialize(outFile, sampleText);
+            }
+
         }
 
         public void SerializeDelete(string c)
@@ -42,15 +55,24 @@ namespace DAL
 
         public List<Podcast> Deserialize<T>(string value)
         {
-            string xmlName = value;
-            List<Podcast> listOfObjectToBeReturned;
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Podcast>));
-            using (FileStream inFile = new FileStream(xmlName, FileMode.Open,
-                FileAccess.Read))
+            try
             {
-                listOfObjectToBeReturned = (List<Podcast>)xmlSerializer.Deserialize(inFile);
+                string xmlName = value;
+                List<Podcast> listOfObjectToBeReturned;
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Podcast>));
+                using (FileStream inFile = new FileStream(xmlName, FileMode.Open,
+                    FileAccess.Read))
+                {
+                    listOfObjectToBeReturned = (List<Podcast>)xmlSerializer.Deserialize(inFile);
+                }
+                return listOfObjectToBeReturned;
             }
-            return listOfObjectToBeReturned;
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                //throw;
+                return null;
+            }
         }
     }
 }

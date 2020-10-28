@@ -39,29 +39,38 @@ namespace BL
 
         public void UpdatePodcast(object sender, EventArgs e)
         {
-            foreach (var p in PodcastRepository.objectList)
+            /*if ((!PodcastRepository.objectList.Any()) && (PodcastRepository.objectList!=null))
             {
-                if (p.NeedsUpdate)
+                foreach (var p in PodcastRepository.objectList)
                 {
-                    p.Update();
-                    if (!p.episodes[0].Title.Equals(UrlManager.GetEpisodes(p.Url)[0].Title))
+                    if (p.NeedsUpdate)
                     {
-                        p.episodes = UrlManager.GetEpisodes(p.Url);
-                        p.TotalEpisodes = UrlManager.GetTotalEpisodes(p.Url);
-                        Console.WriteLine(p.Name + " Have added Episodes");
+                        p.Update();
+                        if (!p.episodes[0].Title.Equals(UrlManager.GetEpisodes(p.Url)[0].Title))
+                        {
+                            p.episodes = UrlManager.GetEpisodes(p.Url);
+                            p.TotalEpisodes = UrlManager.GetTotalEpisodes(p.Url);
+                            Console.WriteLine(p.Name + " Have added Episodes");
+                        }
+
+                        Console.WriteLine(p.Name + " WAS UPDATED");
                     }
-                    
-                    Console.WriteLine(p.Name + " WAS UPDATED");
                 }
-            }
-            PodcastRepository.SaveChanges();
-            PodcastRepository.objectList.Clear();
-            PodcastRepository.GetAll();
+
+                PodcastRepository.SaveChanges();
+                PodcastRepository.objectList.Clear();
+                PodcastRepository.GetAll();
+            }*/
         }
 
-        public List<Podcast> GetList()
+        public List<Podcast> GetListPodcasts()
         {
             return PodcastRepository.GetList;
+        }
+
+        public List<Category> GetListCategories()
+        {
+            return CategoryRepository.GetList;
         }
 
         public void CreatePodcast(string name, UpdateFrequency updateFrequency, string url, Category category)

@@ -25,6 +25,21 @@ namespace DAL.Repositories
             }
             SaveChanges();
         }
+        public List<Category> GetList
+        {
+            get
+            {
+                return objectList;
+            }
+        }
+
+        public override void SaveChanges()
+        {
+            foreach (var c in objectList)
+            {
+                dataManager.Serialize(c.Title + ".xml");
+            }
+        }
 
         public override void Delete(string value)
         {

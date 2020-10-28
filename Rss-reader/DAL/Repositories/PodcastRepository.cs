@@ -48,20 +48,27 @@ namespace DAL.Repositories
                 foreach (var c in CategoryRepository.objectList)
                 {
                     List<Podcast> temporaryList = GetPodcastsByCategoyTitle(c.Title);
-                    for (int i = 0; i < temporaryList.Count; i++)
+                    try
                     {
-                        temporaryList[i].category = c;
-                    }
+                        for (int i = 0; i < temporaryList.Count; i++)
+                        {
+                            temporaryList[i].category = c;
+                        }
 
-                    if (objectList.Count()== 0)
-                    {
-                        objectList = temporaryList;
+                        if (objectList.Count() == 0)
+                        {
+                            objectList = temporaryList;
+                        }
+                        else
+                        {
+                            objectList.AddRange(temporaryList);
+                        }
                     }
-                    else
+                    catch (Exception e)
                     {
-                        objectList.AddRange(temporaryList);
+                        Console.WriteLine(e);
+                        //throw;
                     }
-
                 }
 
                 return objectList;
