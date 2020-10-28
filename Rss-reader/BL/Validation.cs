@@ -1,9 +1,5 @@
 ﻿using DAL;
 using DAL.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace BL
@@ -17,6 +13,19 @@ namespace BL
             {
                 MessageBox.Show(textType + " måste innehålla minst 3 tecken!");
                 return false;
+            }
+            return true;
+        }
+
+        public static bool NameIsUnique(TextBox name, PodcastRepository podcastRepository)
+        {
+            foreach (var podcast in podcastRepository.GetAll())
+            {
+                if (podcast.Name == name.Text)
+                {
+                    MessageBox.Show("En podcast med detta namn finns redan tillagd!");
+                    return false;
+                }
             }
             return true;
         }
@@ -53,37 +62,27 @@ namespace BL
                 MessageBox.Show("Den angivna URL:en är ogiltig!");
                 return false;
             }
-
             return true;
         }
 
-
-        public static bool UrlIsUniqueOrSame(TextBox url, PodcastRepository podcastRepository, string urlToChange)
+        public static bool UrlIsUnchanged(TextBox url, string oldPodcastUrl)
         {
-
-            return true;
-        }
-
-        public static bool NameIsUnique(TextBox name, PodcastRepository podcastRepository)
-        {
-            foreach (var podcast in podcastRepository.GetAll())
+            if (!url.Text.Equals(oldPodcastUrl))
             {
-                if (podcast.Name == name.Text)
-                {
-                    MessageBox.Show("En podcast med detta namn finns redan tillagd!");
-                    return false;
-                }
+                return false;
             }
-
             return true;
         }
 
-        public static bool NameIsUniqueOrSame(TextBox name, PodcastRepository podcastRepository, string nameToChange)
+        public static bool NameIsUnchanged(TextBox name, string oldPodcastName)
         {
-
+            if (!name.Text.Equals(oldPodcastName))
+            {
+                return false;
+            }
             return true;
-
         }
+
 
         public static bool comboBoxItemSelected(ComboBox comboBox, string dataTyp)
         {
@@ -99,7 +98,7 @@ namespace BL
         // Metoderna nedan grupperar valideringsmetoderna ovan i metoder som utför flera valideringar på en gång.  
         public static bool ValidateNewName(TextBox name, PodcastRepository podcastRepository)
         {
-            if (TextIsFilled(name, "Namnfältet"))
+            if (TextIsFilled(name, "Namnet"))
             {
                 if (NameIsUnique(name, podcastRepository))
                 {
@@ -123,6 +122,32 @@ namespace BL
             return false;
         }
 
+        public static bool ValidateChangedUrl(TextBox url, PodcastRepository podcastRepository, string oldPodcastUrl)
+        {
+            if(TextIsFilled(url, "URL:en"))
+            {
+                if (UrlIsUnchanged(url, oldPodcastUrl) || UrlIsUnique(url, podcastRepository))
+                {
+                    if (UrlIsValid(url))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static bool ValidateChangedName(TextBox name, PodcastRepository podcastRepository, string oldPodcastName)
+        {
+            if(TextIsFilled(name, "Namnet"))
+            {
+                if(NameIsUnchanged(name, oldPodcastName) || NameIsUnique(name, podcastRepository))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         //Metoderna nedan är de färdigställda metoderna som kan användas för validering!
         public static bool ValidateNewOrChangedCategory(TextBox name, CategoryRepository categoryRepository)
@@ -143,7 +168,7 @@ namespace BL
             {
                 if (ValidateNewUrl(url, podcastRepository))
                 {
-                    if (comboBoxItemSelected(updateFrequency, "Uppdateringsfrekvens"))
+                    if (comboBoxItemSelected(updateFrequency, "uppdateringsfrekvens"))
                     {
                         if (comboBoxItemSelected(category, "kategori"))
                         {
@@ -155,13 +180,22 @@ namespace BL
             return false;
         }
 
-
-        public static bool ValidateChangedPodcast(TextBox name, TextBox url, PodcastRepository podcastRepository)
+        public static bool ValidateChangedPodcast(TextBox name, TextBox url, PodcastRepository podcastRepository, ComboBox category, ComboBox updateFrequency, string oldPodcastName, string oldPodcastUrl)
         {
-            
-
-
-            return true;
+            if (ValidateChangedName(name, podcastRepository, oldPodcastName))
+            {
+                if(ValidateChangedUrl(url, podcastRepository, oldPodcastUrl))
+                {
+                    if(comboBoxItemSelected(updateFrequency, "uppdateringsfrekvens"))
+                    {
+                        if(comboBoxItemSelected(category, "kategori"))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
         
     }
