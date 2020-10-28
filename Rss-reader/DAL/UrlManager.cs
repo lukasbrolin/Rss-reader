@@ -7,12 +7,12 @@ using Models;
 
 namespace DAL
 {
-    public class UrlManager
+    public static class UrlManager
     {
-        public XDocument urlManager = new XDocument();
+        public static XDocument urlManager = new XDocument();
 
 
-        public List<Episode> GetEpisodes(string url)
+        public static List<Episode> GetEpisodes(string url)
         {
             List<Episode> episodeList = new List<Episode>();
             urlManager = XDocument.Load(url);
@@ -54,7 +54,7 @@ namespace DAL
             //return episodeList;
         }
 
-        public int GetTotalEpisodes(string url)
+        public static int GetTotalEpisodes(string url)
         {
             urlManager = XDocument.Load(url);
             var items = from e in urlManager.Descendants("item") 

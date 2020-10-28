@@ -11,7 +11,7 @@ namespace BL
 {
     public class Controller : IController<Podcast>
     {
-        private UrlManager _urlManager;
+        //private UrlManager _urlManager;
         public CategoryRepository CategoryRepository;
         public PodcastRepository PodcastRepository;
         private Timer timer = new Timer(15000);
@@ -21,7 +21,7 @@ namespace BL
         {
             timer.Elapsed += UpdatePodcast;
             timer.Start();
-            _urlManager = new UrlManager();
+            //_urlManager = new UrlManager();
             CategoryRepository = new CategoryRepository();
             PodcastRepository = new PodcastRepository(CategoryRepository);
             CategoryRepository.onCategoryDelete += this.onCategoryDelete;
@@ -31,20 +31,23 @@ namespace BL
         {
             PodcastRepository.Delete(e.Title);
             PodcastRepository.SaveChanges();
+            PodcastRepository.objectList.Clear();
+            CategoryRepository.objectList.Clear();
+            CategoryRepository.GetAll();
             PodcastRepository.GetAll();
         }
 
         public void UpdatePodcast(object sender, EventArgs e)
         {
-            foreach (var p in PodcastRepository.objectList.ToList())
+            foreach (var p in PodcastRepository.objectList)
             {
                 if (p.NeedsUpdate)
                 {
                     p.Update();
-                    if (!p.episodes[0].Title.Equals(_urlManager.GetEpisodes(p.Url)[0].Title))
+                    if (!p.episodes[0].Title.Equals(UrlManager.GetEpisodes(p.Url)[0].Title))
                     {
-                        p.episodes = _urlManager.GetEpisodes(p.Url);
-                        p.TotalEpisodes = _urlManager.GetTotalEpisodes(p.Url);
+                        p.episodes = UrlManager.GetEpisodes(p.Url);
+                        p.TotalEpisodes = UrlManager.GetTotalEpisodes(p.Url);
                         Console.WriteLine(p.Name + " Have added Episodes");
                     }
                     
@@ -52,12 +55,18 @@ namespace BL
                 }
             }
             PodcastRepository.SaveChanges();
+            PodcastRepository.objectList.Clear();
             PodcastRepository.GetAll();
+        }
+
+        public List<Podcast> GetList()
+        {
+            return PodcastRepository.GetList;
         }
 
         public void CreatePodcast(string name, UpdateFrequency updateFrequency, string url, Category category)
         {
-            Podcast newPodcast = new Podcast(name, updateFrequency, url, category, _urlManager.GetTotalEpisodes(url), _urlManager.GetEpisodes(url));
+            Podcast newPodcast = new Podcast(name, updateFrequency, url, category, UrlManager.GetTotalEpisodes(url), UrlManager.GetEpisodes(url));
             PodcastRepository.Create(newPodcast);
         }
 

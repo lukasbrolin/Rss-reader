@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Models;
 
 namespace DAL.Repositories
@@ -32,6 +33,14 @@ namespace DAL.Repositories
             }
         }
 
+        public List<Podcast> GetList
+        {
+            get
+            {
+                return objectList;
+            }
+        }
+
         public override List<Podcast> GetAll()
         {
             try
@@ -44,7 +53,7 @@ namespace DAL.Repositories
                         temporaryList[i].category = c;
                     }
 
-                    if (objectList == null)
+                    if (objectList.Count()== 0)
                     {
                         objectList = temporaryList;
                     }
