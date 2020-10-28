@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Timers;
 using BL;
 using Models;
 
@@ -15,6 +15,9 @@ namespace Rss_reader
     public partial class Form1 : Form
     {
         public Controller controller = new Controller();
+        private System.Timers.Timer timer = new System.Timers.Timer(15000);
+        
+
 
         string oldcat = "";
         string oldname = "";
@@ -53,6 +56,9 @@ namespace Rss_reader
 
         public Form1()
         {
+            //controller;
+            timer.Elapsed += controller.UpdatePodcast;
+            timer.Start();
             InitializeComponent();
             FilldgwPodcast();
         }
@@ -131,11 +137,10 @@ namespace Rss_reader
 
         private void dgwPodcasts_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            int chosenPodcastIndex = 0;
             lbEpisodes.Items.Clear();
 
             int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected);
-            chosenPodcastIndex = 0;
+            int chosenPodcastIndex = 0;
 
             string name = dgwPodcasts.SelectedRows[chosenPodcastIndex].Cells[1].Value.ToString();
             lblEpisode.Text = name;
@@ -156,6 +161,8 @@ namespace Rss_reader
             }
 
         }
+
+        private void UpdateEpisodesList(){}
 
         private void btnAddCategory_Click(object sender, EventArgs e)
         {

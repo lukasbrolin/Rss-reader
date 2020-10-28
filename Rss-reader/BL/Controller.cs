@@ -14,18 +14,23 @@ namespace BL
         //private UrlManager _urlManager;
         public CategoryRepository CategoryRepository;
         public PodcastRepository PodcastRepository;
-        private Timer timer = new Timer(15000);
+        //private Timer timer = new Timer(15000);
         
 
         public Controller()
         {
-            timer.Elapsed += UpdatePodcast;
-            timer.Start();
+            //timer.Elapsed += UpdatePodcast;
+            //timer.Start();
             //_urlManager = new UrlManager();
             CategoryRepository = new CategoryRepository();
             PodcastRepository = new PodcastRepository(CategoryRepository);
             CategoryRepository.onCategoryDelete += this.onCategoryDelete;
         }
+
+        //public Timer GetTimer()
+        //{
+        //    return timer;
+        //}
 
         private void onCategoryDelete(object sender, CategoryEvent e)
         {
@@ -51,15 +56,17 @@ namespace BL
                             p.episodes = UrlManager.GetEpisodes(p.Url);
                             p.TotalEpisodes = UrlManager.GetTotalEpisodes(p.Url);
                             Console.WriteLine(p.Name + " Have added Episodes");
+                            PodcastRepository.SaveChanges();
+                            PodcastRepository.objectList.Clear();
+                            PodcastRepository.GetAll();
+                            //var data = new CategoryEvent();
+                            //data.Title = ;
+                            //onCategoryDelete(this, data);
                         }
 
                         Console.WriteLine(p.Name + " WAS UPDATED");
                     }
                 }
-
-                PodcastRepository.SaveChanges();
-                PodcastRepository.objectList.Clear();
-                PodcastRepository.GetAll();
             }
         }
 
