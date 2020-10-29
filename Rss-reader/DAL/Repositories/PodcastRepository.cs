@@ -20,7 +20,7 @@ namespace DAL.Repositories
 
         public override void SaveChanges()
         {
-            foreach (var c in CategoryRepository.objectList)
+            foreach (var c in CategoryRepository.GetList)
             {
                 List<Podcast> temporaryList = new List<Podcast>();
                 var query = from podcast in objectList where podcast.category.Title.Equals(c.Title) select podcast;
@@ -46,7 +46,7 @@ namespace DAL.Repositories
             try
             {
                 objectList.Clear();
-                foreach (var c in CategoryRepository.objectList)
+                foreach (var c in CategoryRepository.GetList)
                 {
                     List<Podcast> temporaryList = GetPodcastsByCategoyTitle(c.Title);
                     try
@@ -87,7 +87,7 @@ namespace DAL.Repositories
 
         public void UpdateCategory(string name,string valueBefore, string value)
         {
-            foreach (var c in CategoryRepository.objectList)
+            foreach (var c in CategoryRepository.GetList)
             { 
                 if (c.Title.Equals(valueBefore))
                 {
@@ -124,7 +124,7 @@ namespace DAL.Repositories
         {
             bool match = false;
 
-            foreach (var c in CategoryRepository.objectList)
+            foreach (var c in CategoryRepository.GetList)
             {
                 if (!match)
                 {

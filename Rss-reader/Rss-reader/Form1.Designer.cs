@@ -270,6 +270,7 @@ namespace Rss_reader
             this.btnRemoveCategory.TabIndex = 19;
             this.btnRemoveCategory.Text = "Ta bort";
             this.btnRemoveCategory.UseVisualStyleBackColor = true;
+            this.btnRemoveCategory.Click += new System.EventHandler(this.btnRemoveCategory_Click);
             // 
             // lblDescription
             // 

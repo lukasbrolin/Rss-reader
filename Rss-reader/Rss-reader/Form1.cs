@@ -182,19 +182,7 @@ namespace Rss_reader
             }
         }
 
-        private void btnRemoveCategory_Click(object sender, EventArgs e)
-        {
-            string categoryToDelete = lbCategories.SelectedItem.ToString();
-            if (categoryToDelete != null)
-            {
-                DialogResult deleteCategory = MessageBox.Show("Vill du ta bort kategorin och alla podcasts i denna?", "Ta bort kategori", MessageBoxButtons.YesNo);
-                if (deleteCategory == DialogResult.Yes)
-                {
-                    controller.DeleteCategory(categoryToDelete);
-                    MessageBox.Show("Kategorin togs bort!");
-                }
-            }
-        }
+        
 
         private void btnSavePodcast_Click(object sender, EventArgs e)
         {
@@ -283,5 +271,18 @@ namespace Rss_reader
             }
         }
 
+        private void btnRemoveCategory_Click(object sender, EventArgs e)
+        {
+                string categoryToDelete = lbCategories.SelectedItem.ToString();
+                if (categoryToDelete != null)
+                {
+                    DialogResult deleteCategory = MessageBox.Show("Vill du ta bort kategorin och alla podcasts i denna?", "Ta bort kategori", MessageBoxButtons.YesNo);
+                    if (deleteCategory == DialogResult.Yes)
+                    {
+                        controller.DeleteCategory(categoryToDelete);
+                        MessageBox.Show("Kategorin togs bort!");
+                    }
+                }
+        }
     }
 }

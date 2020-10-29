@@ -52,10 +52,11 @@ namespace DAL.Repositories
                 {
                     var data = new CategoryEvent();
                     data.Title = value;
-                    onCategoryDelete(this, data);
                     dataManager.SerializeDelete(@"..\Debug\" + objectList[i].Title + ".xml");
-                    objectList.RemoveAt(i);
+                    //objectList.RemoveAt(i);
+                    onCategoryDelete(this, data);
                     break;
+
                 }
             }
         }
@@ -64,6 +65,10 @@ namespace DAL.Repositories
         {
             try
             {
+                if (objectList != null)
+                {
+                    objectList.Clear();
+                }
                 List<Category> savedCategories = new List<Category>();
                 string[] XMLfiles = Directory.GetFiles(@"..\Debug\", "*.XML");
                 foreach (string file in XMLfiles)
@@ -71,6 +76,7 @@ namespace DAL.Repositories
                     savedCategories.Add(new Category(Path.GetFileName(file).Split('.')[0]));
                 }
 
+                objectList = savedCategories;
                 return savedCategories;
             }
             catch (NullReferenceException e)

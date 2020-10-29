@@ -38,10 +38,8 @@ namespace BL
 
         private void onCategoryDelete(object sender, CategoryEvent e)
         {
-            PodcastRepository.Delete(e.Title);
-            PodcastRepository.SaveChanges();
-            PodcastRepository.objectList.Clear();
-            CategoryRepository.objectList.Clear();
+            //PodcastRepository.Delete(e.Title);
+            //PodcastRepository.SaveChanges();
             CategoryRepository.GetAll();
             PodcastRepository.GetAll();
         }
