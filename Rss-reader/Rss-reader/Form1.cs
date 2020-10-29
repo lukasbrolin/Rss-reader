@@ -126,11 +126,14 @@ namespace Rss_reader
             
         }
 
-        private void dgwPodcasts_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void RefreshView()
         {
-            
-
-
+            dgwPodcasts.Rows.Clear();
+            FilldgwPodcast();
+            lblDescription.Text = "";
+            tbDescription.Clear();
+            lbEpisodes.Items.Clear();
+            lblEpisode.Text = "";
         }
 
         
@@ -186,17 +189,7 @@ namespace Rss_reader
 
         private void btnSavePodcast_Click(object sender, EventArgs e)
         {
-            int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected) - 1;
-            string oldPodcastName = dgwPodcasts.SelectedRows[selectedRowCount].Cells[1].Value.ToString();
-            string oldPodcastUrl = controller.GetPodcast(oldPodcastName).Url;
-            if (Validation.ValidateChangedPodcast(tbName, tbUrl, controller.GetListPodcasts(), cbCategory, cbUpdateFrequency, oldPodcastName, oldPodcastUrl))
-            {
-                Podcast podcastToChange = controller.GetPodcast(oldPodcastName);
-                podcastToChange.Name = tbName.Text;
-                podcastToChange.Url = tbUrl.Text;
-                podcastToChange.UpdateFrequency = (UpdateFrequency)cbUpdateFrequency.SelectedValue;
-                podcastToChange.category = controller.GetCategoryByName(cbCategory.SelectedItem.ToString());
-            }
+            
         }
 
         private void btnRemovePodcast_Click(object sender, EventArgs e)
@@ -207,13 +200,19 @@ namespace Rss_reader
             {
                 controller.DeletePodcast(podcastToDelete);
                 MessageBox.Show("Podcasten togs bort!");
-
+                RefreshView();
             }
         }
 
         private void dgwPodcasts_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
+            string name = dgwPodcasts.SelectedRows[0].Cells[1].Value.ToString();
+            tbName.Text = name;
+            tbUrl.Text = controller.GetPodcast(name).Url;
+            cbUpdateFrequency.SelectedItem = controller.GetPodcast(name).UpdateFrequency;
+
             UpdateEpisodesList();
+
         }
 
         private void UpdateEpisodesList()
@@ -264,11 +263,11 @@ namespace Rss_reader
                 string oldCategory = lbCategories.SelectedItem.ToString();
                 string newCategory = tbCategory.Text;
                 controller.ChangeCategory(oldCategory, newCategory);
-                
 
-
-                FillCategories();
+                dgwPodcasts.Rows.Clear();
+                FilldgwPodcast();
             }
+            
         }
 
         private void btnRemoveCategory_Click(object sender, EventArgs e)
@@ -281,8 +280,27 @@ namespace Rss_reader
                     {
                         controller.DeleteCategory(categoryToDelete);
                         MessageBox.Show("Kategorin togs bort!");
+                    RefreshView();
                     }
                 }
+            
+        }
+
+        private void btnSavePodcast_Click_1(object sender, EventArgs e)
+        {
+            int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected) - 1;
+            string oldPodcastName = dgwPodcasts.SelectedRows[selectedRowCount].Cells[1].Value.ToString();
+            string oldPodcastUrl = controller.GetPodcast(oldPodcastName).Url;
+            if (Validation.ValidateChangedPodcast(tbName, tbUrl, controller.GetListPodcasts(), cbCategory, cbUpdateFrequency, oldPodcastName, oldPodcastUrl))
+            {
+                Podcast podcastToChange = controller.GetPodcast(oldPodcastName);
+                podcastToChange.Name = tbName.Text;
+                podcastToChange.Url = tbUrl.Text;
+                podcastToChange.UpdateFrequency = (UpdateFrequency)cbUpdateFrequency.SelectedValue;
+                //Category newCategory = (Category)cbCategory.SelectedItem;
+                podcastToChange.category = (Category)cbCategory.SelectedItem;
+                RefreshView();
+            }
         }
     }
 }
