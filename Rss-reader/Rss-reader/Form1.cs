@@ -182,6 +182,47 @@ namespace Rss_reader
             }
         }
 
+        private void btnRemoveCategory_Click(object sender, EventArgs e)
+        {
+            string categoryToDelete = lbCategories.SelectedItem.ToString();
+            if (categoryToDelete != null)
+            {
+                DialogResult deleteCategory = MessageBox.Show("Vill du ta bort kategorin och alla podcasts i denna?", "Ta bort kategori", MessageBoxButtons.YesNo);
+                if (deleteCategory == DialogResult.Yes)
+                {
+                    controller.DeleteCategory(categoryToDelete);
+                    MessageBox.Show("Kategorin togs bort!");
+                }
+            }
+        }
+
+        private void btnSavePodcast_Click(object sender, EventArgs e)
+        {
+            int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected) - 1;
+            string oldPodcastName = dgwPodcasts.SelectedRows[selectedRowCount].Cells[1].Value.ToString();
+            string oldPodcastUrl = controller.GetPodcast(oldPodcastName).Url;
+            if (Validation.ValidateChangedPodcast(tbName, tbUrl, controller.GetListPodcasts(), cbCategory, cbUpdateFrequency, oldPodcastName, oldPodcastUrl))
+            {
+                Podcast podcastToChange = controller.GetPodcast(oldPodcastName);
+                podcastToChange.Name = tbName.Text;
+                podcastToChange.Url = tbUrl.Text;
+                podcastToChange.UpdateFrequency = (UpdateFrequency)cbUpdateFrequency.SelectedValue;
+                podcastToChange.category = controller.GetCategoryByName(cbCategory.SelectedItem.ToString());
+            }
+        }
+
+        private void btnRemovePodcast_Click(object sender, EventArgs e)
+        {
+            int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected) - 1;
+            string podcastToDelete = dgwPodcasts.SelectedRows[selectedRowCount].Cells[1].Value.ToString();
+            if (podcastToDelete != null)
+            {
+                controller.DeletePodcast(podcastToDelete);
+                MessageBox.Show("Podcasten togs bort!");
+
+            }
+        }
+
         private void dgwPodcasts_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
             UpdateEpisodesList();
@@ -242,9 +283,5 @@ namespace Rss_reader
             }
         }
 
-        private void btnRemovePodcast_Click(object sender, EventArgs e)
-        {
-            UpdatePodcastTable();
-        }
     }
 }
