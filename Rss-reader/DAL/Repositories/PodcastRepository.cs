@@ -85,15 +85,15 @@ namespace DAL.Repositories
         }
 
 
-        public void UpdateCategory(string name,string valueBefore, string value)
+        public void UpdateCategory(string name,Category category)
         {
-            foreach (var c in CategoryRepository.GetList)
-            { 
-                if (c.Title.Equals(valueBefore))
-                {
-                    GetPodcast(name).category = c;
-                }
-            }
+            GetPodcast(name).category = category;
+            SaveChanges();
+        }
+
+        public void UpdateUrl(string name, string url)
+        {
+            GetPodcast(name).Url = url;
             SaveChanges();
         }
 
