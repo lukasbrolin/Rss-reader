@@ -45,6 +45,7 @@ namespace DAL.Repositories
         {
             try
             {
+                objectList.Clear();
                 foreach (var c in CategoryRepository.objectList)
                 {
                     List<Podcast> temporaryList = GetPodcastsByCategoyTitle(c.Title);

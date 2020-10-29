@@ -22,8 +22,8 @@ namespace DAL
                 XNamespace xd = "http://www.itunes.com/dtds/podcast-1.0.dtd";
                 return new Episode
                 {
-                    Title = i.Element("title").Value,
-                    Description = i.Element("description").Value,
+                    Title = i.Element("title")?.Value ?? "",
+                    Description = i.Element("description")?.Value ?? "",
                     Length = i.Descendants(xd + "duration").FirstOrDefault()?.Value ?? "0"
                 };
             }).ToList();
@@ -34,6 +34,7 @@ namespace DAL
             urlManager = XDocument.Load(url);
 
             return urlManager.Descendants(("item")).Select(i => i.Element("title")).Count();
+
 
             /*var items = from e in urlManager.Descendants("item") 
                 select new { title = e.Element("title")};

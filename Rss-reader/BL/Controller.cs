@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
+using System.Security.Cryptography.X509Certificates;
 using System.Timers;
 using DAL;
 using DAL.Repositories;
@@ -14,6 +15,8 @@ namespace BL
         //private UrlManager _urlManager;
         public CategoryRepository CategoryRepository;
         public PodcastRepository PodcastRepository;
+
+        //public event EventHandler<EventArgs> onUpdatePodcast; 
         //private Timer timer = new Timer(15000);
         
 
@@ -25,6 +28,7 @@ namespace BL
             CategoryRepository = new CategoryRepository();
             PodcastRepository = new PodcastRepository(CategoryRepository);
             CategoryRepository.onCategoryDelete += this.onCategoryDelete;
+            
         }
 
         //public Timer GetTimer()
@@ -46,7 +50,7 @@ namespace BL
         {
             if ((!PodcastRepository.objectList.Any()) && (PodcastRepository.objectList!=null) || PodcastRepository!=null)
             {
-                foreach (var p in PodcastRepository.objectList)
+                foreach (var p in PodcastRepository.objectList.ToList())
                 {
                     if (p.NeedsUpdate)
                     {
@@ -57,11 +61,10 @@ namespace BL
                             p.TotalEpisodes = UrlManager.GetTotalEpisodes(p.Url);
                             Console.WriteLine(p.Name + " Have added Episodes");
                             PodcastRepository.SaveChanges();
-                            PodcastRepository.objectList.Clear();
                             PodcastRepository.GetAll();
-                            //var data = new CategoryEvent();
+                            //var data = new EventArgs();
                             //data.Title = ;
-                            //onCategoryDelete(this, data);
+                            //onUpdatePodcast(this, data);
                         }
 
                         Console.WriteLine(p.Name + " WAS UPDATED");

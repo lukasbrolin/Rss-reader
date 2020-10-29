@@ -81,9 +81,4 @@ namespace DAL.Repositories
         }
 
     }
-
-    public class CategoryEvent : EventArgs
-    {
-        public string Title { get; set; }
-    }
 }

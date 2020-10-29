@@ -14,8 +14,9 @@ namespace DAL
         {
             
             //string xmlName = (objects.LastOrDefault().ToString().Split('.')[1]) + ".xml";
+            SerializeDelete(c);
             XmlSerializer xmlSerializer = new XmlSerializer(objects.GetType());
-            using (FileStream outFile = new FileStream(c, FileMode.Open,
+            using (FileStream outFile = new FileStream(c, FileMode.Create,
                 FileAccess.Write))
             {
                 xmlSerializer.Serialize(outFile, objects);
