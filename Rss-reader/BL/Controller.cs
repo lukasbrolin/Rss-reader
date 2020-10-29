@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
-using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using System.Timers;
 using DAL;
 using DAL.Repositories;
@@ -46,17 +45,23 @@ namespace BL
 
         public void UpdatePodcast(object sender, EventArgs e)
         {
+            CheckforEpisodes(sender, e);
+        }
+
+        public async Task CheckforEpisodes(object sender, EventArgs e)
+        {
             if ((!PodcastRepository.objectList.Any()) && (PodcastRepository.objectList!=null) || PodcastRepository!=null)
             {
                 foreach (var p in PodcastRepository.objectList.ToList())
                 {
                     if (p.NeedsUpdate)
                     {
+                        var result = await Task.Run( () => UrlManager.GetEpisodes(p.Url));
                         p.Update();
-                        if (!p.episodes[0].Title.Equals(UrlManager.GetEpisodes(p.Url)[0].Title))
+                        if (!p.episodes[0].Title.Equals(result[0].Title))
                         {
-                            p.episodes = UrlManager.GetEpisodes(p.Url);
-                            p.TotalEpisodes = UrlManager.GetTotalEpisodes(p.Url);
+                            p.episodes = result;
+                            p.TotalEpisodes = result.Count;
                             Console.WriteLine(p.Name + " Have added Episodes");
                             PodcastRepository.SaveChanges();
                             PodcastRepository.GetAll();
@@ -81,9 +86,10 @@ namespace BL
             return CategoryRepository.GetList;
         }
 
-        public void CreatePodcast(string name, UpdateFrequency updateFrequency, string url, Category category)
+        public async Task CreatePodcast(string name, UpdateFrequency updateFrequency, string url, Category category)
         {
-            Podcast newPodcast = new Podcast(name, updateFrequency, url, category, UrlManager.GetTotalEpisodes(url), UrlManager.GetEpisodes(url));
+            var result = await Task.Run(() => UrlManager.GetEpisodes(url));
+            Podcast newPodcast = new Podcast(name, updateFrequency, url, category, result.Count, result);
             PodcastRepository.Create(newPodcast);
         }
 
@@ -120,9 +126,14 @@ namespace BL
             PodcastRepository.UpdateName(nameBefore, name);
         }
 
-        public void ChangePodcastCategory(string podcastName, string valueBefore, string value)
+        public void ChangePodcastCategory(string podcastName, Category category)
         {
-            PodcastRepository.UpdateCategory(podcastName, valueBefore,value);
+            PodcastRepository.UpdateCategory(podcastName, category);
+        }
+
+        public void ChangeUrl(string name, string url)
+        {
+            PodcastRepository.UpdateUrl(name, url);
         }
 
         public void ChangePodcastFrequency(string podcastName, UpdateFrequency newFrequency)
