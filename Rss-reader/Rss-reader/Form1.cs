@@ -36,7 +36,7 @@ namespace Rss_reader
             foreach (var p in controller.GetListPodcasts())
             {
                 Console.WriteLine(p);
-                dgwPodcasts.Rows.Add(p.TotalEpisodes, p.Name, "Varje " + p.UpdateFrequency + " minut", p.category.Title);
+                dgwPodcasts.Rows.Add(p.TotalEpisodes, p.Name, "Var " + p.UpdateFrequency + " minut", p.category.Title);
             }
         }
 

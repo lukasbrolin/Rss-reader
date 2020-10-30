@@ -2,7 +2,7 @@
 {
     public enum UpdateFrequency
     {
-        Minut = 60,
+        Femte = 300,
         Femtonde = 900,
         Trettionde = 1800
 

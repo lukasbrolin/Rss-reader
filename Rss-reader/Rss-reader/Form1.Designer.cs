@@ -71,6 +71,7 @@ namespace Rss_reader
             this.clmFrequency = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmEpisode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgwPodcasts)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -106,7 +107,7 @@ namespace Rss_reader
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Open Sans", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.WhiteSmoke;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgwPodcasts.DefaultCellStyle = dataGridViewCellStyle2;
@@ -165,7 +166,7 @@ namespace Rss_reader
             // tbUrl
             // 
             this.tbUrl.BackColor = System.Drawing.SystemColors.Window;
-            this.tbUrl.Cursor = System.Windows.Forms.Cursors.Default;
+            this.tbUrl.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.tbUrl.Location = new System.Drawing.Point(12, 332);
             this.tbUrl.Name = "tbUrl";
             this.tbUrl.Size = new System.Drawing.Size(280, 20);
@@ -239,7 +240,6 @@ namespace Rss_reader
             this.lblEpisode.Name = "lblEpisode";
             this.lblEpisode.Size = new System.Drawing.Size(736, 20);
             this.lblEpisode.TabIndex = 13;
-            this.lblEpisode.Text = "TEst123";
             // 
             // lblCategories
             // 
@@ -307,7 +307,6 @@ namespace Rss_reader
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(387, 20);
             this.lblDescription.TabIndex = 20;
-            this.lblDescription.Text = "Test 123";
             // 
             // tbDescription
             // 
@@ -493,12 +492,23 @@ namespace Rss_reader
             this.clmEpisode.ReadOnly = true;
             this.clmEpisode.Width = 80;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(533, 315);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(79, 13);
+            this.label2.TabIndex = 35;
+            this.label2.Text = "Anges i minuter";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1180, 757);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.tbName);
@@ -582,6 +592,7 @@ namespace Rss_reader
         private DataGridViewTextBoxColumn clmName;
         private DataGridViewTextBoxColumn clmFrequency;
         private DataGridViewTextBoxColumn clmCategory;
+        private Label label2;
     }
 }
 
