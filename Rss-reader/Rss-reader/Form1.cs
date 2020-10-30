@@ -217,13 +217,15 @@ namespace Rss_reader
 
         private void dgwPodcasts_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            string name = dgwPodcasts.SelectedRows[0].Cells[1].Value.ToString();
-            tbName.Text = name;
-            tbUrl.Text = controller.GetPodcast(name).Url;
-            cbUpdateFrequency.SelectedItem = controller.GetPodcast(name).UpdateFrequency;
+            if (dgwPodcasts.Rows.Count != 0)
+            {
+                string name = dgwPodcasts.SelectedRows[0].Cells[1].Value.ToString();
+                tbName.Text = name;
+                tbUrl.Text = controller.GetPodcast(name).Url;
+                cbUpdateFrequency.SelectedItem = controller.GetPodcast(name).UpdateFrequency;
 
-            UpdateEpisodesList();
-
+                UpdateEpisodesList();
+            }
         }
 
         private void UpdateEpisodesList()
