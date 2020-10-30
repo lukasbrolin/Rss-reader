@@ -293,11 +293,12 @@ namespace Rss_reader
             string oldPodcastUrl = controller.GetPodcast(oldPodcastName).Url;
             if (Validation.ValidateChangedPodcast(tbName, tbUrl, controller.GetListPodcasts(), cbCategory, cbUpdateFrequency, oldPodcastName, oldPodcastUrl))
             {
-
-                controller.ChangePodcastName(oldPodcastName, tbName.Text);
-                controller.ChangePodcastCategory(tbName.Text, (Category)cbCategory.SelectedItem);
-                controller.ChangePodcastFrequency(tbName.Text, (UpdateFrequency)cbUpdateFrequency.SelectedValue);
-                controller.ChangeUrl(tbName.Text, tbUrl.Text);
+                Podcast podcastToChange = controller.GetPodcast(oldPodcastName);
+                podcastToChange.Name = tbName.Text;
+                podcastToChange.Url = tbUrl.Text;
+                podcastToChange.UpdateFrequency = (UpdateFrequency)cbUpdateFrequency.SelectedValue;
+                //Category newCategory = (Category)cbCategory.SelectedItem;
+                podcastToChange.category = (Category)cbCategory.SelectedItem;
                 RefreshView();
             }
         }
