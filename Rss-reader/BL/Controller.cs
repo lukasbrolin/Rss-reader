@@ -81,6 +81,7 @@ namespace BL
                 catch (Exception e)
                 {
                     System.Windows.Forms.MessageBox.Show("Tom lista ej Uppdateringsbar");
+                    Console.WriteLine(e.Message);
                 }
             }
            
