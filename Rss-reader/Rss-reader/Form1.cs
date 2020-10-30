@@ -246,11 +246,6 @@ namespace Rss_reader
             }
         }
 
-        public async Task cas()
-        {
-
-        }
-
         private void btnAddCategory_Click(object sender, EventArgs e)
         {
             if (Validation.ValidateNewCategory(tbCategory, controller.GetListCategories()))
@@ -260,8 +255,6 @@ namespace Rss_reader
 
                 FillCategories();
             }
-            
-
         }
 
         private void btnSaveCategory_Click(object sender, EventArgs e)
@@ -275,23 +268,21 @@ namespace Rss_reader
                 dgwPodcasts.Rows.Clear();
                 FilldgwPodcast();
             }
-            
         }
 
         private void btnRemoveCategory_Click(object sender, EventArgs e)
         {
-                string categoryToDelete = lbCategories.SelectedItem.ToString();
-                if (categoryToDelete != null)
-                {
-                    DialogResult deleteCategory = MessageBox.Show("Vill du ta bort kategorin och alla podcasts i denna?", "Ta bort kategori", MessageBoxButtons.YesNo);
-                    if (deleteCategory == DialogResult.Yes)
-                    {
-                        controller.DeleteCategory(categoryToDelete);
-                        MessageBox.Show("Kategorin togs bort!");
+            string categoryToDelete = lbCategories.SelectedItem.ToString();
+            if (categoryToDelete != null)
+            {
+                DialogResult deleteCategory = MessageBox.Show("Vill du ta bort kategorin och alla podcasts i denna?", "Ta bort kategori", MessageBoxButtons.YesNo);
+                if (deleteCategory == DialogResult.Yes)
+                { 
+                    controller.DeleteCategory(categoryToDelete); 
+                    MessageBox.Show("Kategorin togs bort!");
                     RefreshView();
-                    }
                 }
-            
+            }
         }
 
         private void btnSavePodcast_Click_1(object sender, EventArgs e)
@@ -313,7 +304,6 @@ namespace Rss_reader
             catch (ArgumentOutOfRangeException exception)
             {
                 Console.WriteLine("There is no podcasts in the list");
-
             }
         }
 
