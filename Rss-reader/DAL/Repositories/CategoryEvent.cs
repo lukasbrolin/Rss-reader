@@ -6,8 +6,6 @@ namespace DAL.Repositories
     {
         public string Title { get; set; }
     }
-
-
     public class UpdateEvent : EventArgs
     {
 

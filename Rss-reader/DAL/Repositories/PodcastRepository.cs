@@ -9,7 +9,6 @@ namespace DAL.Repositories
 {
     public class PodcastRepository : Repository<Podcast>, IRepository
     {
-
         public CategoryRepository CategoryRepository;
 
         public PodcastRepository(CategoryRepository catRepository)
@@ -21,7 +20,6 @@ namespace DAL.Repositories
 
         public override void SaveChanges()
         {
-            
             foreach (var c in CategoryRepository.GetList)
             {
                 List<Podcast> temporaryList = new List<Podcast>();
@@ -73,10 +71,8 @@ namespace DAL.Repositories
                     catch (Exception e)
                     {
                         Console.WriteLine(e);
-                        //throw;
                     }
                 }
-
                 return objectList;
             }
             catch (NullReferenceException e)
@@ -86,7 +82,6 @@ namespace DAL.Repositories
                 return null;
             }
         }
-
 
         public void UpdateCategory(string name,Category category)
         {
@@ -139,7 +134,6 @@ namespace DAL.Repositories
                     }
                 }
             }
-
             if (!match)
             {
                 DeleteByName(value);
@@ -162,7 +156,7 @@ namespace DAL.Repositories
         {
             name += ".xml";
             List<Podcast> savedPodcasts = new List<Podcast>();
-             savedPodcasts = dataManager.Deserialize<List<Podcast>>(name);
+            savedPodcasts = dataManager.Deserialize<List<Podcast>>(name);
             return savedPodcasts;
         }
     }

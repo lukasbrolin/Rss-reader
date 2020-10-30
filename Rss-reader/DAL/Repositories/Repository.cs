@@ -8,7 +8,6 @@ namespace DAL.Repositories
         internal DataManager dataManager;
         public List<T> objectList { get; set; }
 
-
         public Repository()
         {
             dataManager = new DataManager();
@@ -22,7 +21,6 @@ namespace DAL.Repositories
 
         public virtual void Delete(string value)
         {
-
         }
 
         public virtual void UpdateCategory(string valueBefore, string value)

@@ -67,7 +67,6 @@ namespace BL
                 Console.WriteLine(e.Message);
                 return false;
             }
-
         }
 
         public static bool UrlIsUnique(TextBox urlTextBox, List<Podcast> podcastList)
@@ -88,7 +87,6 @@ namespace BL
                 Console.WriteLine(e.Message);
                 return false;
             }
-            
         }
 
         public static bool UrlIsValid(TextBox urlTextBox)
@@ -116,7 +114,6 @@ namespace BL
                 Console.WriteLine(e.Message);
                 return false;
             }
-
         }
         public static bool listBoxItemSelected(ListBox listBox, string dataTyp)
         {
@@ -165,13 +162,17 @@ namespace BL
             }
             return false;
         }
+
         public static bool ValidateNewUrl(TextBox url, List<Podcast> podcastList)
         {
             if (TextIsFilled(url, "URL:en"))
             {
                 if (UrlIsUnique(url, podcastList))
                 {
-                    return true;   
+                    if (UrlIsValid(url))
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -214,7 +215,7 @@ namespace BL
                     return true;
                 }
             }
-                return false;
+            return false;
         }
 
         public static bool ValidateChangedCategory(TextBox name, ListBox category, List<Category> categoryList)

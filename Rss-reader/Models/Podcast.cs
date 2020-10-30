@@ -6,32 +6,22 @@ namespace Models
 {
     public class Podcast
     {
-
         public string Name { get; set; }
         public UpdateFrequency UpdateFrequency { get; set; }
-
         public DateTime NextUpdate { get; set; }
-
         public string Url { get; set; }
-
         public Category category;
-
         public int TotalEpisodes { get; set; }
-
         public List<Episode> episodes;
-
-
-
 
         public Podcast()
         {
             this.Name = "";
             UpdateFrequency = UpdateFrequency;
             this.Url = "";
-            this.category = category;
+            this.category = null;
             this.TotalEpisodes = TotalEpisodes;
-            this.episodes = episodes;
-            
+            this.episodes = null;
         }
 
         public Podcast(string name, UpdateFrequency updateFrequency, string url, Category category, int totalEpisodes,

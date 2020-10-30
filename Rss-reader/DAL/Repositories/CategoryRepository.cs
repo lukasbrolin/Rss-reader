@@ -53,7 +53,6 @@ namespace DAL.Repositories
                     var data = new CategoryEvent();
                     data.Title = value;
                     dataManager.SerializeDelete(@"..\Debug\" + objectList[i].Title + ".xml");
-                    //objectList.RemoveAt(i);
                     onCategoryDelete(this, data);
                     break;
 

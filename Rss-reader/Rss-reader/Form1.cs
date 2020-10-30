@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
-
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//using System.Timers;
 using BL;
 using Models;
 
@@ -17,13 +16,9 @@ namespace Rss_reader
     {
         public Controller controller = new Controller();
         private Timer timer;
+        private Stopwatch stopwatch = new Stopwatch();
         
-
-
-        string oldcat = "";
-        string oldname = "";
-        string oldcategory = "";
-
+       
         private void FilldgwPodcast()
         {
             cbUpdateFrequency.DataSource = Enum.GetValues(typeof(UpdateFrequency));
@@ -57,22 +52,27 @@ namespace Rss_reader
 
         public Form1()
         {
-            //controller;
-            
             InitializeComponent();
             StartTimer();
             FilldgwPodcast();
-            //controller.onUpdatePodcast += UpdateTables;
-
         }
 
         public void StartTimer()
         {
-            timer = new Timer{Interval = 15000, Enabled = true, Tag = "123"};
-            timer.Tick += controller.UpdatePodcast;
+            timer = new Timer{Interval = 15000, Enabled = true};
+            timer.Tick += Start;
+            //timer.Tick += controller.UpdatePodcast;
             timer.Tick += TimerTick;
             timer.Start();
+                        
+
         }
+
+        public void Start(object sender, EventArgs e)
+        {
+            stopwatch.Start();
+        }
+
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -81,9 +81,17 @@ namespace Rss_reader
 
         private void TimerTick(object sender, EventArgs e)
         {
+            Update();
+        }
+
+        private async Task Update()
+        {
+            await Task.Run(() => controller.CheckforEpisodes());
             UpdatePodcastTable();
             UpdateEpisodesList();
         }
+
+        
 
         private void UpdatePodcastTable()
         {
@@ -315,7 +323,6 @@ namespace Rss_reader
 
         private void btnSavePodcast_Click_1(object sender, EventArgs e)
         {
-            //int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected) - 1;
             try
             {
                 string oldPodcastName = dgwPodcasts.SelectedRows[0].Cells[1].Value.ToString();
@@ -345,8 +352,6 @@ namespace Rss_reader
                 {
                     Console.WriteLine(dgwPodcasts.Rows[i].Cells[3].Value.ToString());
 
-                    //ta bort lbCategories.SelectedItem != null && ?
-                
                     if (!dgwPodcasts.Rows[i].Cells[3].Value.ToString()
                         .Equals(lbCategories.SelectedItem.ToString()))
                     {

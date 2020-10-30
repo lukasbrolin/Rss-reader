@@ -10,10 +10,10 @@ namespace DAL
 {
     internal class DataManager
     {
+        //Writes to file
         public void Serialize<T>(List<T> objects, string c)
         {
             
-            //string xmlName = (objects.LastOrDefault().ToString().Split('.')[1]) + ".xml";
             SerializeDelete(c);
             XmlSerializer xmlSerializer = new XmlSerializer(objects.GetType());
             using (FileStream outFile = new FileStream(c, FileMode.Create,
@@ -23,42 +23,30 @@ namespace DAL
             }
         }
 
+
+        //Creates new file
         public void Serialize(string c)
         {
-            //using (FileStream outFile = new FileStream(c, FileMode.Create,
-            //    FileAccess.Write))
-            //var sampleText = "";
-            //XmlSerializer xmlSerializer = new XmlSerializer("".GetType());
             using (FileStream outFile = new FileStream(c, FileMode.Create))
             {
-                //xmlSerializer.Serialize(outFile, sampleText);
             }
-
         }
 
+
+        //Changes name of file
         public void SerializeRename(string valueBefore, string value)
         {
             File.Move(valueBefore, value);
         }
 
+
+        //Deletes file
         public void SerializeDelete(string c)
         {
             File.Delete(c);
         }
 
-        /*public List<T> Deserialize<T>(List<T> objectList, string value)
-        {
-            string xmlName = value + ".xml";
-            List<T> listOfObjectToBeReturned;
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<T>));
-            using (FileStream inFile = new FileStream(xmlName, FileMode.Open,
-                FileAccess.Read))
-            {
-                listOfObjectToBeReturned = (List<T>)xmlSerializer.Deserialize(inFile);
-            }
-            return listOfObjectToBeReturned;
-        }*/
-
+        //Reads file
         public List<Podcast> Deserialize<T>(string value)
         {
             try
@@ -76,7 +64,6 @@ namespace DAL
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                //throw;
                 return null;
             }
         }

@@ -13,7 +13,6 @@ namespace DAL
     {
         public static XDocument urlManager = new XDocument();
 
-
         public static List<Episode> GetEpisodes(string url)
         {
             urlManager = XDocument.Load(url);
@@ -33,15 +32,8 @@ namespace DAL
         public static int GetTotalEpisodes(string url)
         {
             urlManager = XDocument.Load(url);
-
             return urlManager.Descendants(("item")).Select(i => i.Element("title")).Count();
 
-
-            /*var items = from e in urlManager.Descendants("item") 
-                select new { title = e.Element("title")};
-            
-            int totalEpisodes = items.Count();
-            return totalEpisodes;*/
         }
     }
 }

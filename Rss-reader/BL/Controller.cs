@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using DAL;
@@ -11,34 +13,18 @@ namespace BL
 {
     public class Controller : IController<Podcast>
     {
-        //private UrlManager _urlManager;
         public CategoryRepository CategoryRepository;
         public PodcastRepository PodcastRepository;
 
-        //public event EventHandler<EventArgs> onUpdatePodcast; 
-        //private Timer timer = new Timer(15000);
-        
-
         public Controller()
         {
-            //timer.Elapsed += UpdatePodcast;
-            //timer.Start();
-            //_urlManager = new UrlManager();
             CategoryRepository = new CategoryRepository();
             PodcastRepository = new PodcastRepository(CategoryRepository);
             CategoryRepository.onCategoryDelete += this.onCategoryDelete;
-            
         }
-
-        //public Timer GetTimer()
-        //{
-        //    return timer;
-        //}
 
         private void onCategoryDelete(object sender, CategoryEvent e)
         {
-            //PodcastRepository.Delete(e.Title);
-            //PodcastRepository.SaveChanges();
             CategoryRepository.GetAll();
             PodcastRepository.GetAll();
         }
@@ -55,13 +41,19 @@ namespace BL
 
                 try
                 {
+                    //var query = from pod in PodcastRepository.objectList.ToList()
+                    //            where pod.NeedsUpdate == true
+                    //            select pod;
                     var query = from pod in PodcastRepository.objectList.ToList()
-                                where pod.NeedsUpdate == true
-                                select pod;
+                        select pod;
 
                     foreach (var p in query)
                     {
+                        Stopwatch stopwatch = new Stopwatch();
+                        stopwatch.Start();
                         var result = await Task.Run(() => UrlManager.GetEpisodes(p.Url));
+                        stopwatch.Stop();
+                        Console.WriteLine(stopwatch.Elapsed);
                         p.Update();
                         if (!p.episodes[0].Title.Equals(result[0].Title))
                         {
@@ -70,9 +62,6 @@ namespace BL
                             Console.WriteLine(p.Name + " Have added Episodes");
                             PodcastRepository.SaveChanges();
                             PodcastRepository.GetAll();
-                            //var data = new EventArgs();
-                            //data.Title = ;
-                            //onUpdatePodcast(this, data);
                         }
 
                         Console.WriteLine(p.Name + " WAS UPDATED");
