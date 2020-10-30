@@ -2,6 +2,7 @@
 using DAL;
 using DAL.Repositories;
 using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Windows.Forms;
@@ -23,6 +24,7 @@ namespace BL
             }
             catch (EmptyTextBoxException e)
             {
+                Console.WriteLine(e.Message);
                 return false;
             }
         }
@@ -42,6 +44,7 @@ namespace BL
 
             }
             catch (ValueNotUniqueException e){
+                Console.WriteLine(e.Message);
                 return false;
             }
         }
@@ -61,6 +64,7 @@ namespace BL
             }
             catch (ValueNotUniqueException e)
             {
+                Console.WriteLine(e.Message);
                 return false;
             }
 
@@ -81,6 +85,7 @@ namespace BL
             }
             catch (ValueNotUniqueException e)
             {
+                Console.WriteLine(e.Message);
                 return false;
             }
             
@@ -108,6 +113,7 @@ namespace BL
             }
             catch (NoItemSelectedException e)
             {
+                Console.WriteLine(e.Message);
                 return false;
             }
 
@@ -124,6 +130,7 @@ namespace BL
             }
             catch (NoItemSelectedException e)
             {
+                Console.WriteLine(e.Message);
                 return false;
             }
         }

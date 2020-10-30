@@ -82,6 +82,7 @@ namespace DAL.Repositories
             catch (NullReferenceException e)
             {
                 Console.WriteLine("Var god lägg till en podcast");
+                Console.WriteLine(e.Message);
                 return null;
             }
         }
