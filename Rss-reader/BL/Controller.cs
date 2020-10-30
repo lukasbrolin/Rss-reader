@@ -45,10 +45,10 @@ namespace BL
 
         public void UpdatePodcast(object sender, EventArgs e)
         {
-            CheckforEpisodes(sender, e);
+            CheckforEpisodes();
         }
 
-        public async Task CheckforEpisodes(object sender, EventArgs e)
+        public async Task CheckforEpisodes()
         {
             if ((!PodcastRepository.objectList.Any()) && (PodcastRepository.objectList!=null) || PodcastRepository!=null)
             {
@@ -102,7 +102,7 @@ namespace BL
         {
             List<Podcast> temporaryList = new List<Podcast>();
             var query = from podcast in PodcastRepository.objectList
-                where podcast.category.Equals(value)
+                where podcast.category.Title.Equals(value)
                 select podcast;
             foreach (var podcast in query)
             {

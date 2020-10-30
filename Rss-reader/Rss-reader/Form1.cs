@@ -26,13 +26,13 @@ namespace Rss_reader
         private void FilldgwPodcast()
         {
             cbUpdateFrequency.DataSource = Enum.GetValues(typeof(UpdateFrequency));
-            FillPodcasts();
+            FillPodcasts(controller.GetListPodcasts());
             FillCategories();
         }
 
-        private void FillPodcasts()
+        private void FillPodcasts(List<Podcast> PodcastList)
         {
-            foreach (var p in controller.GetListPodcasts())
+            foreach (var p in PodcastList)
             {
                 Console.WriteLine(p);
                 dgwPodcasts.Rows.Add(p.TotalEpisodes, p.Name, "Every " + p.UpdateFrequency + " seconds", p.category.Title);
@@ -59,15 +59,15 @@ namespace Rss_reader
             //controller;
             
             InitializeComponent();
-            StartTimer();
             FilldgwPodcast();
+            StartTimer();
             //controller.onUpdatePodcast += UpdateTables;
 
         }
 
         public void StartTimer()
         {
-            timer = new Timer{Interval = 15000, Enabled = true, Tag = "123"};
+            timer = new Timer{Interval = 15000, Enabled = true};
             timer.Tick += controller.UpdatePodcast;
             timer.Tick += TimerTick;
             timer.Start();
@@ -206,10 +206,7 @@ namespace Rss_reader
 
         private void dgwPodcasts_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            string name = dgwPodcasts.SelectedRows[0].Cells[1].Value.ToString();
-            tbName.Text = name;
-            tbUrl.Text = controller.GetPodcast(name).Url;
-            cbUpdateFrequency.SelectedItem = controller.GetPodcast(name).UpdateFrequency;
+            
 
             UpdateEpisodesList();
 
@@ -217,10 +214,17 @@ namespace Rss_reader
 
         private void UpdateEpisodesList()
         {
-            if (lbEpisodes.Items.Count != 0){
-                lbEpisodes.Items.Clear();
+            string selectedPod = dgwPodcasts.SelectedRows[0].Cells[1].Value.ToString();
+            tbName.Text = selectedPod;
+            tbUrl.Text = controller.GetPodcast(selectedPod).Url;
+            cbUpdateFrequency.SelectedItem = controller.GetPodcast(selectedPod).UpdateFrequency;
 
-                int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected);
+            if (lbEpisodes.Items.Count != 0)
+            {
+                lbEpisodes.Items.Clear();
+            }
+
+            int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected);
                 int chosenPodcastIndex = 0;
 
                 string name = dgwPodcasts.SelectedRows[chosenPodcastIndex].Cells[1].Value.ToString();
@@ -240,7 +244,7 @@ namespace Rss_reader
                         }
                     }
                 }
-            }
+            
         }
 
         private void btnAddCategory_Click(object sender, EventArgs e)
@@ -288,18 +292,51 @@ namespace Rss_reader
 
         private void btnSavePodcast_Click_1(object sender, EventArgs e)
         {
-            int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected) - 1;
-            string oldPodcastName = dgwPodcasts.SelectedRows[selectedRowCount].Cells[1].Value.ToString();
+            //int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected) - 1;
+            string oldPodcastName = dgwPodcasts.SelectedRows[0].Cells[1].Value.ToString();
             string oldPodcastUrl = controller.GetPodcast(oldPodcastName).Url;
             if (Validation.ValidateChangedPodcast(tbName, tbUrl, controller.GetListPodcasts(), cbCategory, cbUpdateFrequency, oldPodcastName, oldPodcastUrl))
             {
-
                 controller.ChangePodcastName(oldPodcastName, tbName.Text);
                 controller.ChangePodcastCategory(tbName.Text, (Category)cbCategory.SelectedItem);
                 controller.ChangePodcastFrequency(tbName.Text, (UpdateFrequency)cbUpdateFrequency.SelectedValue);
                 controller.ChangeUrl(tbName.Text, tbUrl.Text);
                 RefreshView();
             }
+        }
+
+        private void btnSortEpisodes_Click(object sender, EventArgs e)
+        {
+
+            for (int i = 0; i < (dgwPodcasts.Rows.Count); i++)
+            {
+                Console.WriteLine(dgwPodcasts.Rows[i].Cells[3].Value.ToString());
+                if (!dgwPodcasts.Rows[i].Cells[3].Value.ToString().Equals(lbCategories.SelectedItem.ToString()))
+                {
+                    dgwPodcasts.Rows[i].Visible = false;
+                }
+                else
+                {
+                    dgwPodcasts.Rows[i].Visible = true;
+                }
+            }
+
+            lbEpisodes.Items.Clear();
+            lblEpisode.Text = "";
+            lblDescription.Text = "";
+            tbDescription.Clear();
+        }
+
+        private void btnShowAllPodcasts_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < (dgwPodcasts.Rows.Count); i++)
+            {
+                dgwPodcasts.Rows[i].Visible = true;
+            }
+            lbEpisodes.Items.Clear();
+            lblEpisode.Text = "";
+            lblDescription.Text = "";
+            tbDescription.Clear();
         }
     }
 }
