@@ -91,12 +91,20 @@ namespace BL
 
         public static bool UrlIsValid(TextBox urlTextBox)
         {
-            if (UrlManager.GetTotalEpisodes(urlTextBox.Text) < 1)
+            try
             {
-                MessageBox.Show("Den angivna URL:en är ogiltig!");
+                if (UrlManager.GetTotalEpisodes(urlTextBox.Text) < 1)
+                {
+                    throw new UrlNotValidException();
+                }
+                return true;
+            }
+            catch(UrlNotValidException e)
+            {
+                Console.WriteLine(e.Message);
                 return false;
             }
-            return true;
+            
         }
 
         public static bool comboBoxItemSelected(ComboBox comboBox, string dataTyp)

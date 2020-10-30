@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -31,7 +32,14 @@ namespace DAL
 
         public static int GetTotalEpisodes(string url)
         {
-            urlManager = XDocument.Load(url);
+            try
+            {
+                urlManager = XDocument.Load(url);
+            }
+            catch (FileNotFoundException e)
+            {
+                return 0;
+            }
             return urlManager.Descendants(("item")).Select(i => i.Element("title")).Count();
 
         }
