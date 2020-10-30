@@ -32,6 +32,7 @@ namespace Rss_reader
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dgwPodcasts = new System.Windows.Forms.DataGridView();
             this.clmEpisode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clmName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -166,6 +167,8 @@ namespace Rss_reader
             // 
             // tbUrl
             // 
+            this.tbUrl.BackColor = System.Drawing.SystemColors.Window;
+            this.tbUrl.Cursor = System.Windows.Forms.Cursors.Default;
             this.tbUrl.Location = new System.Drawing.Point(16, 312);
             this.tbUrl.Name = "tbUrl";
             this.tbUrl.Size = new System.Drawing.Size(211, 20);
@@ -278,7 +281,7 @@ namespace Rss_reader
             // lblDescription
             // 
             this.lblDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDescription.Location = new System.Drawing.Point(632, 409);
+            this.lblDescription.Location = new System.Drawing.Point(632, 386);
             this.lblDescription.Name = "lblDescription";
             this.lblDescription.Size = new System.Drawing.Size(420, 20);
             this.lblDescription.TabIndex = 20;
@@ -287,11 +290,11 @@ namespace Rss_reader
             // 
             this.tbDescription.BackColor = System.Drawing.SystemColors.Control;
             this.tbDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbDescription.Location = new System.Drawing.Point(632, 432);
+            this.tbDescription.Location = new System.Drawing.Point(632, 409);
             this.tbDescription.Multiline = true;
             this.tbDescription.Name = "tbDescription";
             this.tbDescription.ReadOnly = true;
-            this.tbDescription.Size = new System.Drawing.Size(420, 245);
+            this.tbDescription.Size = new System.Drawing.Size(420, 268);
             this.tbDescription.TabIndex = 21;
             // 
             // tbName
@@ -356,7 +359,8 @@ namespace Rss_reader
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1064, 680);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(1064, 690);
             this.Controls.Add(this.btnShowAllPodcasts);
             this.Controls.Add(this.btnSortEpisodes);
             this.Controls.Add(this.lbCategories);
@@ -381,7 +385,10 @@ namespace Rss_reader
             this.Controls.Add(this.lblUpdateFrequency);
             this.Controls.Add(this.lblUrl);
             this.Controls.Add(this.dgwPodcasts);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.dgwPodcasts)).EndInit();
             this.ResumeLayout(false);
