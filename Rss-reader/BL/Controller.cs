@@ -29,11 +29,6 @@ namespace BL
             PodcastRepository.GetAll();
         }
 
-        public void UpdatePodcast(object sender, EventArgs e)
-        {
-            CheckforEpisodes();
-        }
-
         public async Task CheckforEpisodes()
         {
             if ((!PodcastRepository.objectList.Any()) && (PodcastRepository.objectList != null) || PodcastRepository != null)
@@ -41,19 +36,11 @@ namespace BL
 
                 try
                 {
-                    //var query = from pod in PodcastRepository.objectList.ToList()
-                    //            where pod.NeedsUpdate == true
-                    //            select pod;
-                    var query = from pod in PodcastRepository.objectList.ToList()
-                        select pod;
+                    var query = from pod in PodcastRepository.objectList.ToList() select pod;
 
                     foreach (var p in query)
                     {
-                        Stopwatch stopwatch = new Stopwatch();
-                        stopwatch.Start();
-                        var result = await Task.Run(() => UrlManager.GetEpisodes(p.Url));
-                        stopwatch.Stop();
-                        Console.WriteLine(stopwatch.Elapsed);
+                        var result = await Task.Run(() => UrlManager.GetEpisodes(p.Url)).ConfigureAwait(false);
                         p.Update();
                         if (!p.episodes[0].Title.Equals(result[0].Title))
                         {

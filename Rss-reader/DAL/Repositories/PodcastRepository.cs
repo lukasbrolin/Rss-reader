@@ -108,14 +108,7 @@ namespace DAL.Repositories
         }
         public Podcast GetPodcast(string value)
         {
-            foreach (var p in objectList)
-            {
-                if (p.Name.Equals(value))
-                {
-                    return p;
-                }
-            }
-            return null;
+            return (from p in objectList where p.Name.Equals(value) select p).FirstOrDefault();
         }
 
         public override void Delete(string value)

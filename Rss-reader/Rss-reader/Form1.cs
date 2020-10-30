@@ -16,7 +16,6 @@ namespace Rss_reader
     {
         public Controller controller = new Controller();
         private Timer timer;
-        private Stopwatch stopwatch = new Stopwatch();
         
        
         private void FilldgwPodcast()
@@ -60,23 +59,12 @@ namespace Rss_reader
         public void StartTimer()
         {
             timer = new Timer{Interval = 15000, Enabled = true};
-            timer.Tick += Start;
-            //timer.Tick += controller.UpdatePodcast;
             timer.Tick += TimerTick;
             timer.Start();
-                        
-
         }
-
-        public void Start(object sender, EventArgs e)
-        {
-            stopwatch.Start();
-        }
-
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void TimerTick(object sender, EventArgs e)
@@ -91,36 +79,33 @@ namespace Rss_reader
             UpdateEpisodesList();
         }
 
-        
-
         private void UpdatePodcastTable()
         {
 
             if (dgwPodcasts.RowCount != 0 )
             {
                 lbEpisodes.Items.Clear();
-            
 
-            int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected);
-            int chosenPodcastIndex = 0;
+                int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected);
+                int chosenPodcastIndex = 0;
 
-            string name = dgwPodcasts.SelectedRows[chosenPodcastIndex].Cells[1].Value.ToString();
-            lblEpisode.Text = name;
+                string name = dgwPodcasts.SelectedRows[chosenPodcastIndex].Cells[1].Value.ToString();
+                lblEpisode.Text = name;
 
-            foreach (var p in controller.GetListPodcasts().ToList())
-            {
-                string podName = p.Name;
-                if (podName == name)
+                foreach (var p in controller.GetListPodcasts().ToList())
                 {
-
-                    var episodeList = p.episodes;
-                    foreach (var c in episodeList)
+                    string podName = p.Name;
+                    if (podName == name)
                     {
-                        lbEpisodes.Items.Add(c.Title);
-                        lbEpisodes.Items.Add("");
+
+                        var episodeList = p.episodes;
+                        foreach (var c in episodeList)
+                        {
+                            lbEpisodes.Items.Add(c.Title);
+                            lbEpisodes.Items.Add("");
+                        }
                     }
                 }
-            }
             }
         }
 
@@ -132,7 +117,6 @@ namespace Rss_reader
                 dgwPodcasts.Rows.Clear();
                 FilldgwPodcast();
             }
-            
         }
 
         
@@ -159,27 +143,24 @@ namespace Rss_reader
 
         private void cbCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         private void cbUpdateFrequency_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-
             foreach (var up in Enum.GetValues(typeof(UpdateFrequency)))
             {
                 cbUpdateFrequency.Items.Add(up.ToString());
                     }
         }
 
-        private void lbEpisodes_SelectedIndexChanged(object sender, EventArgs e)
+        private void lbEpisodes_SelectedIndexChanged(object sender, EventArgs eventArgs)
         {
             
             if(lbEpisodes.SelectedItem != null){
                 String text;
 
                 text = lbEpisodes.SelectedItem.ToString();
-                
+
                 foreach (var p in controller.GetListPodcasts())
                 {
                     var episodeList = p.episodes;
@@ -229,53 +210,45 @@ namespace Rss_reader
             {
                 string name = dgwPodcasts.SelectedRows[0].Cells[1].Value.ToString();
                 tbName.Text = name;
-                tbUrl.Text = controller.GetPodcast(name).Url;
-                cbUpdateFrequency.SelectedItem = controller.GetPodcast(name).UpdateFrequency;
+                var podcast = controller.GetPodcast(name);
+                tbUrl.Text = podcast.Url;
+                cbUpdateFrequency.SelectedItem = podcast.UpdateFrequency;
 
                 UpdateEpisodesList();
             }
         }
 
-        private void UpdateEpisodesList()
+        private async Task UpdateEpisodesList()
         {
-
             try
             {
                 string selectedPod = dgwPodcasts.SelectedRows[0].Cells[1].Value.ToString();
                 tbName.Text = selectedPod;
-                tbUrl.Text = controller.GetPodcast(selectedPod).Url;
-                cbUpdateFrequency.SelectedItem = controller.GetPodcast(selectedPod).UpdateFrequency;
+                var podcast = await Task.Run(() => controller.GetPodcast(selectedPod)).ConfigureAwait(false);
+                tbUrl.Text = podcast.Url;
+                cbUpdateFrequency.SelectedItem = podcast.UpdateFrequency;
+                lblEpisode.Text = podcast.Name;
 
                 if (lbEpisodes.Items.Count != 0)
                 {
                     lbEpisodes.Items.Clear();
                 }
 
-                int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected);
-                int chosenPodcastIndex = 0;
-
-                string name = dgwPodcasts.SelectedRows[chosenPodcastIndex].Cells[1].Value.ToString();
-                lblEpisode.Text = name;
-
-                foreach (var p in controller.GetListPodcasts().ToList())
+                podcast.episodes.ForEach(e =>
                 {
-                    string podName = p.Name;
-                    if (podName == name)
-                    {
-
-                        var episodeList = p.episodes;
-                        foreach (var c in episodeList)
-                        {
-                            lbEpisodes.Items.Add(c.Title);
-                            lbEpisodes.Items.Add("");
-                        }
-                    }
-                }
+                    lbEpisodes.Items.Add(e.Title);
+                    lbEpisodes.Items.Add("");
+                });
             }
             catch (ArgumentOutOfRangeException e)
             {
                 Console.WriteLine("There is no podcasts in the list");
             }
+        }
+
+        public async Task cas()
+        {
+
         }
 
         private void btnAddCategory_Click(object sender, EventArgs e)

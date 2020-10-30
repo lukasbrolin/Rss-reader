@@ -47,7 +47,6 @@ namespace Models
         public void Update()
         {
             NextUpdate = DateTime.Now.AddSeconds((double) UpdateFrequency);
-            Console.WriteLine(((double)UpdateFrequency).GetType());
         }
     }
 }
