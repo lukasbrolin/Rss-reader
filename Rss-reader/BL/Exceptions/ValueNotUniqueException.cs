@@ -8,11 +8,11 @@ namespace BL.Exceptions
     public class ValueNotUniqueException : Exception
     {
         public ValueNotUniqueException():
-            base("Texten som skrivits in i rutan är för kort!")
+            base("Inputen från användaren finns redan i ett annat objekt!")
         { 
         }
         public ValueNotUniqueException(string textType):
-            base("Texten som skrivits in i rutan är för kort!")
+            base("TeInputen från användaren finns redan i ett annat objekt!")
         {
             MessageBox.Show(textType + " finns redan!", "Inmatningsfel");
         }
