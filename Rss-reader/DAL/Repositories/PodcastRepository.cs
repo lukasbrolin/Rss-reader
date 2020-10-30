@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using Models;
 
@@ -20,6 +21,7 @@ namespace DAL.Repositories
 
         public override void SaveChanges()
         {
+            
             foreach (var c in CategoryRepository.GetList)
             {
                 List<Podcast> temporaryList = new List<Podcast>();

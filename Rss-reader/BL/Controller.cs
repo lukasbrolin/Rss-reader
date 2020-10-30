@@ -86,9 +86,9 @@ namespace BL
             return CategoryRepository.GetList;
         }
 
-        public async Task CreatePodcast(string name, UpdateFrequency updateFrequency, string url, Category category)
+        public void CreatePodcast(string name, UpdateFrequency updateFrequency, string url, Category category)
         {
-            var result = await Task.Run(() => UrlManager.GetEpisodes(url));
+            var result = UrlManager.GetEpisodes(url);
             Podcast newPodcast = new Podcast(name, updateFrequency, url, category, result.Count, result);
             PodcastRepository.Create(newPodcast);
         }

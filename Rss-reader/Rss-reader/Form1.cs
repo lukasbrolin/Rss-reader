@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 //using System.Timers;
 using BL;
@@ -126,6 +127,8 @@ namespace Rss_reader
             
         }
 
+        
+
         private void RefreshView()
         {
             dgwPodcasts.Rows.Clear();
@@ -194,14 +197,22 @@ namespace Rss_reader
 
         private void btnRemovePodcast_Click(object sender, EventArgs e)
         {
-            int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected) - 1;
-            string podcastToDelete = dgwPodcasts.SelectedRows[selectedRowCount].Cells[1].Value.ToString();
-            if (podcastToDelete != null)
+            try
             {
-                controller.DeletePodcast(podcastToDelete);
-                MessageBox.Show("Podcasten togs bort!");
-                RefreshView();
+                int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected) - 1;
+                string podcastToDelete = dgwPodcasts.SelectedRows[selectedRowCount].Cells[1].Value.ToString();
+                if (podcastToDelete != null)
+                {
+                    controller.DeletePodcast(podcastToDelete);
+                    MessageBox.Show("Podcasten togs bort!");
+                    RefreshView();
+                }
             }
+            catch (ArgumentOutOfRangeException exception)
+            {
+                Console.WriteLine("There is no podcasts in the list");
+            }
+            
         }
 
         private void dgwPodcasts_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
@@ -217,8 +228,18 @@ namespace Rss_reader
 
         private void UpdateEpisodesList()
         {
-            if (lbEpisodes.Items.Count != 0){
-                lbEpisodes.Items.Clear();
+
+            try
+            {
+                string selectedPod = dgwPodcasts.SelectedRows[0].Cells[1].Value.ToString();
+                tbName.Text = selectedPod;
+                tbUrl.Text = controller.GetPodcast(selectedPod).Url;
+                cbUpdateFrequency.SelectedItem = controller.GetPodcast(selectedPod).UpdateFrequency;
+
+                if (lbEpisodes.Items.Count != 0)
+                {
+                    lbEpisodes.Items.Clear();
+                }
 
                 int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected);
                 int chosenPodcastIndex = 0;
@@ -240,6 +261,10 @@ namespace Rss_reader
                         }
                     }
                 }
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                Console.WriteLine("There is no podcasts in the list");
             }
         }
 
@@ -288,19 +313,73 @@ namespace Rss_reader
 
         private void btnSavePodcast_Click_1(object sender, EventArgs e)
         {
-            int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected) - 1;
-            string oldPodcastName = dgwPodcasts.SelectedRows[selectedRowCount].Cells[1].Value.ToString();
-            string oldPodcastUrl = controller.GetPodcast(oldPodcastName).Url;
-            if (Validation.ValidateChangedPodcast(tbName, tbUrl, controller.GetListPodcasts(), cbCategory, cbUpdateFrequency, oldPodcastName, oldPodcastUrl))
+            //int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected) - 1;
+            try
             {
-                Podcast podcastToChange = controller.GetPodcast(oldPodcastName);
-                podcastToChange.Name = tbName.Text;
-                podcastToChange.Url = tbUrl.Text;
-                podcastToChange.UpdateFrequency = (UpdateFrequency)cbUpdateFrequency.SelectedValue;
-                //Category newCategory = (Category)cbCategory.SelectedItem;
-                podcastToChange.category = (Category)cbCategory.SelectedItem;
-                RefreshView();
+                string oldPodcastName = dgwPodcasts.SelectedRows[0].Cells[1].Value.ToString();
+                string oldPodcastUrl = controller.GetPodcast(oldPodcastName).Url;
+                if (Validation.ValidateChangedPodcast(tbName, tbUrl, controller.GetListPodcasts(), cbCategory,
+                    cbUpdateFrequency, oldPodcastName, oldPodcastUrl))
+                {
+                    controller.ChangePodcastName(oldPodcastName, tbName.Text);
+                    controller.ChangePodcastCategory(tbName.Text, (Category) cbCategory.SelectedItem);
+                    controller.ChangePodcastFrequency(tbName.Text, (UpdateFrequency) cbUpdateFrequency.SelectedValue);
+                    controller.ChangeUrl(tbName.Text, tbUrl.Text);
+                    RefreshView();
+                }
             }
+            catch (ArgumentOutOfRangeException exception)
+            {
+                Console.WriteLine("There is no podcasts in the list");
+
+            }
+        }
+
+        private void btnSortEpisodes_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                for (int i = 0; i < (dgwPodcasts.Rows.Count); i++)
+                {
+                    Console.WriteLine(dgwPodcasts.Rows[i].Cells[3].Value.ToString());
+
+                    //ta bort lbCategories.SelectedItem != null && ?
+                
+                    if (!dgwPodcasts.Rows[i].Cells[3].Value.ToString()
+                        .Equals(lbCategories.SelectedItem.ToString()))
+                    {
+                        dgwPodcasts.Rows[i].Visible = false;
+                    }
+                    else
+                    {
+                        dgwPodcasts.Rows[i].Visible = true;
+                    }
+                }
+
+                lbEpisodes.Items.Clear();
+                lblEpisode.Text = "";
+                lblDescription.Text = "";
+                tbDescription.Clear();
+            }
+            catch (NullReferenceException exception)
+            {
+                Console.WriteLine("No category is selected");
+                MessageBox.Show("Det finns ingen vald kategori", "Inmatningsfel");
+            }
+        }
+        
+
+
+        private void btnShowAllPodcasts_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < (dgwPodcasts.Rows.Count); i++)
+            {
+                dgwPodcasts.Rows[i].Visible = true;
+            }
+            lbEpisodes.Items.Clear();
+            lblEpisode.Text = "";
+            lblDescription.Text = "";
+            tbDescription.Clear();
         }
     }
 }
