@@ -96,6 +96,38 @@ namespace BL
             return true;
         }
 
+        public static bool comboBoxItemSelected(ComboBox comboBox, string dataTyp)
+        {
+            try
+            {
+                if (comboBox.SelectedItem == null)
+                {
+                    throw new NoItemSelectedException(dataTyp);
+                }
+                return true;
+            }
+            catch (NoItemSelectedException e)
+            {
+                return false;
+            }
+
+        }
+        public static bool listBoxItemSelected(ListBox listBox, string dataTyp)
+        {
+            try
+            {
+                if (listBox.SelectedItem == null)
+                {
+                    throw new NoItemSelectedException(dataTyp);
+                }
+                return true;
+            }
+            catch (NoItemSelectedException e)
+            {
+                return false;
+            }
+        }
+
         public static bool UrlIsUnchanged(TextBox url, string oldPodcastUrl)
         {
             if (!url.Text.Equals(oldPodcastUrl))
@@ -113,27 +145,6 @@ namespace BL
             }
             return true;
         }
-
-
-        public static bool comboBoxItemSelected(ComboBox comboBox, string dataTyp)
-        {
-            if (comboBox.SelectedItem == null)
-            {
-                MessageBox.Show("En "+ dataTyp +" värde måste väljas!");
-                return false;
-            }
-            return true;
-        }
-        public static bool listBoxItemSelected(ListBox listBox, string dataTyp)
-        {
-            if (listBox.SelectedItem == null)
-            {
-                MessageBox.Show("En " + dataTyp + " måste väljas!");
-                return false;
-            }
-            return true;
-        }
-
 
         // Metoderna nedan grupperar valideringsmetoderna ovan i metoder som utför flera valideringar på en gång.  
         public static bool ValidateNewName(TextBox name, List<Podcast> podcastList)

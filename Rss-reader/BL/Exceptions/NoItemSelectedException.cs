@@ -14,7 +14,7 @@ namespace BL.Exceptions
         public NoItemSelectedException(string textType):
             base("Texten som skrivits in i rutan är för kort!")
         {
-            MessageBox.Show(textType + " finns redan!", "Inmatningsfel");
+            MessageBox.Show("En " + textType + " måste väljas!");
         }
     }
 }
