@@ -317,7 +317,7 @@ namespace Rss_reader
             this.tbDescription.Multiline = true;
             this.tbDescription.Name = "tbDescription";
             this.tbDescription.ReadOnly = true;
-            this.tbDescription.Size = new System.Drawing.Size(390, 274);
+            this.tbDescription.Size = new System.Drawing.Size(390, 268);
             this.tbDescription.TabIndex = 21;
             // 
             // tbName
@@ -541,7 +541,7 @@ namespace Rss_reader
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Rss-Reader";
             ((System.ComponentModel.ISupportInitialize)(this.dgwPodcasts)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
