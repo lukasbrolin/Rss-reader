@@ -1,7 +1,9 @@
-﻿using DAL;
+﻿using BL.Exceptions;
+using DAL;
 using DAL.Repositories;
 using Models;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Windows.Forms;
 
 namespace BL
@@ -11,50 +13,77 @@ namespace BL
         // Metoderna nedan utför en specifik validering.
         public static bool TextIsFilled(TextBox textBox, string textType)
         {
-            if (textBox.Text.Length <= 3)
+            try
             {
-                MessageBox.Show(textType + " måste innehålla minst 3 tecken!");
+                if (textBox.Text.Length <= 2)
+                {
+                    throw new EmptyTextBoxException(textType);
+                }
+                return true;
+            }
+            catch (EmptyTextBoxException e)
+            {
                 return false;
             }
-            return true;
         }
 
         public static bool NameIsUnique(TextBox name, List<Podcast> podcastList)
         {
-            foreach (var podcast in podcastList)
+            try
             {
-                if (podcast.Name == name.Text)
+                foreach (var podcast in podcastList)
                 {
-                    MessageBox.Show("En podcast med detta namn finns redan tillagd!");
-                    return false;
+                    if (podcast.Name == name.Text)
+                    {
+                        throw new ValueNotUniqueException("En podcast med detta namn");
+                    }
                 }
+                return true;
+
             }
-            return true;
+            catch (ValueNotUniqueException e){
+                return false;
+            }
         }
 
         public static bool CategoryIsUnique(TextBox categoryTextBox, List<Category> categoryList)
         {
-            foreach (var category in categoryList)
+            try
             {
-                if (categoryTextBox.Text == category.Title)
+                foreach (var category in categoryList)
                 {
-                    MessageBox.Show("Den angivna kategorin finns redan!");
-                    return false;
+                    if (categoryTextBox.Text == category.Title)
+                    {
+                        throw new ValueNotUniqueException("Den angivna kategorin");
+                    }
                 }
+                return true;
             }
-            return true;
+            catch (ValueNotUniqueException e)
+            {
+                return false;
+            }
+
         }
 
         public static bool UrlIsUnique(TextBox urlTextBox, List<Podcast> podcastList)
         {
-            foreach (var podcast in podcastList)
+            try
             {
-                if (urlTextBox.Text == podcast.Url)
+                foreach (var podcast in podcastList)
                 {
-                    MessageBox.Show("Den angivna URL:en finns redan!");
-                    return false; }
+                    if (urlTextBox.Text == podcast.Url)
+                    {
+                        throw new ValueNotUniqueException("En podcast med den angivna URL:en");
+                    }
+                }
+                return true;
             }
-            return true;
+            catch (ValueNotUniqueException e)
+            {
+                return false;
+            }
+            
         }
 
         public static bool UrlIsValid(TextBox urlTextBox)
