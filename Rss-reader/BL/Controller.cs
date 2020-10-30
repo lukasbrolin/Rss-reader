@@ -50,13 +50,18 @@ namespace BL
 
         public async Task CheckforEpisodes()
         {
-            if ((!PodcastRepository.objectList.Any()) && (PodcastRepository.objectList!=null) || PodcastRepository!=null)
+            if ((!PodcastRepository.objectList.Any()) && (PodcastRepository.objectList != null) || PodcastRepository != null)
             {
-                foreach (var p in PodcastRepository.objectList.ToList())
+
+                try
                 {
-                    if (p.NeedsUpdate)
+                    var query = from pod in PodcastRepository.objectList.ToList()
+                                where pod.NeedsUpdate == true
+                                select pod;
+
+                    foreach (var p in query)
                     {
-                        var result = await Task.Run( () => UrlManager.GetEpisodes(p.Url));
+                        var result = await Task.Run(() => UrlManager.GetEpisodes(p.Url));
                         p.Update();
                         if (!p.episodes[0].Title.Equals(result[0].Title))
                         {
@@ -73,7 +78,12 @@ namespace BL
                         Console.WriteLine(p.Name + " WAS UPDATED");
                     }
                 }
+                catch (Exception e)
+                {
+                    System.Windows.Forms.MessageBox.Show("Tom lista ej Uppdateringsbar");
+                }
             }
+           
         }
 
         public List<Podcast> GetListPodcasts()
