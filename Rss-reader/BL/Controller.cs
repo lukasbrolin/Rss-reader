@@ -26,7 +26,7 @@ namespace BL
             PodcastRepository.GetAll();
         }
 
-        public async Task CheckforEpisodes()
+        public async Task CheckForEpisodes()
         {
             if ((!PodcastRepository.ObjectList.Any()) && (PodcastRepository.ObjectList != null) || PodcastRepository != null)
             {

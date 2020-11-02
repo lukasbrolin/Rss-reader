@@ -64,7 +64,7 @@ namespace Rss_reader
 
         private async Task UpdateAviable()
         {
-            await Task.Run(() => controller.CheckforEpisodes());
+            await Task.Run(() => controller.CheckForEpisodes());
             UpdatePodcastTable();
             UpdateEpisodesList();
         }
