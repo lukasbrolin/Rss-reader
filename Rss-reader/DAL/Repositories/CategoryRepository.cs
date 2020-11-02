@@ -1,6 +1,5 @@
 ﻿using Models;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
@@ -8,15 +7,15 @@ namespace DAL.Repositories
 {
     public class CategoryRepository : Repository<Category>
     {
-        public event EventHandler<CategoryEvent> onCategoryDelete; 
+        public event EventHandler<CategoryEvent> OnCategoryDelete; 
         public CategoryRepository()
         {
-            objectList = GetAll();
+            ObjectList = GetAll();
         }
 
         public override void UpdateCategory(string valueBefore, string value)
         {
-            foreach (var c in objectList)
+            foreach (var c in ObjectList)
             {
                 if (c.Title.Equals(valueBefore))
                 {
@@ -25,35 +24,34 @@ namespace DAL.Repositories
             }
             string valueBeforePath = @"..\Debug\" + valueBefore + ".xml";
             string valuePath = @"..\Debug\" + value + ".xml";
-            dataManager.SerializeRename(valueBeforePath, valuePath);
+            DataManager.SerializeRename(valueBeforePath, valuePath);
             SaveChanges();
         }
         public List<Category> GetList
         {
             get
             {
-                return objectList;
+                return ObjectList;
             }
         }
 
         public override void SaveChanges()
         {
-            foreach (var c in objectList)
+            foreach (var c in ObjectList)
             {
-                dataManager.Serialize(c.Title + ".xml");
+                DataManager.Serialize(c.Title + ".xml");
             }
         }
 
         public override void Delete(string value)
         {
-            for (int i = 0; i < objectList.Count; i++)
+            for (int i = 0; i < ObjectList.Count; i++)
             {
-                if (objectList[i].Title.Equals(value))
+                if (ObjectList[i].Title.Equals(value))
                 {
-                    var data = new CategoryEvent();
-                    data.Title = value;
-                    dataManager.SerializeDelete(@"..\Debug\" + objectList[i].Title + ".xml");
-                    onCategoryDelete(this, data);
+                    var data = new CategoryEvent {Title = value};
+                    DataManager.SerializeDelete(@"..\Debug\" + ObjectList[i].Title + ".xml");
+                    OnCategoryDelete(this, data);
                     break;
 
                 }
@@ -64,9 +62,9 @@ namespace DAL.Repositories
         {
             try
             {
-                if (objectList != null)
+                if (ObjectList != null)
                 {
-                    objectList.Clear();
+                    ObjectList.Clear();
                 }
                 List<Category> savedCategories = new List<Category>();
                 string[] XMLfiles = Directory.GetFiles(@"..\Debug\", "*.XML");
@@ -75,7 +73,7 @@ namespace DAL.Repositories
                     savedCategories.Add(new Category(Path.GetFileName(file).Split('.')[0]));
                 }
 
-                objectList = savedCategories;
+                ObjectList = savedCategories;
                 return savedCategories;
             }
             catch (NullReferenceException e)

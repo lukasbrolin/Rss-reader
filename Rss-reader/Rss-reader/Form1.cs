@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -29,7 +24,6 @@ namespace Rss_reader
         {
             foreach (var p in controller.GetListPodcasts())
             {
-                Console.WriteLine(p);
                 dgwPodcasts.Rows.Add(p.TotalEpisodes, p.Name, "Var " + p.UpdateFrequency + " minut", p.category.Title);
             }
         }
@@ -63,10 +57,6 @@ namespace Rss_reader
             timer.Start();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-        }
-
         private async void TimerTick(object sender, EventArgs e)
         {
             await UpdateAviable();
@@ -86,10 +76,7 @@ namespace Rss_reader
             {
                 lbEpisodes.Items.Clear();
 
-                int selectedRowCount = dgwPodcasts.Rows.GetRowCount(DataGridViewElementStates.Selected);
-                int chosenPodcastIndex = 0;
-
-                string name = dgwPodcasts.SelectedRows[chosenPodcastIndex].Cells[1].Value.ToString();
+                string name = dgwPodcasts.SelectedRows[0].Cells[1].Value.ToString();
                 lblEpisode.Text = name;
 
                 foreach (var p in controller.GetListPodcasts().ToList())
@@ -97,7 +84,6 @@ namespace Rss_reader
                     string podName = p.Name;
                     if (podName == name)
                     {
-
                         var episodeList = p.episodes;
                         foreach (var c in episodeList)
                         {
@@ -108,19 +94,16 @@ namespace Rss_reader
                 }
             }
         }
-
-        private void btnAddPodcast_Click(object sender, EventArgs e)
+        private void BtnAddPodcast_Click(object sender, EventArgs e)
         {
             if (Validation.ValidateNewPodcast(tbName, tbUrl, cbCategory, cbUpdateFrequency, controller.GetListPodcasts()))
             {
                 controller.CreatePodcast(tbName.Text, (UpdateFrequency)cbUpdateFrequency.SelectedValue, tbUrl.Text, (Category)cbCategory.SelectedValue);
+                controller.SaveChanges();
                 dgwPodcasts.Rows.Clear();
                 FilldgwPodcast();
             }
         }
-
-        
-
         private void RefreshView()
         {
             dgwPodcasts.Rows.Clear();
@@ -130,30 +113,7 @@ namespace Rss_reader
             lbEpisodes.Items.Clear();
             lblEpisode.Text = "";
         }
-
-        
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            var catetgory = controller.GetAllCategories();
-            foreach (var cat in catetgory) {
-                cbCategory.Items.Add(cat.Title);
-            }
-        }
-
-        private void cbCategory_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void cbUpdateFrequency_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            foreach (var up in Enum.GetValues(typeof(UpdateFrequency)))
-            {
-                cbUpdateFrequency.Items.Add(up.ToString());
-                    }
-        }
-
-        private void lbEpisodes_SelectedIndexChanged(object sender, EventArgs eventArgs)
+        private void LbEpisodes_SelectedIndexChanged(object sender, EventArgs eventArgs)
         {
             
             if(lbEpisodes.SelectedItem != null){
@@ -176,15 +136,7 @@ namespace Rss_reader
                 }
             }
         }
-
-        
-
-        private void btnSavePodcast_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void btnRemovePodcast_Click(object sender, EventArgs e)
+        private void BtnRemovePodcast_Click(object sender, EventArgs e)
         {
             try
             {
@@ -205,7 +157,7 @@ namespace Rss_reader
             
         }
 
-        private void dgwPodcasts_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        private void DgwPodcasts_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
         {
             if (dgwPodcasts.Rows.Count != 0)
             {
@@ -247,8 +199,7 @@ namespace Rss_reader
                 Console.WriteLine("There is no podcasts in the list");
             }
         }
-
-        private void btnAddCategory_Click(object sender, EventArgs e)
+        private void BtnAddCategory_Click(object sender, EventArgs e)
         {
             if (Validation.ValidateNewCategory(tbCategory, controller.GetListCategories()))
             {
@@ -258,8 +209,7 @@ namespace Rss_reader
                 FillCategories();
             }
         }
-
-        private void btnSaveCategory_Click(object sender, EventArgs e)
+        private void BtnSaveCategory_Click(object sender, EventArgs e)
         {
             if (Validation.ValidateChangedCategory(tbCategory, lbCategories, controller.GetListCategories()))
             {
@@ -271,8 +221,7 @@ namespace Rss_reader
                 FilldgwPodcast();
             }
         }
-
-        private void btnRemoveCategory_Click(object sender, EventArgs e)
+        private void BtnRemoveCategory_Click(object sender, EventArgs e)
         {
             string categoryToDelete = lbCategories.SelectedItem.ToString();
             if (categoryToDelete != null)
@@ -286,8 +235,7 @@ namespace Rss_reader
                 }
             }
         }
-
-        private void btnSavePodcast_Click_1(object sender, EventArgs e)
+        private void BtnSavePodcast_Click_1(object sender, EventArgs e)
         {
             try
             {
@@ -309,15 +257,12 @@ namespace Rss_reader
                 Console.WriteLine("There is no podcasts in the list");
             }
         }
-
-        private void btnSortEpisodes_Click(object sender, EventArgs e)
+        private void BtnSortEpisodes_Click(object sender, EventArgs e)
         {
             try
             {
                 for (int i = 0; i < (dgwPodcasts.Rows.Count); i++)
                 {
-                    Console.WriteLine(dgwPodcasts.Rows[i].Cells[3].Value.ToString());
-
                     if (!dgwPodcasts.Rows[i].Cells[3].Value.ToString()
                         .Equals(lbCategories.SelectedItem.ToString()))
                     {
@@ -341,10 +286,7 @@ namespace Rss_reader
                 MessageBox.Show("Det finns ingen vald kategori", "Inmatningsfel");
             }
         }
-        
-
-
-        private void btnShowAllPodcasts_Click(object sender, EventArgs e)
+        private void BtnShowAllPodcasts_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < (dgwPodcasts.Rows.Count); i++)
             {

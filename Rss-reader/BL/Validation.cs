@@ -1,10 +1,8 @@
 ﻿using BL.Exceptions;
 using DAL;
-using DAL.Repositories;
 using Models;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Windows.Forms;
 
 namespace BL
@@ -93,7 +91,7 @@ namespace BL
         {
             try
             {
-                if (UrlManager.GetTotalEpisodes(urlTextBox.Text) < 1)
+                if (UrlManager.GetTotalEpisodesCount(urlTextBox.Text) < 1)
                 {
                     throw new UrlNotValidException();
                 }
@@ -107,7 +105,7 @@ namespace BL
             
         }
 
-        public static bool comboBoxItemSelected(ComboBox comboBox, string dataTyp)
+        public static bool ComboBoxItemSelected(ComboBox comboBox, string dataTyp)
         {
             try
             {
@@ -123,7 +121,7 @@ namespace BL
                 return false;
             }
         }
-        public static bool listBoxItemSelected(ListBox listBox, string dataTyp)
+        public static bool ListBoxItemSelected(ListBox listBox, string dataTyp)
         {
             try
             {
@@ -230,7 +228,7 @@ namespace BL
         {
             if (TextIsFilled(name, "Kategorin"))
             {
-                if (listBoxItemSelected(category, "kategori"))
+                if (ListBoxItemSelected(category, "kategori"))
                 {
                     if (CategoryIsUnique(name, categoryList))
                     {
@@ -248,9 +246,9 @@ namespace BL
             {
                 if (ValidateNewUrl(url, podcastList))
                 {
-                    if (comboBoxItemSelected(updateFrequency, "uppdateringsfrekvens"))
+                    if (ComboBoxItemSelected(updateFrequency, "uppdateringsfrekvens"))
                     {
-                        if (comboBoxItemSelected(category, "kategori"))
+                        if (ComboBoxItemSelected(category, "kategori"))
                         {
                             return true;
                         }
@@ -266,9 +264,9 @@ namespace BL
             {
                 if(ValidateChangedUrl(url, podcastList, oldPodcastUrl))
                 {
-                    if(comboBoxItemSelected(updateFrequency, "uppdateringsfrekvens"))
+                    if(ComboBoxItemSelected(updateFrequency, "uppdateringsfrekvens"))
                     {
-                        if(comboBoxItemSelected(category, "kategori"))
+                        if(ComboBoxItemSelected(category, "kategori"))
                         {
                             return true;
                         }

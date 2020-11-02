@@ -36,6 +36,10 @@ namespace Rss_reader
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dgwPodcasts = new System.Windows.Forms.DataGridView();
+            this.clmEpisode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmFrequency = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.clmCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblUrl = new System.Windows.Forms.Label();
             this.lblUpdateFrequency = new System.Windows.Forms.Label();
             this.lblCategory = new System.Windows.Forms.Label();
@@ -59,24 +63,20 @@ namespace Rss_reader
             this.lbCategories = new System.Windows.Forms.ListBox();
             this.btnSortEpisodes = new System.Windows.Forms.Button();
             this.btnShowAllPodcasts = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
+            this.pnlCategoriesTop = new System.Windows.Forms.Panel();
+            this.pnlPodcastsTop = new System.Windows.Forms.Panel();
+            this.lblPodcasts = new System.Windows.Forms.Label();
+            this.pnlPodcastsRight = new System.Windows.Forms.Panel();
+            this.pnlCategoriesRight = new System.Windows.Forms.Panel();
             this.lblCategorytb = new System.Windows.Forms.Label();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.clmCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmFrequency = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.clmEpisode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label2 = new System.Windows.Forms.Label();
+            this.pnlEpisodes = new System.Windows.Forms.Panel();
+            this.pnlEpisodeInfo = new System.Windows.Forms.Panel();
+            this.lblUFInfo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgwPodcasts)).BeginInit();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel5.SuspendLayout();
-            this.panel6.SuspendLayout();
+            this.pnlCategoriesTop.SuspendLayout();
+            this.pnlPodcastsTop.SuspendLayout();
+            this.pnlEpisodes.SuspendLayout();
+            this.pnlEpisodeInfo.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgwPodcasts
@@ -96,7 +96,7 @@ namespace Rss_reader
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgwPodcasts.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgwPodcasts.ColumnHeadersHeight = 40;
+            this.dgwPodcasts.ColumnHeadersHeight = 43;
             this.dgwPodcasts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgwPodcasts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.clmEpisode,
@@ -131,7 +131,39 @@ namespace Rss_reader
             this.dgwPodcasts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgwPodcasts.Size = new System.Drawing.Size(600, 244);
             this.dgwPodcasts.TabIndex = 0;
-            this.dgwPodcasts.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgwPodcasts_CellContentClick_1);
+            this.dgwPodcasts.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgwPodcasts_CellContentClick_1);
+            // 
+            // clmEpisode
+            // 
+            this.clmEpisode.HeaderText = "Avsnitt";
+            this.clmEpisode.MinimumWidth = 8;
+            this.clmEpisode.Name = "clmEpisode";
+            this.clmEpisode.ReadOnly = true;
+            this.clmEpisode.Width = 80;
+            // 
+            // clmName
+            // 
+            this.clmName.HeaderText = "Namn";
+            this.clmName.MinimumWidth = 8;
+            this.clmName.Name = "clmName";
+            this.clmName.ReadOnly = true;
+            this.clmName.Width = 200;
+            // 
+            // clmFrequency
+            // 
+            this.clmFrequency.HeaderText = "Frekvens";
+            this.clmFrequency.MinimumWidth = 8;
+            this.clmFrequency.Name = "clmFrequency";
+            this.clmFrequency.ReadOnly = true;
+            this.clmFrequency.Width = 160;
+            // 
+            // clmCategory
+            // 
+            this.clmCategory.HeaderText = "Kategori";
+            this.clmCategory.MinimumWidth = 8;
+            this.clmCategory.Name = "clmCategory";
+            this.clmCategory.ReadOnly = true;
+            this.clmCategory.Width = 160;
             // 
             // lblUrl
             // 
@@ -139,9 +171,9 @@ namespace Rss_reader
             this.lblUrl.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Bold);
             this.lblUrl.Location = new System.Drawing.Point(8, 309);
             this.lblUrl.Name = "lblUrl";
-            this.lblUrl.Size = new System.Drawing.Size(60, 22);
+            this.lblUrl.Size = new System.Drawing.Size(51, 22);
             this.lblUrl.TabIndex = 1;
-            this.lblUrl.Text = "URL: *";
+            this.lblUrl.Text = "URL: ";
             // 
             // lblUpdateFrequency
             // 
@@ -149,9 +181,9 @@ namespace Rss_reader
             this.lblUpdateFrequency.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Bold);
             this.lblUpdateFrequency.Location = new System.Drawing.Point(328, 308);
             this.lblUpdateFrequency.Name = "lblUpdateFrequency";
-            this.lblUpdateFrequency.Size = new System.Drawing.Size(205, 22);
+            this.lblUpdateFrequency.Size = new System.Drawing.Size(196, 22);
             this.lblUpdateFrequency.TabIndex = 2;
-            this.lblUpdateFrequency.Text = "Uppdateringsfrekvens: *";
+            this.lblUpdateFrequency.Text = "Uppdateringsfrekvens: ";
             // 
             // lblCategory
             // 
@@ -159,9 +191,9 @@ namespace Rss_reader
             this.lblCategory.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Bold);
             this.lblCategory.Location = new System.Drawing.Point(328, 355);
             this.lblCategory.Name = "lblCategory";
-            this.lblCategory.Size = new System.Drawing.Size(96, 22);
+            this.lblCategory.Size = new System.Drawing.Size(87, 22);
             this.lblCategory.TabIndex = 3;
-            this.lblCategory.Text = "Kategori: *";
+            this.lblCategory.Text = "Kategori: ";
             // 
             // tbUrl
             // 
@@ -170,8 +202,7 @@ namespace Rss_reader
             this.tbUrl.Location = new System.Drawing.Point(12, 332);
             this.tbUrl.Name = "tbUrl";
             this.tbUrl.Size = new System.Drawing.Size(280, 20);
-            this.tbUrl.TabIndex = 4;
-            this.tbUrl.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.tbUrl.TabIndex = 2;
             // 
             // cbUpdateFrequency
             // 
@@ -181,7 +212,7 @@ namespace Rss_reader
             this.cbUpdateFrequency.Location = new System.Drawing.Point(332, 331);
             this.cbUpdateFrequency.Name = "cbUpdateFrequency";
             this.cbUpdateFrequency.Size = new System.Drawing.Size(280, 21);
-            this.cbUpdateFrequency.TabIndex = 5;
+            this.cbUpdateFrequency.TabIndex = 3;
             // 
             // cbCategory
             // 
@@ -191,7 +222,7 @@ namespace Rss_reader
             this.cbCategory.Location = new System.Drawing.Point(332, 378);
             this.cbCategory.Name = "cbCategory";
             this.cbCategory.Size = new System.Drawing.Size(280, 21);
-            this.cbCategory.TabIndex = 6;
+            this.cbCategory.TabIndex = 5;
             // 
             // btnRemovePodcast
             // 
@@ -201,10 +232,10 @@ namespace Rss_reader
             this.btnRemovePodcast.Location = new System.Drawing.Point(618, 256);
             this.btnRemovePodcast.Name = "btnRemovePodcast";
             this.btnRemovePodcast.Size = new System.Drawing.Size(137, 33);
-            this.btnRemovePodcast.TabIndex = 9;
+            this.btnRemovePodcast.TabIndex = 10;
             this.btnRemovePodcast.Text = "Ta bort";
             this.btnRemovePodcast.UseVisualStyleBackColor = false;
-            this.btnRemovePodcast.Click += new System.EventHandler(this.btnRemovePodcast_Click);
+            this.btnRemovePodcast.Click += new System.EventHandler(this.BtnRemovePodcast_Click);
             // 
             // btnAddPodcast
             // 
@@ -214,10 +245,10 @@ namespace Rss_reader
             this.btnAddPodcast.Location = new System.Drawing.Point(618, 178);
             this.btnAddPodcast.Name = "btnAddPodcast";
             this.btnAddPodcast.Size = new System.Drawing.Size(137, 33);
-            this.btnAddPodcast.TabIndex = 10;
+            this.btnAddPodcast.TabIndex = 8;
             this.btnAddPodcast.Text = "Lägg till";
             this.btnAddPodcast.UseVisualStyleBackColor = false;
-            this.btnAddPodcast.Click += new System.EventHandler(this.btnAddPodcast_Click);
+            this.btnAddPodcast.Click += new System.EventHandler(this.BtnAddPodcast_Click);
             // 
             // btnSavePodcast
             // 
@@ -227,10 +258,10 @@ namespace Rss_reader
             this.btnSavePodcast.Location = new System.Drawing.Point(618, 217);
             this.btnSavePodcast.Name = "btnSavePodcast";
             this.btnSavePodcast.Size = new System.Drawing.Size(137, 33);
-            this.btnSavePodcast.TabIndex = 11;
+            this.btnSavePodcast.TabIndex = 9;
             this.btnSavePodcast.Text = "Spara";
             this.btnSavePodcast.UseVisualStyleBackColor = false;
-            this.btnSavePodcast.Click += new System.EventHandler(this.btnSavePodcast_Click_1);
+            this.btnSavePodcast.Click += new System.EventHandler(this.BtnSavePodcast_Click_1);
             // 
             // lblEpisode
             // 
@@ -258,7 +289,7 @@ namespace Rss_reader
             this.tbCategory.Location = new System.Drawing.Point(780, 332);
             this.tbCategory.Name = "tbCategory";
             this.tbCategory.Size = new System.Drawing.Size(240, 20);
-            this.tbCategory.TabIndex = 16;
+            this.tbCategory.TabIndex = 14;
             // 
             // btnAddCategory
             // 
@@ -268,10 +299,10 @@ namespace Rss_reader
             this.btnAddCategory.Location = new System.Drawing.Point(1026, 99);
             this.btnAddCategory.Name = "btnAddCategory";
             this.btnAddCategory.Size = new System.Drawing.Size(134, 42);
-            this.btnAddCategory.TabIndex = 17;
+            this.btnAddCategory.TabIndex = 11;
             this.btnAddCategory.Text = "Lägg till";
             this.btnAddCategory.UseVisualStyleBackColor = false;
-            this.btnAddCategory.Click += new System.EventHandler(this.btnAddCategory_Click);
+            this.btnAddCategory.Click += new System.EventHandler(this.BtnAddCategory_Click);
             // 
             // btnSaveCategory
             // 
@@ -281,10 +312,10 @@ namespace Rss_reader
             this.btnSaveCategory.Location = new System.Drawing.Point(1026, 147);
             this.btnSaveCategory.Name = "btnSaveCategory";
             this.btnSaveCategory.Size = new System.Drawing.Size(134, 42);
-            this.btnSaveCategory.TabIndex = 18;
+            this.btnSaveCategory.TabIndex = 12;
             this.btnSaveCategory.Text = "Spara";
             this.btnSaveCategory.UseVisualStyleBackColor = false;
-            this.btnSaveCategory.Click += new System.EventHandler(this.btnSaveCategory_Click);
+            this.btnSaveCategory.Click += new System.EventHandler(this.BtnSaveCategory_Click);
             // 
             // btnRemoveCategory
             // 
@@ -294,10 +325,10 @@ namespace Rss_reader
             this.btnRemoveCategory.Location = new System.Drawing.Point(1026, 195);
             this.btnRemoveCategory.Name = "btnRemoveCategory";
             this.btnRemoveCategory.Size = new System.Drawing.Size(134, 42);
-            this.btnRemoveCategory.TabIndex = 19;
+            this.btnRemoveCategory.TabIndex = 13;
             this.btnRemoveCategory.Text = "Ta bort";
             this.btnRemoveCategory.UseVisualStyleBackColor = false;
-            this.btnRemoveCategory.Click += new System.EventHandler(this.btnRemoveCategory_Click);
+            this.btnRemoveCategory.Click += new System.EventHandler(this.BtnRemoveCategory_Click);
             // 
             // lblDescription
             // 
@@ -319,13 +350,14 @@ namespace Rss_reader
             this.tbDescription.ReadOnly = true;
             this.tbDescription.Size = new System.Drawing.Size(390, 268);
             this.tbDescription.TabIndex = 21;
+            this.tbDescription.TabStop = false;
             // 
             // tbName
             // 
             this.tbName.Location = new System.Drawing.Point(12, 378);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(280, 20);
-            this.tbName.TabIndex = 22;
+            this.tbName.TabIndex = 4;
             // 
             // lblName
             // 
@@ -346,7 +378,8 @@ namespace Rss_reader
             this.lbEpisodes.Name = "lbEpisodes";
             this.lbEpisodes.Size = new System.Drawing.Size(753, 268);
             this.lbEpisodes.TabIndex = 24;
-            this.lbEpisodes.SelectedIndexChanged += new System.EventHandler(this.lbEpisodes_SelectedIndexChanged);
+            this.lbEpisodes.TabStop = false;
+            this.lbEpisodes.SelectedIndexChanged += new System.EventHandler(this.LbEpisodes_SelectedIndexChanged);
             // 
             // lbCategories
             // 
@@ -366,10 +399,10 @@ namespace Rss_reader
             this.btnSortEpisodes.Location = new System.Drawing.Point(618, 51);
             this.btnSortEpisodes.Name = "btnSortEpisodes";
             this.btnSortEpisodes.Size = new System.Drawing.Size(137, 46);
-            this.btnSortEpisodes.TabIndex = 26;
+            this.btnSortEpisodes.TabIndex = 6;
             this.btnSortEpisodes.Text = "Sortera efter Kategori";
             this.btnSortEpisodes.UseVisualStyleBackColor = false;
-            this.btnSortEpisodes.Click += new System.EventHandler(this.btnSortEpisodes_Click);
+            this.btnSortEpisodes.Click += new System.EventHandler(this.BtnSortEpisodes_Click);
             // 
             // btnShowAllPodcasts
             // 
@@ -379,58 +412,58 @@ namespace Rss_reader
             this.btnShowAllPodcasts.Location = new System.Drawing.Point(618, 103);
             this.btnShowAllPodcasts.Name = "btnShowAllPodcasts";
             this.btnShowAllPodcasts.Size = new System.Drawing.Size(137, 46);
-            this.btnShowAllPodcasts.TabIndex = 27;
+            this.btnShowAllPodcasts.TabIndex = 7;
             this.btnShowAllPodcasts.Text = "Visa alla Podcasts";
             this.btnShowAllPodcasts.UseVisualStyleBackColor = false;
-            this.btnShowAllPodcasts.Click += new System.EventHandler(this.btnShowAllPodcasts_Click);
+            this.btnShowAllPodcasts.Click += new System.EventHandler(this.BtnShowAllPodcasts_Click);
             // 
-            // panel1
+            // pnlCategoriesTop
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(71)))), ((int)(((byte)(111)))));
-            this.panel1.Controls.Add(this.lblCategories);
-            this.panel1.Location = new System.Drawing.Point(780, 16);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(387, 29);
-            this.panel1.TabIndex = 28;
+            this.pnlCategoriesTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(71)))), ((int)(((byte)(111)))));
+            this.pnlCategoriesTop.Controls.Add(this.lblCategories);
+            this.pnlCategoriesTop.Location = new System.Drawing.Point(780, 16);
+            this.pnlCategoriesTop.Name = "pnlCategoriesTop";
+            this.pnlCategoriesTop.Size = new System.Drawing.Size(387, 29);
+            this.pnlCategoriesTop.TabIndex = 28;
             // 
-            // panel2
+            // pnlPodcastsTop
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(71)))), ((int)(((byte)(111)))));
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Location = new System.Drawing.Point(12, 16);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(753, 29);
-            this.panel2.TabIndex = 29;
+            this.pnlPodcastsTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(71)))), ((int)(((byte)(111)))));
+            this.pnlPodcastsTop.Controls.Add(this.lblPodcasts);
+            this.pnlPodcastsTop.Location = new System.Drawing.Point(12, 16);
+            this.pnlPodcastsTop.Name = "pnlPodcastsTop";
+            this.pnlPodcastsTop.Size = new System.Drawing.Size(753, 29);
+            this.pnlPodcastsTop.TabIndex = 29;
             // 
-            // label1
+            // lblPodcasts
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(3, 4);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 22);
-            this.label1.TabIndex = 15;
-            this.label1.Text = "Kategorier:";
+            this.lblPodcasts.AutoSize = true;
+            this.lblPodcasts.BackColor = System.Drawing.Color.Transparent;
+            this.lblPodcasts.Font = new System.Drawing.Font("Open Sans", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPodcasts.ForeColor = System.Drawing.Color.White;
+            this.lblPodcasts.Location = new System.Drawing.Point(3, 4);
+            this.lblPodcasts.Name = "lblPodcasts";
+            this.lblPodcasts.Size = new System.Drawing.Size(86, 22);
+            this.lblPodcasts.TabIndex = 15;
+            this.lblPodcasts.Text = "Podcasts:";
             // 
-            // panel3
+            // pnlPodcastsRight
             // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(71)))), ((int)(((byte)(111)))));
-            this.panel3.ForeColor = System.Drawing.Color.Transparent;
-            this.panel3.Location = new System.Drawing.Point(761, 16);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(4, 382);
-            this.panel3.TabIndex = 30;
+            this.pnlPodcastsRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(71)))), ((int)(((byte)(111)))));
+            this.pnlPodcastsRight.ForeColor = System.Drawing.Color.Transparent;
+            this.pnlPodcastsRight.Location = new System.Drawing.Point(761, 16);
+            this.pnlPodcastsRight.Name = "pnlPodcastsRight";
+            this.pnlPodcastsRight.Size = new System.Drawing.Size(4, 382);
+            this.pnlPodcastsRight.TabIndex = 30;
             // 
-            // panel4
+            // pnlCategoriesRight
             // 
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(71)))), ((int)(((byte)(111)))));
-            this.panel4.ForeColor = System.Drawing.Color.Transparent;
-            this.panel4.Location = new System.Drawing.Point(1166, 16);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(4, 382);
-            this.panel4.TabIndex = 31;
+            this.pnlCategoriesRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(71)))), ((int)(((byte)(111)))));
+            this.pnlCategoriesRight.ForeColor = System.Drawing.Color.Transparent;
+            this.pnlCategoriesRight.Location = new System.Drawing.Point(1166, 16);
+            this.pnlCategoriesRight.Name = "pnlCategoriesRight";
+            this.pnlCategoriesRight.Size = new System.Drawing.Size(4, 382);
+            this.pnlCategoriesRight.TabIndex = 31;
             // 
             // lblCategorytb
             // 
@@ -442,65 +475,33 @@ namespace Rss_reader
             this.lblCategorytb.TabIndex = 32;
             this.lblCategorytb.Text = "Kategorinamn:";
             // 
-            // panel5
+            // pnlEpisodes
             // 
-            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(71)))), ((int)(((byte)(111)))));
-            this.panel5.Controls.Add(this.lblEpisode);
-            this.panel5.Location = new System.Drawing.Point(12, 436);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(753, 29);
-            this.panel5.TabIndex = 33;
+            this.pnlEpisodes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(71)))), ((int)(((byte)(111)))));
+            this.pnlEpisodes.Controls.Add(this.lblEpisode);
+            this.pnlEpisodes.Location = new System.Drawing.Point(12, 436);
+            this.pnlEpisodes.Name = "pnlEpisodes";
+            this.pnlEpisodes.Size = new System.Drawing.Size(753, 29);
+            this.pnlEpisodes.TabIndex = 33;
             // 
-            // panel6
+            // pnlEpisodeInfo
             // 
-            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(71)))), ((int)(((byte)(111)))));
-            this.panel6.Controls.Add(this.lblDescription);
-            this.panel6.Location = new System.Drawing.Point(780, 436);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(390, 29);
-            this.panel6.TabIndex = 34;
+            this.pnlEpisodeInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(6)))), ((int)(((byte)(71)))), ((int)(((byte)(111)))));
+            this.pnlEpisodeInfo.Controls.Add(this.lblDescription);
+            this.pnlEpisodeInfo.Location = new System.Drawing.Point(780, 436);
+            this.pnlEpisodeInfo.Name = "pnlEpisodeInfo";
+            this.pnlEpisodeInfo.Size = new System.Drawing.Size(390, 29);
+            this.pnlEpisodeInfo.TabIndex = 34;
             // 
-            // clmCategory
+            // lblUFInfo
             // 
-            this.clmCategory.HeaderText = "Kategori";
-            this.clmCategory.MinimumWidth = 8;
-            this.clmCategory.Name = "clmCategory";
-            this.clmCategory.ReadOnly = true;
-            this.clmCategory.Width = 160;
-            // 
-            // clmFrequency
-            // 
-            this.clmFrequency.HeaderText = "Frekvens";
-            this.clmFrequency.MinimumWidth = 8;
-            this.clmFrequency.Name = "clmFrequency";
-            this.clmFrequency.ReadOnly = true;
-            this.clmFrequency.Width = 160;
-            // 
-            // clmName
-            // 
-            this.clmName.HeaderText = "Namn";
-            this.clmName.MinimumWidth = 8;
-            this.clmName.Name = "clmName";
-            this.clmName.ReadOnly = true;
-            this.clmName.Width = 200;
-            // 
-            // clmEpisode
-            // 
-            this.clmEpisode.HeaderText = "Avsnitt";
-            this.clmEpisode.MinimumWidth = 8;
-            this.clmEpisode.Name = "clmEpisode";
-            this.clmEpisode.ReadOnly = true;
-            this.clmEpisode.Width = 80;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(533, 315);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(79, 13);
-            this.label2.TabIndex = 35;
-            this.label2.Text = "Anges i minuter";
+            this.lblUFInfo.AutoSize = true;
+            this.lblUFInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUFInfo.Location = new System.Drawing.Point(533, 315);
+            this.lblUFInfo.Name = "lblUFInfo";
+            this.lblUFInfo.Size = new System.Drawing.Size(79, 13);
+            this.lblUFInfo.TabIndex = 35;
+            this.lblUFInfo.Text = "Anges i minuter";
             // 
             // Form1
             // 
@@ -508,15 +509,15 @@ namespace Rss_reader
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1180, 757);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.panel6);
-            this.Controls.Add(this.panel5);
+            this.Controls.Add(this.lblUFInfo);
+            this.Controls.Add(this.pnlEpisodeInfo);
+            this.Controls.Add(this.pnlEpisodes);
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.tbCategory);
             this.Controls.Add(this.lblCategorytb);
-            this.Controls.Add(this.panel4);
-            this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.pnlCategoriesRight);
+            this.Controls.Add(this.pnlPodcastsRight);
+            this.Controls.Add(this.pnlPodcastsTop);
             this.Controls.Add(this.btnShowAllPodcasts);
             this.Controls.Add(this.btnSortEpisodes);
             this.Controls.Add(this.lbCategories);
@@ -536,19 +537,19 @@ namespace Rss_reader
             this.Controls.Add(this.lblUpdateFrequency);
             this.Controls.Add(this.lblUrl);
             this.Controls.Add(this.dgwPodcasts);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnlCategoriesTop);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Rss-Reader";
             ((System.ComponentModel.ISupportInitialize)(this.dgwPodcasts)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.panel5.ResumeLayout(false);
-            this.panel6.ResumeLayout(false);
+            this.pnlCategoriesTop.ResumeLayout(false);
+            this.pnlCategoriesTop.PerformLayout();
+            this.pnlPodcastsTop.ResumeLayout(false);
+            this.pnlPodcastsTop.PerformLayout();
+            this.pnlEpisodes.ResumeLayout(false);
+            this.pnlEpisodeInfo.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -580,19 +581,19 @@ namespace Rss_reader
         private ListBox lbCategories;
         private Button btnSortEpisodes;
         private Button btnShowAllPodcasts;
-        private Panel panel1;
-        private Panel panel2;
-        private Label label1;
-        private Panel panel3;
-        private Panel panel4;
+        private Panel pnlCategoriesTop;
+        private Panel pnlPodcastsTop;
+        private Label lblPodcasts;
+        private Panel pnlPodcastsRight;
+        private Panel pnlCategoriesRight;
         private Label lblCategorytb;
-        private Panel panel5;
-        private Panel panel6;
+        private Panel pnlEpisodes;
+        private Panel pnlEpisodeInfo;
         private DataGridViewTextBoxColumn clmEpisode;
         private DataGridViewTextBoxColumn clmName;
         private DataGridViewTextBoxColumn clmFrequency;
         private DataGridViewTextBoxColumn clmCategory;
-        private Label label2;
+        private Label lblUFInfo;
     }
 }
 

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using DAL;
 using DAL.Repositories;
 using Models;
@@ -20,10 +17,10 @@ namespace BL
         {
             CategoryRepository = new CategoryRepository();
             PodcastRepository = new PodcastRepository(CategoryRepository);
-            CategoryRepository.onCategoryDelete += this.onCategoryDelete;
+            CategoryRepository.OnCategoryDelete += this.OnCategoryDelete;
         }
 
-        private void onCategoryDelete(object sender, CategoryEvent e)
+        private void OnCategoryDelete(object sender, CategoryEvent e)
         {
             CategoryRepository.GetAll();
             PodcastRepository.GetAll();
@@ -31,12 +28,14 @@ namespace BL
 
         public async Task CheckforEpisodes()
         {
-            if ((!PodcastRepository.objectList.Any()) && (PodcastRepository.objectList != null) || PodcastRepository != null)
+            if ((!PodcastRepository.ObjectList.Any()) && (PodcastRepository.ObjectList != null) || PodcastRepository != null)
             {
 
                 try
                 {
-                    var query = from pod in PodcastRepository.objectList.ToList() select pod;
+                    var query = from pod in PodcastRepository.ObjectList.ToList()
+                        where pod.NeedsUpdate.Equals(true)
+                                select pod;
 
                     foreach (var p in query)
                     {
@@ -50,6 +49,8 @@ namespace BL
                             PodcastRepository.SaveChanges();
                             PodcastRepository.GetAll();
                         }
+
+                        Console.WriteLine("Updated");
                     }
                 }
                 catch (Exception e)
@@ -64,6 +65,11 @@ namespace BL
         public List<Podcast> GetListPodcasts()
         {
             return PodcastRepository.GetList;
+        }
+
+        public void SaveChanges()
+        {
+            PodcastRepository.SaveChanges();
         }
 
         public List<Category> GetListCategories()
@@ -81,29 +87,6 @@ namespace BL
         public Podcast GetPodcast(string value)
         {
             return PodcastRepository.GetPodcast(value);
-        }
-
-        public List<Podcast> GetPodcastsPerCategory(string value)
-        {
-            List<Podcast> temporaryList = new List<Podcast>();
-            var query = from podcast in PodcastRepository.objectList
-                where podcast.category.Title.Equals(value)
-                select podcast;
-            foreach (var podcast in query)
-            {
-                temporaryList.Add(podcast);
-            }
-
-            return temporaryList;
-        }
-
-        public Episode GetPodcastEpisode(string podName, string episodeName)
-        {
-            Podcast podcast = (from p in PodcastRepository.objectList
-                where p.Name.Equals(podName)
-                select p).FirstOrDefault();
-            Episode episode = (from e in podcast.episodes where e.Title.Equals(episodeName) select e).FirstOrDefault();
-            return episode;
         }
 
         public void ChangePodcastName(string nameBefore, string name)
@@ -135,11 +118,13 @@ namespace BL
         {
             Category newCategory = new Category(value);
             CategoryRepository.Create(newCategory);
+            PodcastRepository.SaveChanges();
         }
 
         public void ChangeCategory(string valueBefore, string value)
         {
             CategoryRepository.UpdateCategory(valueBefore, value);
+            PodcastRepository.SaveChanges();
         }
 
         public void DeleteCategory(string value)
@@ -147,21 +132,9 @@ namespace BL
             CategoryRepository.Delete(value);
         }
 
-
         public List<Podcast> GetAll()
         {
             return PodcastRepository.GetAll();
-        }
-
-        public List<Category> GetAllCategories()
-        {
-            return CategoryRepository.GetAll();
-        }
-
-        public Category GetCategoryByName(string value)
-        {
-            
-            return CategoryRepository.objectList.Where(c => c.Title.Equals(value)).Select(c => c).FirstOrDefault();
         }
     }
 }

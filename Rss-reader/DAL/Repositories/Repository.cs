@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace DAL.Repositories
 {
     public abstract class Repository<T> : IRepository<T> where T : class
     {
-        internal DataManager dataManager;
-        public List<T> objectList { get; set; }
-
-        public Repository()
-        {
-            dataManager = new DataManager();
-        }
+        public List<T> ObjectList { get; set; }
 
         public virtual void Create(T value)
         {
-            objectList.Add(value);
+            ObjectList.Add(value);
             SaveChanges();
         }
 

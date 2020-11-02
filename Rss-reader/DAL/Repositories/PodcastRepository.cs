@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
-using System.Runtime.CompilerServices;
 using Models;
 
 namespace DAL.Repositories
@@ -14,8 +12,8 @@ namespace DAL.Repositories
         public PodcastRepository(CategoryRepository catRepository)
         {
             this.CategoryRepository = catRepository;
-            objectList = new List<Podcast>();
-            objectList = GetAll();
+            ObjectList = new List<Podcast>();
+            ObjectList = GetAll();
         }
 
         public override void SaveChanges()
@@ -23,13 +21,13 @@ namespace DAL.Repositories
             foreach (var c in CategoryRepository.GetList)
             {
                 List<Podcast> temporaryList = new List<Podcast>();
-                var query = from podcast in objectList where podcast.category.Title.Equals(c.Title) select podcast;
+                var query = from podcast in ObjectList where podcast.category.Title.Equals(c.Title) select podcast;
                 foreach (var podcast in query)
                 {
                     temporaryList.Add(podcast);
                 }
 
-                dataManager.Serialize(temporaryList, (c.Title + ".xml"));
+                DataManager.Serialize(temporaryList, (c.Title + ".xml"));
             }
         }
 
@@ -37,7 +35,7 @@ namespace DAL.Repositories
         {
             get
             {
-                return objectList;
+                return ObjectList;
             }
         }
 
@@ -45,7 +43,7 @@ namespace DAL.Repositories
         {
             try
             {
-                objectList.Clear();
+                ObjectList.Clear();
                 foreach (var c in CategoryRepository.GetList)
                 {
                     List<Podcast> temporaryList = GetPodcastsByCategoyTitle(c.Title);
@@ -58,13 +56,13 @@ namespace DAL.Repositories
                                 temporaryList[i].category = c;
                             }
 
-                            if (objectList.Count() == 0)
+                            if (ObjectList.Count() == 0)
                             {
-                                objectList = temporaryList;
+                                ObjectList = temporaryList;
                             }
                             else
                             {
-                                objectList.AddRange(temporaryList);
+                                ObjectList.AddRange(temporaryList);
                             }
                         }
                     }
@@ -73,7 +71,7 @@ namespace DAL.Repositories
                         Console.WriteLine(e);
                     }
                 }
-                return objectList;
+                return ObjectList;
             }
             catch (NullReferenceException e)
             {
@@ -108,7 +106,7 @@ namespace DAL.Repositories
         }
         public Podcast GetPodcast(string value)
         {
-            return (from p in objectList where p.Name.Equals(value) select p).FirstOrDefault();
+            return (from p in ObjectList where p.Name.Equals(value) select p).FirstOrDefault();
         }
 
         public override void Delete(string value)
@@ -135,21 +133,20 @@ namespace DAL.Repositories
 
         private void DeleteByCategory(string value)
         {
-            objectList.RemoveAll(p => p.category.Equals(value));
+            ObjectList.RemoveAll(p => p.category.Equals(value));
             SaveChanges();
         }
 
         private void DeleteByName(string value)
         {
-            objectList.RemoveAll(p => p.Name.Equals(value));
+            ObjectList.RemoveAll(p => p.Name.Equals(value));
             SaveChanges();
         }
 
         public List<Podcast> GetPodcastsByCategoyTitle(string name)
         {
             name += ".xml";
-            List<Podcast> savedPodcasts = new List<Podcast>();
-            savedPodcasts = dataManager.Deserialize<List<Podcast>>(name);
+            List<Podcast> savedPodcasts = DataManager.Deserialize<List<Podcast>>(name);
             return savedPodcasts;
         }
     }

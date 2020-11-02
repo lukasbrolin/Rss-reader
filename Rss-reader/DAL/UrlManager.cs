@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 using Models;
 
@@ -21,17 +17,17 @@ namespace DAL
 
             return urlManager.Descendants(("item")).Select(i =>
             {
-                XNamespace xd = "http://www.itunes.com/dtds/podcast-1.0.dtd";
+                XNamespace Prefix = "http://www.itunes.com/dtds/podcast-1.0.dtd";
                 return new Episode
                 {
                     Title = i.Element("title")?.Value ?? "",
-                    Description = i.Element("description")?.Value ?? "",
-                    Length = i.Descendants(xd + "duration").FirstOrDefault()?.Value ?? "0"
+                    Description = i.Element("description")?.Value.Replace(@"<p>", "").Replace(@"</p>", "") ?? "",
+                    Length = i.Descendants(Prefix + "duration").FirstOrDefault()?.Value ?? "0"
                 };
             }).ToList();
         }
 
-        public static int GetTotalEpisodes(string url)
+        public static int GetTotalEpisodesCount(string url)
         {
             try
             {

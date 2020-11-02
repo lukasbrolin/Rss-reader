@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace Models
 {
@@ -12,6 +11,7 @@ namespace Models
         public string Url { get; set; }
         public Category category;
         public int TotalEpisodes { get; set; }
+
         public List<Episode> episodes;
 
         public Podcast()

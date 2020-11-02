@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Xml.Serialization;
-using System.Xml.XPath;
 using Models;
 
 namespace DAL
 {
-    internal class DataManager
+    internal static class DataManager
     {
         //Writes to file
-        public void Serialize<T>(List<T> objects, string c)
+        public static void Serialize<T>(List<T> objects, string c)
         {
-            
             SerializeDelete(c);
             XmlSerializer xmlSerializer = new XmlSerializer(objects.GetType());
             using (FileStream outFile = new FileStream(c, FileMode.Create,
@@ -25,7 +22,7 @@ namespace DAL
 
 
         //Creates new file
-        public void Serialize(string c)
+        public static void Serialize(string c)
         {
             using (FileStream outFile = new FileStream(c, FileMode.Create))
             {
@@ -34,20 +31,20 @@ namespace DAL
 
 
         //Changes name of file
-        public void SerializeRename(string valueBefore, string value)
+        public static void SerializeRename(string valueBefore, string value)
         {
             File.Move(valueBefore, value);
         }
 
 
         //Deletes file
-        public void SerializeDelete(string c)
+        public static void SerializeDelete(string c)
         {
             File.Delete(c);
         }
 
         //Reads file
-        public List<Podcast> Deserialize<T>(string value)
+        public static List<Podcast> Deserialize<T>(string value)
         {
             try
             {
