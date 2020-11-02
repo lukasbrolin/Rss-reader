@@ -50,8 +50,6 @@ namespace BL
                             PodcastRepository.SaveChanges();
                             PodcastRepository.GetAll();
                         }
-
-                        Console.WriteLine(p.Name + " WAS UPDATED");
                     }
                 }
                 catch (Exception e)

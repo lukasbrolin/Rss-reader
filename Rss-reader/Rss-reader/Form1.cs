@@ -58,7 +58,7 @@ namespace Rss_reader
 
         public void StartTimer()
         {
-            timer = new Timer{Interval = 15000, Enabled = true};
+            timer = new Timer{Interval = 300000, Enabled = true};
             timer.Tick += TimerTick;
             timer.Start();
         }
@@ -67,12 +67,12 @@ namespace Rss_reader
         {
         }
 
-        private void TimerTick(object sender, EventArgs e)
+        private async void TimerTick(object sender, EventArgs e)
         {
-            Update();
+            await UpdateAviable();
         }
 
-        private async Task Update()
+        private async Task UpdateAviable()
         {
             await Task.Run(() => controller.CheckforEpisodes());
             UpdatePodcastTable();
@@ -199,6 +199,7 @@ namespace Rss_reader
             }
             catch (ArgumentOutOfRangeException exception)
             {
+                Console.WriteLine(exception);
                 Console.WriteLine("There is no podcasts in the list");
             }
             
@@ -218,13 +219,13 @@ namespace Rss_reader
             }
         }
 
-        private async Task UpdateEpisodesList()
+        private void UpdateEpisodesList()
         {
             try
             {
                 string selectedPod = dgwPodcasts.SelectedRows[0].Cells[1].Value.ToString();
                 tbName.Text = selectedPod;
-                var podcast = await Task.Run(() => controller.GetPodcast(selectedPod)).ConfigureAwait(false);
+                var podcast = controller.GetPodcast(selectedPod);
                 tbUrl.Text = podcast.Url;
                 cbUpdateFrequency.SelectedItem = podcast.UpdateFrequency;
                 lblEpisode.Text = podcast.Name;
@@ -242,6 +243,7 @@ namespace Rss_reader
             }
             catch (ArgumentOutOfRangeException e)
             {
+                Console.WriteLine(e);
                 Console.WriteLine("There is no podcasts in the list");
             }
         }
@@ -303,6 +305,7 @@ namespace Rss_reader
             }
             catch (ArgumentOutOfRangeException exception)
             {
+                Console.WriteLine(exception);
                 Console.WriteLine("There is no podcasts in the list");
             }
         }
@@ -333,6 +336,7 @@ namespace Rss_reader
             }
             catch (NullReferenceException exception)
             {
+                Console.WriteLine(exception);
                 Console.WriteLine("No category is selected");
                 MessageBox.Show("Det finns ingen vald kategori", "Inmatningsfel");
             }

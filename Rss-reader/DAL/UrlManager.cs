@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Models;
@@ -38,6 +39,7 @@ namespace DAL
             }
             catch (FileNotFoundException e)
             {
+                Console.WriteLine(e);
                 return 0;
             }
             return urlManager.Descendants(("item")).Select(i => i.Element("title")).Count();
