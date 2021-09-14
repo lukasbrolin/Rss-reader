@@ -297,5 +297,10 @@ namespace Rss_reader
             lblDescription.Text = "";
             tbDescription.Clear();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
